@@ -1,4 +1,5 @@
 .xprofile
+(This file gets executed at the beginning of the X session)
 - to make touchpad tap work in bspwm
 - to increase pointer acceleration to max
 
