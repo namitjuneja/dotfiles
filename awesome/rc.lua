@@ -436,6 +436,8 @@ function getScreenFromIndex(index)
 end
 
 
+
+
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
@@ -467,13 +469,18 @@ for i = 1, 9 do
                   end,
                   {description = "toggle tag #" .. i, group = "tag"}),
         -- Move client to tag.
+	-- Move a window to another tag 
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
+                          local current_screen = awful.screen.focused()
+                          --local tag = client.focus.screen.tags[i]
+                          local screen = getScreenFromIndex(tag_to_screen[i])
+                          local tag = screen.tags[i]
                           if tag then
                               client.focus:move_to_tag(tag)
                           end
+			  awful.screen.focus(current_screen)
                      end
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
