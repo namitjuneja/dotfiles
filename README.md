@@ -14,18 +14,65 @@ startup.sh (currently run by keeping a soft link in /etc/profile.d directory whi
 - set background using feh 
 - start compton
 - start ksuperkey to use modkey(independantly) to get system notification
+- start redshift
 
 compton.conf (soft linked to .config/compton.conf)
 - to din inactive windows
 
+crontab -e
+- play sound every hour
+  paplay /usr/share/sounds/ubuntu/stereo/service-login.ogg
 
 
+sudo crontab -e
+- modify /etc/hosts/
+- remove "#" (comment) from any line that contains 127.0.0.1 (local DNS)
+  awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts
+
+Note
+changed key press delay to improve vim usability using the below commands
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 1
+gsettings set org.gnome.desktop.peripherals.keyboard delay 1
+should be ideally
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
+gsettings set org.gnome.desktop.peripherals.keyboard delay 250
+
+
+Firefox modifications
+userChrome.css
+- used to modify UI of Firefox (use this with vivaldi firefox addon)
+- used for xml hack to inect JS which operates when new tab opens to open a custom page, keep the focus to the adress bar and clear any url which is there
+- enable ESNI and DoH from Cloudflare to prevent tracking
+
+userChrome.xml
+userChrome.js
+
+userContent.css
+- used to make background of new window page black
+
+List of about:config changes
+- devpixels scaling to 1.2
+- remove popup for notification permissions
+- remove fullscreen warning notification
+- enable ctrl q quit firefox warning - to prevent accidental presses
+- privacy.firstparty.isolate;true (cookies cannot be used by anyone except the domain that set it)
+
+Firefox TODO
+- get similar behaviour in new window action
+- figure out a way to include firefox profile in dotfiles, which includes about:config changes
 
 REQUIREMENTS
 -ksuperkey
 -i3lock-fancy
 	-i3lock
 	-scrot
+
+TODO
+- invalidate Firefox's DNS cache so that /etc/hosts/ takes effect immediately
+
+
+
+
 
 NOTES
 Removed all options in setxkbmap to be able to use alt + shift shortcut (for bspwm & sublime)

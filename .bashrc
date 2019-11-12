@@ -1,8 +1,16 @@
-alias vup="amixer set 'Master' 10%+"
-alias vdown="amixer set 'Master' 10%-"
-alias bat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+export PATH="$PATH:/home/namit/dotfiles/scripts"
+#fortune | cowsay -y | lolcat
 
-# I don't really know what they do but they help in setting up the virtualenv for non free version of opencv
-# https://www.pyimagesearch.com/2015/06/22/install-opencv-3-0-and-python-2-7-on-ubuntu/
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+
+alias jp="jupyter notebook"
+alias qtb="~/qutebrowser/.venv/bin/python3 -m ~/qutebrowser/.venv/bin/qutebrowser"
+# folloew this link for installing qutebrowser with tox
+# https://www.qutebrowser.org/doc/install.html#tox
+
+# monitor setup
+alias lab_mon="xrandr --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --off --output HDMI-2 --off"
+
+
+
+
+

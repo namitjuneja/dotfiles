@@ -2,14 +2,22 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
+
 -- Widget and layout library
 local wibox = require("wibox")
+
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -17,6 +25,10 @@ require("awful.hotkeys_popup.keys")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+
+
+-- more multiple monitors
+local xrandr = require("xrandr")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -49,7 +61,7 @@ beautiful.init(awful.util.getdir("config") .. "themes/default_modified/theme.lua
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
+editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -282,9 +294,9 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey,           }, "z", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey,           }, "c", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -337,7 +349,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "space",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
-    awful.key({ modkey }, "x",
+    awful.key({ modkey }, "'",
               function ()
                   awful.prompt.run {
                     prompt       = "Run Lua code: ",
@@ -348,8 +360,9 @@ globalkeys = gears.table.join(
               end,
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+    -- awful.key({ modkey }, "p", function() xrandr.xrandr() end,
+    --          {description = "Multiple monitors setup"})
+    awful.key({modkey}, "p", function() xrandr.xrandr() end)
 )
 
 clientkeys = gears.table.join(
@@ -365,7 +378,7 @@ clientkeys = gears.table.join(
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
+    awful.key({ modkey,           }, "x",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
@@ -490,6 +503,7 @@ awful.rules.rules = {
 
         name = {
           "Event Tester",  -- xev.
+	  "Print",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -504,6 +518,10 @@ awful.rules.rules = {
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
+    --  properties = { fullscreen = true} },
+
+    -- Set Firefox to always map on the tag named "2" on screen 1.
+    -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
 }
 -- }}}
@@ -513,7 +531,7 @@ awful.rules.rules = {
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+    if not awesome.startup then awful.client.setslave(c) end
 
     if awesome.startup and
       not c.size_hints.user_position

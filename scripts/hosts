@@ -1,0 +1,52 @@
+127.0.0.1	localhost
+127.0.1.1	thinkdog
+127.0.1.1	www.youtube.com	
+127.0.1.1	www.reddit.com
+127.0.1.1	www.facebook.com
+127.0.1.1	www.hntoplinks.com
+127.0.1.1       news.ycombinator.com
+127.0.1.1       tetris.com
+127.0.1.1	www.tetris.com
+127.0.1.1       www.amazon.com 
+127.0.1.1       www.amazon.in
+127.0.1.1       www.instagram.com
+127.0.1.1       fmovies.to 
+127.0.1.1       www9.fmovies.to 
+127.0.1.1       imgur.com 
+127.0.1.1       www.quora.com 
+127.0.1.1	vimeo.com
+127.0.1.1       discord.com 
+127.0.1.1       discordapp.com 
+127.0.1.1       twitch.tv
+127.0.1.1       www.twitch.tv
+127.0.1.1       dailymotion.com
+127.0.1.1       twitter.com
+127.0.1.1       www.twitter.com
+127.0.1.1       www.foxnews.com 
+127.0.1.1       dawn.com
+127.0.1.1       www.dawn.com
+127.0.1.1       ndtv.com
+127.0.1.1       www.ndtv.com
+127.0.1.1       timesofindia.indiatimes.com
+127.0.1.1       thehindu.com
+127.0.1.1       www.thehindu.com
+127.0.1.1       news18.com
+127.0.1.1       www.news18.com
+127.0.1.1       www.hindustantimes.com 
+127.0.1.1       epaper.hindustantimes.com
+127.0.1.1       www.indiatoday.in
+127.0.1.1       indianexpress.com
+127.0.1.1       www.rediff.com
+127.0.1.1       www.firstpost.com
+127.0.1.1       economictimes.indiatimes.com
+127.0.1.1       people.com
+127.0.1.1       techcrunch.com
+127.0.1.1       news.google.com
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
