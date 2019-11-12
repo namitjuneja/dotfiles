@@ -409,25 +409,57 @@ clientkeys = gears.table.join(
         {description = "(un)maximize horizontally", group = "client"})
 )
 
+
+
+
+
+-- tag to screen mapping
+primary_screen_index = screen.primary.index
+secondary_screen_index = primary_screen_index+1
+
+tag_to_screen = {[1]=secondary_screen_index,
+		 [2]=secondary_screen_index,
+		 [3]=secondary_screen_index,
+		 [4]=secondary_screen_index,
+		 [7]=secondary_screen_index,
+		 [8]=secondary_screen_index,
+		 [5]=primary_screen_index,
+		 [6]=primary_screen_index,
+		 [9]=primary_screen_index}
+
+function getScreenFromIndex(index)
+ for s in screen do
+    if s.index == index then
+	return s	
+    end
+ end
+end
+
+
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
+	-- View a particular tag
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
-                        local screen = awful.screen.focused()
+                        -- local screen = awful.screen.focused()
+                        local screen = getScreenFromIndex(tag_to_screen[i])
                         local tag = screen.tags[i]
+			awful.screen.focus (tag_to_screen[i])
                         if tag then
                            tag:view_only()
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
+	-- view multiple tags together
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
-                      local screen = awful.screen.focused()
+                      --local screen = awful.screen.focused()
+                      local screen = getScreenFromIndex(tag_to_screen[i])
                       local tag = screen.tags[i]
                       if tag then
                          awful.tag.viewtoggle(tag)
