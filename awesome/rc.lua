@@ -198,6 +198,7 @@ function getScreenFromIndex(index)
 	return s	
     end
  end
+ naughty.notify({title="No Screen Found"})
 end
 
 
@@ -277,7 +278,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-              {description = "view purevious", group = "tag"}),
+              {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", function() goToLastTag() end,
@@ -419,12 +420,18 @@ clientkeys = gears.table.join(
 
 
 
-
-
 -- tag to screen mapping
 primary_screen_index = screen.primary.index
-secondary_screen_index = primary_screen_index+1
 
+-- handle the cse when there is only one screen
+if screen.count() == 2 then
+	secondary_screen_index = primary_screen_index+1
+else
+	secondary_screen_index = primary_screen_index
+end
+
+-- defining what tags belong to what screen
+-- personal workflow choice
 tag_to_screen = {[1]=secondary_screen_index,
 		 [2]=secondary_screen_index,
 		 [3]=secondary_screen_index,
