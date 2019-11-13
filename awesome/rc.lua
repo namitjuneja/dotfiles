@@ -192,6 +192,15 @@ local tasklist_buttons = gears.table.join(
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
                                           end))
+function getScreenFromIndex(index)
+ for s in screen do
+    if s.index == index then
+	return s	
+    end
+ end
+end
+
+
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -268,12 +277,11 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
+              {description = "view purevious", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-              {description = "go back", group = "tag"}),
-
+    awful.key({ modkey,           }, "Escape", function() goToLastTag() end,
+              {description = "go back", group = "tag"}),  -- custom history function
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -427,16 +435,32 @@ tag_to_screen = {[1]=secondary_screen_index,
 		 [6]=primary_screen_index,
 		 [9]=primary_screen_index}
 
-function getScreenFromIndex(index)
- for s in screen do
-    if s.index == index then
-	return s	
-    end
- end
+
+
+--[[
+I wanted to go to the last tag irrespective of the screen that it belonged to
+awful.tag.history.restore only restore's the last tag on the current screen
+updating the history was also not an option since it contained a seaprate queue for
+each screen.
+So I wrote my own function that restores to the last screen and last tag which is 
+stored in the last_screen and last_tag global varible. 
+This function is invoked by the mod + esc combination mentioned somewhere up. 
+--]]
+function goToLastTag()
+	-- Store the current screen and tag in a temp variable
+	local temp_last_screen = awful.screen.focused()
+	local temp_last_tag = temp_last_screen.selected_tag.index
+
+	-- Restore the last screen and tag 
+	local sc = getScreenFromIndex(last_screen.index)
+	local tg = sc.tags[last_tag]:view_only()
+	-- you need to focus the screen as well along with call tag view_only function
+	awful.screen.focus (sc) 
+
+	-- after channging to the last screen-tag set last screen-tag to the current screen-tag
+	last_screen = temp_last_screen
+	last_tag = temp_last_tag
 end
-
-
-
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
@@ -447,13 +471,26 @@ for i = 1, 9 do
 	-- View a particular tag
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
-                        -- local screen = awful.screen.focused()
+			-- store the current screen-tag to be later
+			-- stored in last screen-tag
+                        local temp_last_screen = awful.screen.focused()
+			local temp_last_tag = temp_last_screen.selected_tag.index
+			
+			-- get screen corresponding to the tag and set to that screen-tag
                         local screen = getScreenFromIndex(tag_to_screen[i])
                         local tag = screen.tags[i]
 			awful.screen.focus (tag_to_screen[i])
                         if tag then
                            tag:view_only()
                         end
+
+			-- if the screen-tag is not the same as the current screen-tag 
+			-- set the current screen-tag to last screen-tag
+			-- this prevents infinite loop situation
+			if not (temp_last_screen.index==tag_to_screen[i] and temp_last_tag==i) then
+				last_screen = temp_last_screen
+				last_tag = temp_last_tag
+			end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
@@ -480,7 +517,7 @@ for i = 1, 9 do
                           if tag then
                               client.focus:move_to_tag(tag)
                           end
-			  awful.screen.focus(current_screen)
+			  --awful.screen.focus(current_screen)
                      end
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
