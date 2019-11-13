@@ -18,6 +18,10 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
 
+-- Volume control widget
+local volume_control = require("volume-control")
+volumecfg = volume_control({device="pulse"})
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -211,6 +215,8 @@ local function set_wallpaper(s)
     end
 end
 
+
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -255,6 +261,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    require("battery-widget") {battery_prefix = "🔋", ac_prefix = "🔌", alert_threshold = 10},
             wibox.widget.systray(),
             mytextclock,
+	    volumecfg.widget,
             s.mylayoutbox,
         },
     }
@@ -350,7 +357,7 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt,
+    -- Prompt
     awful.key({ modkey }, "space", function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
@@ -363,7 +370,12 @@ globalkeys = gears.table.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"})
+              {description = "lua execute prompt", group = "awesome"}), 
+
+    -- Volume Control
+    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
+    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
+    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end)
 )
 
 clientkeys = gears.table.join(
@@ -409,7 +421,6 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"})
 )
-
 
 
 -- tag to screen mapping
@@ -516,7 +527,7 @@ for i = 1, 9 do
                           if tag then
                               client.focus:move_to_tag(tag)
                           end
-			  --awful.screen.focus(current_screen)
+			  awful.screen.focus(current_screen)
                      end
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
@@ -615,6 +626,8 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 end)
+
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
