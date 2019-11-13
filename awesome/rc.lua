@@ -26,10 +26,6 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
-
--- more multiple monitors
-local xrandr = require("xrandr")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -354,8 +350,8 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
-    awful.key({ modkey },            "space",     function () awful.screen.focused().mypromptbox:run() end,
+    -- Prompt,
+    awful.key({ modkey }, "space", function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "'",
@@ -367,11 +363,7 @@ globalkeys = gears.table.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"}),
-    -- Menubar
-    -- awful.key({ modkey }, "p", function() xrandr.xrandr() end,
-    --          {description = "Multiple monitors setup"})
-    awful.key({modkey}, "p", function() xrandr.xrandr() end)
+              {description = "lua execute prompt", group = "awesome"})
 )
 
 clientkeys = gears.table.join(
