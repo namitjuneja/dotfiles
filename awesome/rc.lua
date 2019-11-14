@@ -675,6 +675,12 @@ end)
 client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
+
+	-- Update last screen-tag variable 
+	-- for the custom history function
+        last_screen = awful.screen.focused()
+	last_tag = last_screen.selected_tag.index
+
         client.focus = c
     end
 end)
@@ -682,6 +688,8 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+-- restart awesome on screen connected/removed in order to 
+-- get new custom screen distribution into effect
 screen.connect_signal("removed", awesome.restart)
 screen.connect_signal("added", awesome.restart)
 -- }}}
