@@ -676,12 +676,25 @@ client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
 
-	-- Update last screen-tag variable 
-	-- for the custom history function
-        last_screen = awful.screen.focused()
-	last_tag = last_screen.selected_tag.index
+        local temp_last_screen = awful.screen.focused()
+	local temp_last_tag = temp_last_screen.selected_tag.index
 
         client.focus = c
+
+	-- Update last screen-tag variable 
+	-- for the custom history function
+
+	-- if the screen-tag is not the same as the current screen-tag 
+	-- set the current screen-tag to last screen-tag
+	-- this prevents infinite loop situation
+	local focussed_screen = client.focus.screen
+
+	if not (temp_last_screen.index==focussed_screen.index 
+		and temp_last_tag==focussed_screen.selected_tag.index) then
+		last_screen = temp_last_screen
+		last_tag = temp_last_tag
+	end
+
     end
 end)
 
