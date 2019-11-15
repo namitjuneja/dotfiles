@@ -244,7 +244,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 20})
+    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 20})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -676,7 +676,7 @@ client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
 
-        local temp_last_screen = awful.screen.focused()
+        local temp_last_screen = client.focus.screen
 	local temp_last_tag = temp_last_screen.selected_tag.index
 
         client.focus = c
