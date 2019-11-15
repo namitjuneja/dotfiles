@@ -25,16 +25,22 @@ crontab -e
 
 
 sudo crontab -e
-- modify /etc/hosts/
-- remove "#" (comment) from any line that contains 127.0.0.1 (local DNS)
-  awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts
+- ~~modify /etc/hosts/~~
+  ~~remove "#" (comment) from any line that contains 127.0.0.1 (local DNS)~~
+  ~~`awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts`~~
+  moved this to an alias in bashrc
 
 Note
 changed key press delay to improve vim usability using the below commands
+
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 1
+
 gsettings set org.gnome.desktop.peripherals.keyboard delay 1
+
 should be ideally
+
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
+
 gsettings set org.gnome.desktop.peripherals.keyboard delay 250
 
 
@@ -56,6 +62,11 @@ List of about:config changes
 - remove fullscreen warning notification
 - enable ctrl q quit firefox warning - to prevent accidental presses
 - privacy.firstparty.isolate;true (cookies cannot be used by anyone except the domain that set it)
+- fullscreen enter and leave duration
+  full-screen-api.transition-duration.enter;300
+  full-screen-api.transition-duration.leave;300
+- Reomove full screen warning by reducing its timeout to 0
+  full-screen-api.warning.timeout;0
 
 Firefox TODO
 - get similar behaviour in new window action
