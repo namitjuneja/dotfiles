@@ -20,6 +20,10 @@ redshift -O 3500
 # eye blink reminder
 safeeyes &
 
+# make caps lock into escape and xcape control
+# I coldnt figure out how to this using xmodmap
+setxkbmap -option ctrl:nocaps
+xcape -e "Control_L=Escape"
 
 # reload xmodmap to set mod3 to Hyper_L
 # I think hyper_l is not mapped to any key 
