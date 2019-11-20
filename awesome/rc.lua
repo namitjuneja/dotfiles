@@ -375,7 +375,11 @@ globalkeys = gears.table.join(
     -- Volume Control
     awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
     awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
-    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end)
+    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+
+    -- Program Shortcuts
+    awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome-beta/google-chrome-beta --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+              {description = "Youtube Music", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
