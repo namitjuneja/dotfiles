@@ -373,9 +373,9 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}), 
 
     -- Volume Control
-    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
-    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
-    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+    awful.key({modkey}, "equal", function() volumecfg:up() end),
+    awful.key({modkey}, "minus", function() volumecfg:down() end),
+    awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
     -- Program Shortcuts
     awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome-beta/google-chrome-beta --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
