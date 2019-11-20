@@ -21,3 +21,14 @@ redshift -O 3500
 safeeyes &
 
 
+# reload xmodmap to set mod3 to Hyper_L
+# I think hyper_l is not mapped to any key 
+# and hence can be used
+xmodmap /home/namit/dotfiles/xmodmap/.Xmodmap
+
+spare_modifier="Hyper_L"
+
+xmodmap -e "keycode 65 = $spare_modifier"
+xmodmap -e "add mod3 = $spare_modifier"
+xmodmap -e "keycode any = space"
+xcape -e "$spare_modifier=space"

@@ -15,6 +15,7 @@ startup.sh (currently run by keeping a soft link in /etc/profile.d directory whi
 - start compton
 - start ksuperkey to use modkey(independantly) to get system notification
 - start redshift
+- space mods code
 
 compton.conf (soft linked to .config/compton.conf)
 - to din inactive windows
