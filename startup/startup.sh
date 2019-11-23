@@ -15,7 +15,11 @@ compton &
 #setxkbmap -option "grp:shift_caps_toggle,grp_led:scroll"
 
 # redshift for eye health
-redshift -O 3500
+#redshift -O 3500
+# Little less brightness for the big monitor
+redshift -m randr:crtc=1 -b 0.6 -O 3500
+# Normal brightness for the laptop screen
+redshift -m randr:crtc=0 -b 1 -O 3500
 
 # eye blink reminder
 safeeyes &
