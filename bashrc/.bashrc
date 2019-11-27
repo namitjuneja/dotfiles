@@ -16,6 +16,12 @@ function reset_etchosts
 {
 	sudo awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts;
 }
+
 alias rr="reset_etchosts"
 
 
+#ls is ls -ltrh
+alias ll="ls -ltrh --color=auto"
+
+# better image viewer
+alias pq='pqiv -z 2.0  --browse --sort --bind-key="q { goto_file_relative(-1); }" --bind-key="w { goto_file_relative(1); }"'

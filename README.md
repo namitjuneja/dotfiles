@@ -75,6 +75,7 @@ Firefox TODO
 
 REQUIREMENTS
 -ksuperkey
+-pqiv
 -i3lock-fancy
 	-i3lock
 	-scrot

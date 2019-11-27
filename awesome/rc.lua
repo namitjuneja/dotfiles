@@ -378,7 +378,7 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
     -- Program Shortcuts
-    awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome-beta/google-chrome-beta --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+    awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
               {description = "Youtube Music", group = "launcher"})
 )
 
