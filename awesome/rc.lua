@@ -423,7 +423,20 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize horizontally", group = "client"}),
+    awful.key({ modkey,           }, "a",
+        function (c)
+	    local active_tag = awful.screen.focused().selected_tag
+	    local clients = active_tag:clients()
+	    for _, c in ipairs(clients) do
+		c.maximized = false
+  		c.maximized_horizontal = false
+  		c.maximized_vertical = false
+		c.floating = false
+	    end
+        end ,
+        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"})
+ 
 )
 
 
