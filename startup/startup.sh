@@ -27,7 +27,7 @@ safeeyes &
 # make caps lock into escape and xcape control
 # I coldnt figure out how to this using xmodmap
 setxkbmap -option ctrl:nocaps
-xcape -e "Control_L=Escape"
+xcape -e "Control_L=Escape" -t 1000
 
 # reload xmodmap to set mod3 to Hyper_L
 # I think hyper_l is not mapped to any key 
@@ -39,4 +39,4 @@ spare_modifier="Hyper_L"
 xmodmap -e "keycode 65 = $spare_modifier"
 xmodmap -e "add mod3 = $spare_modifier"
 xmodmap -e "keycode any = space"
-xcape -e "$spare_modifier=space"
+xcape -e "$spare_modifier=space" -t 1000
