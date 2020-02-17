@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Verify clipster is running, fail otherwise
-clipster -o > /dev/null 2>&1
+/home/namit/dotfiles/scripts/clipster -o > /dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo 'Failed to retrieve history from Clipster, please ensure daemon is running!'
   exit 1
@@ -15,7 +15,7 @@ fi
 #  - Remove empty clipboard items
 #  - Add line numbers to clip items
 # NOTE: This is all done in a single line because bash can't store a NUL byte
-C_HIST="$(clipster -c -o -n 500 -0 \
+C_HIST="$(/home/namit/dotfiles/scripts/clipster -c -o -n 500 -0 \
         | gawk 'BEGIN {RS = "\0"; ORS = "\0"} NF > 0 { print substr($0, 1, 250) }' \
         | gawk 'BEGIN {RS = "\0"; FS="\n"; OFS=" " } { $1=$1; print $0 }'  \
         | sed 's/^ *//' \
@@ -35,10 +35,10 @@ if [ -n "$SELECTION" ]; then
   NUMBER="$(echo "$SELECTION" | cut -c1-3 | sed 's/^0*//')"
 
   # Extract clipboard history from clipster and find the nth non-empty clip based selected line number
-  EXACT_SELECTION="$(clipster -c -o -n 500 -0 \
+  EXACT_SELECTION="$(/home/namit/dotfiles/scripts/clipster -c -o -n 500 -0 \
                    | gawk 'BEGIN {RS = "\0"; ORS = "\0"} NF > 0 { print }' \
                    | gawk 'BEGIN {RS = "\0"}'"NR == $NUMBER { print; exit }")"
 
   # Echo the selection back to clipster
-  echo -n "$EXACT_SELECTION" | clipster -c
+  echo -n "$EXACT_SELECTION" | /home/namit/dotfiles/scripts/clipster -c
 fi

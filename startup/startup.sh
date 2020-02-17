@@ -50,4 +50,4 @@ nm-applet &
 
 
 # clipboard manager - clipster
-clipster -d
+/home/namit/dotfiles/scripts/clipster -d &                                        

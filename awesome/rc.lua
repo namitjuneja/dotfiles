@@ -379,6 +379,10 @@ globalkeys = gears.table.join(
 
     -- Program Shortcuts
     awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+              {description = "Youtube Music", group = "launcher"}),
+
+    -- clipboard manager roficlip launcher
+    awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/roficlip") end,
               {description = "Youtube Music", group = "launcher"})
 )
 
@@ -435,11 +439,8 @@ clientkeys = gears.table.join(
 		c.floating = false
 	    end
         end ,
-        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"}),
+        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"})
 
-    -- clipboard manager roficlip launcher
-    awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/r.sh") end,
-              {description = "Youtube Music", group = "launcher"})
  
 )
 
