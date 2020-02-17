@@ -12,7 +12,7 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "roboto regular 10"
-theme.wallpaper     = "/home/namit/Pictures/aesthetic/bar.jpg"
+theme.wallpaper     = "/home/namit/Pictures/wallpapers/falls.jpg"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#ecff6b"

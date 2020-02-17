@@ -11,11 +11,13 @@ baspwmrc and sxhkdrc
 - <location>/.bashrc to original bashrc
 
 startup.sh (currently run by keeping a soft link in /etc/profile.d directory which means it runs everytime a user logs in)
-- set background using feh 
+- ~~set background using feh~~ awesomewm theme does this now
 - start compton
-- start ksuperkey to use modkey(independantly) to get system notification
+- ~~start ksuperkey to use modkey(independantly) to get system notification~~ dont use this anymore
 - start redshift
 - space mods code
+- start wifi indicator in system tray (nm-applet)
+- start clipster (clipboard manager)
 
 compton.conf (soft linked to .config/compton.conf)
 - to din inactive windows
@@ -74,11 +76,13 @@ Firefox TODO
 - figure out a way to include firefox profile in dotfiles, which includes about:config changes
 
 REQUIREMENTS
--ksuperkey
+-~~ksuperkey~~
 -pqiv
 -i3lock-fancy
 	-i3lock
 	-scrot
+- rofi
+- clipster
 
 TODO
 - invalidate Firefox's DNS cache so that /etc/hosts/ takes effect immediately

@@ -258,7 +258,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-	    require("battery-widget") {battery_prefix = "🔋", ac_prefix = "🔌", alert_threshold = 10},
+	    require("battery-widget") {battery_prefix = "🔋", ac_prefix = "🔌", alert_threshold = 10, percent_colors = {{999, "white" }}},
             wibox.widget.systray(),
             mytextclock,
 	    volumecfg.widget,
@@ -435,7 +435,11 @@ clientkeys = gears.table.join(
 		c.floating = false
 	    end
         end ,
-        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"})
+        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"}),
+
+    -- clipboard manager roficlip launcher
+    awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/r.sh") end,
+              {description = "Youtube Music", group = "launcher"})
  
 )
 
@@ -693,8 +697,14 @@ client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
 
-        local temp_last_screen = client.focus.screen
+        local temp_last_focussed_client = client.focus and client.focus.first_tag or nil
+	if  temp_last_focussed_client ~= nil then
+		temp_last_screen = temp_last_focussed_client.screen
+	else
+		temp_last_screen = awful.screen.focused()
+	end
 	local temp_last_tag = temp_last_screen.selected_tag.index
+	local t = client.focus and client.focus.first_tag or nil
 
         client.focus = c
 

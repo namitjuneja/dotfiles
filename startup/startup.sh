@@ -17,7 +17,7 @@ compton &
 # redshift for eye health
 #redshift -O 3500
 # Little less brightness for the big monitor
-redshift -m randr:crtc=1 -b 0.6 -O 3500
+redshift -m randr:crtc=1 -b 0.8 -O 3500
 # Normal brightness for the laptop screen
 redshift -m randr:crtc=0 -b 1 -O 3500
 
@@ -40,3 +40,14 @@ xmodmap -e "keycode 65 = $spare_modifier"
 xmodmap -e "add mod3 = $spare_modifier"
 xmodmap -e "keycode any = space"
 xcape -e "$spare_modifier=space" -t 1000
+
+# adjust timezone to another country
+# restart for change to take effect
+#TZ='Asia/Kolkata'; export TZ
+
+# wifi indicator in the sys tray
+nm-applet &
+
+
+# clipboard manager - clipster
+clipster -d
