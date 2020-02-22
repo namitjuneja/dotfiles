@@ -12,7 +12,7 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "roboto regular 10"
-theme.wallpaper     = "/home/namit/Pictures/wallpapers/falls.jpg"
+theme.wallpaper     = "/home/namit/Pictures/wallpapers/tunnel.jpg"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#ecff6b"
@@ -27,7 +27,7 @@ theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(5)
-theme.border_normal = "#000000"
+theme.border_normal = "#2f2f2f"
 theme.border_focus  = "#ecff6b"
 theme.border_marked = "#91231c"
 
