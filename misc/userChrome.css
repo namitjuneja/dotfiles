@@ -1,0 +1,14 @@
+#TabsToolbar {
+  visibility: collapse;
+}
+
+
+#sidebar-box #sidebar-header {
+  visibility: collapse;
+}
+
+#sidebar-splitter
+{
+background-color: #2e2e2e !important;
+border: 0px !important;
+}
