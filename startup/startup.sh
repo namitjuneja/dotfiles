@@ -17,17 +17,19 @@ compton &
 # redshift for eye health
 #redshift -O 3500
 # Little less brightness for the big monitor
-redshift -m randr:crtc=1 -b 0.8 -O 3500
+redshift -m randr:crtc=1 -b 0.8 -O 3700
 # Normal brightness for the laptop screen
 redshift -m randr:crtc=0 -b 1 -O 3500
 
 # eye blink reminder
 safeeyes &
 
-# make caps lock into escape and xcape control
-# I coldnt figure out how to this using xmodmap
-setxkbmap -option ctrl:nocaps
-xcape -e "Control_L=Escape" -t 1000
+# caps lock = ctrl right
+# control right = control right + escape on independant release(xcape)
+# control left = remains same
+# made this change in order to avoid accidental escapes when pressing control left
+xmodmap -e "keycode  66 = Control_R NoSymbol Control_R"
+xcape -e "Control_R=Escape" -t 1000
 
 # reload xmodmap to set mod3 to Hyper_L
 # I think hyper_l is not mapped to any key 
