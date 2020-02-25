@@ -51,7 +51,6 @@ Firefox modifications
 userChrome.css
 - used to modify UI of Firefox (use this with vivaldi firefox addon)
 - used for xml hack to inect JS which operates when new tab opens to open a custom page, keep the focus to the adress bar and clear any url which is there
-- enable ESNI and DoH from Cloudflare to prevent tracking
 
 userChrome.xml
 userChrome.js
@@ -60,16 +59,12 @@ userContent.css
 - used to make background of new window page black
 
 List of about:config changes
-- devpixels scaling to 1.2
-- remove popup for notification permissions
-- remove fullscreen warning notification
-- enable ctrl q quit firefox warning - to prevent accidental presses
+- devpixels scaling to 1.2(layout.css.devPixelsPerPx)
+- remove popup for notification permissions( in settings)
+- remove fullscreen warning notification(full-screen-api.warning.timeout=0)
+- enable ctrl q quit firefox warning - to prevent accidental presses(browser.sessionstore.warnOnQuit=true,browser.warnOnQuit=true)
 - privacy.firstparty.isolate;true (cookies cannot be used by anyone except the domain that set it)
-- fullscreen enter and leave duration
-  full-screen-api.transition-duration.enter;300
-  full-screen-api.transition-duration.leave;300
-- Reomove full screen warning by reducing its timeout to 0
-  full-screen-api.warning.timeout;0
+- enable ESNI and DoH from Cloudflare to prevent tracking
 
 Firefox TODO
 - get similar behaviour in new window action
