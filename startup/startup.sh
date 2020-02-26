@@ -28,6 +28,7 @@ safeeyes &
 # control right = control right + escape on independant release(xcape)
 # control left = remains same
 # made this change in order to avoid accidental escapes when pressing control left
+setxkbmap -option ctrl:nocaps
 xmodmap -e "keycode  66 = Control_R NoSymbol Control_R"
 xcape -e "Control_R=Escape" -t 1000
 
