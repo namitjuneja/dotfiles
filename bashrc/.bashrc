@@ -2,7 +2,7 @@ export PATH="$PATH:/home/namit/dotfiles/scripts"
 #fortune | cowsay -y | lolcat
 
 
-alias jp="jupyter lab"
+alias jl="jupyter lab"
 alias qtb="~/qutebrowser/.venv/bin/python3 -m ~/qutebrowser/.venv/bin/qutebrowser"
 # folloew this link for installing qutebrowser with tox
 # https://www.qutebrowser.org/doc/install.html#tox
