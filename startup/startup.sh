@@ -17,7 +17,7 @@ compton &
 # redshift for eye health
 #redshift -O 3500
 # Little less brightness for the big monitor
-redshift -m randr:crtc=1 -b 0.8 -O 3700
+redshift -m randr:crtc=1 -b 1 -O 3700
 # Normal brightness for the laptop screen
 redshift -m randr:crtc=0 -b 1 -O 3500
 
