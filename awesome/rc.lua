@@ -324,6 +324,8 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey,  "Shift"  }, "Return", function () awful.spawn(terminal, {floating=true, placement=awful.placement.centered}) end,
+              {description = "open a floating terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -383,7 +385,7 @@ globalkeys = gears.table.join(
 
     -- clipboard manager roficlip launcher
     awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/roficlip") end,
-              {description = "Youtube Music", group = "launcher"})
+              {description = "Clipboard Manager", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -437,9 +439,10 @@ clientkeys = gears.table.join(
   		c.maximized_horizontal = false
   		c.maximized_vertical = false
 		c.floating = false
+		c.ontop = false
 	    end
         end ,
-        {description = "un-maximize (total/vertical/horizontal), un-float all windows", group = "client"})
+        {description = "un-maximize (total/vertical/horizontal), un-float all windows, un-ontop all windows", group = "client"})
 
  
 )
