@@ -54,3 +54,6 @@ nm-applet &
 
 # clipboard manager - clipster
 /home/namit/dotfiles/scripts/clipster -d &                                        
+
+# start activity time 
+/home/namit/dotfiles/scripts/activitywatch/aw-qt &

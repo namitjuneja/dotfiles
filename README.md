@@ -65,6 +65,7 @@ List of about:config changes
 - enable ctrl q quit firefox warning - to prevent accidental presses(browser.sessionstore.warnOnQuit=true,browser.warnOnQuit=true)
 - privacy.firstparty.isolate;true (cookies cannot be used by anyone except the domain that set it)
 - enable ESNI and DoH from Cloudflare to prevent tracking
+- privacy.resistfingerprinting = true
 
 Firefox TODO
 - get similar behaviour in new window action
