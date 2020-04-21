@@ -69,7 +69,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod3"
+modkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -504,7 +504,8 @@ for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
 	-- View a particular tag
-        awful.key({ modkey }, "#" .. i + 9,
+	-- keycode #67 is F1 hence i+66
+        awful.key({        }, "#" .. i + 66,
                   function ()
 			-- store the current screen-tag to be later
 			-- stored in last screen-tag
@@ -530,7 +531,7 @@ for i = 1, 9 do
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
 	-- view multiple tags together
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
+        awful.key({ "Control" }, "#" .. i + 66,
                   function ()
                       --local screen = awful.screen.focused()
                       local screen = getScreenFromIndex(tag_to_screen[i])
@@ -542,7 +543,7 @@ for i = 1, 9 do
                   {description = "toggle tag #" .. i, group = "tag"}),
         -- Move client to tag.
 	-- Move a window to another tag 
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
+        awful.key({ "Shift" }, "#" .. i + 66,
                   function ()
                       if client.focus then
                           local current_screen = awful.screen.focused()
@@ -557,7 +558,7 @@ for i = 1, 9 do
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
         -- Toggle tag on focused client.
-        awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
+        awful.key({  "Control", "Shift" }, "#" .. i + 66,
                   function ()
                       if client.focus then
                           local tag = client.focus.screen.tags[i]
