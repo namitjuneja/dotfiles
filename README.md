@@ -18,6 +18,7 @@ startup.sh (currently run by keeping a soft link in /etc/profile.d directory whi
 - space mods code
 - start wifi indicator in system tray (nm-applet)
 - start clipster (clipboard manager)
+- replace windows key with the alt key
 
 compton.conf (soft linked to .config/compton.conf)
 - to din inactive windows

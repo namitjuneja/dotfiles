@@ -24,6 +24,15 @@ redshift -m randr:crtc=0 -b 1 -O 3500
 # eye blink reminder
 safeeyes &
 
+# replace alt key with the window key
+# awesome's modkey is set to super key(Mod4) but the alt
+# key is the windows key. This is donw for 2 reasons
+# 1. Use alt key since there are 2 of them
+# 2. Do not forgo the alt key shortcuts that exist
+# this should always be called before xcape command
+setxkbmap -option 'altwin:swap_alt_win'
+
+
 # caps lock = ctrl right
 # control right = control right + escape on independant release(xcape)
 # control left = remains same
@@ -35,14 +44,14 @@ xcape -e "Control_R=Escape" -t 1000
 # reload xmodmap to set mod3 to Hyper_L
 # I think hyper_l is not mapped to any key 
 # and hence can be used
-xmodmap /home/namit/dotfiles/xmodmap/.Xmodmap
+# xmodmap /home/namit/dotfiles/xmodmap/.Xmodmap
 
-spare_modifier="Hyper_L"
+# spare_modifier="Hyper_L"
 
-xmodmap -e "keycode 65 = $spare_modifier"
-xmodmap -e "add mod3 = $spare_modifier"
-xmodmap -e "keycode any = space"
-xcape -e "$spare_modifier=space" -t 1000
+# xmodmap -e "keycode 65 = $spare_modifier"
+# xmodmap -e "add mod3 = $spare_modifier"
+# xmodmap -e "keycode any = space"
+# xcape -e "$spare_modifier=space" -t 1000
 
 # adjust timezone to another country
 # restart for change to take effect
