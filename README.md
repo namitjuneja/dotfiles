@@ -3,9 +3,6 @@
 - to make touchpad tap work in bspwm
 - to increase pointer acceleration to max
 
-baspwmrc and sxhkdrc
-- to setup bspwm 
-
 .bashrc
 - mostly aliases
 - <location>/.bashrc to original bashrc
@@ -93,3 +90,6 @@ Removed all options in setxkbmap to be able to use alt + shift shortcut (for bsp
 It can be restored using the following command
 setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
 For a list of other options run man xkeyboard-config
+
+When setting up a new machine create a Screenshots folder in the pictures folder for scrot comand to work. 
+Pin the folder for ease
