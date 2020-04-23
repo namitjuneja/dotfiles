@@ -389,7 +389,15 @@ globalkeys = gears.table.join(
 
     -- clipboard manager roficlip launcher
     awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/roficlip") end,
-              {description = "Clipboard Manager", group = "launcher"})
+              {description = "Clipboard Manager", group = "launcher"}),
+   
+    -- screenshot  
+    awful.key({}, "Print", function () awful.spawn("scrot") end,
+              {description = "Screenshot", group = "launcher"}),
+
+    -- screen clipper
+    awful.key({"Shift"}, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s") end,
+              {description = "Screen Clipper", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
