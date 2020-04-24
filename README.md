@@ -1,26 +1,34 @@
 
-## Dotfiles
+# Dotfiles
 Each component is listed below along with what that component is, what is it used for and how it is used.
 
 ---
-.xprofile
+### .xprofile
+
 **what**: This file gets executed at the beginning of the X session)
+
 **how**: Softlinked `ln -s ~/dotfiles/xprofile/.xprofile ~/.xprofile`
+
 **why**:
 - to make touchpad tap work in bspwm
 - to increase pointer acceleration to max
 ---
-.bashrc
+### .bashrc
 **what**: This file gets executed at the starting of an *interactive* bash session.
+
 **how**: Sourced from within the default .bashrc file `source ~/dotfiles/bashrc/.bashrc`
+
 **why**:
 - aliases
 - appending directories to $PATH environment variable
 ---
 
-startup.sh 
+### startup.sh 
+
 **what**: This script runs everytime the user log in
+
 **how**: Softlinked `ln -s ~/dotfiles/startup/startup.sh /etc/profile.d/startup.sh`
+
 **why**:
 - ~~set background using feh~~ awesomewm theme does this now
 - start compton
@@ -39,9 +47,12 @@ startup.sh
 *Note: Might require chmod +x* 
 
 ---
-rc.local 
+### rc.local 
+
 **what**: similar to startup.sh (runs upon logging in) but has root priviledges
+
 **how**: Softlinked `sudo ln -s ~/dotfiles/startup/rc.local /etc/rc.local`
+
 **why**:
 - turn on thinkpad backlight on startup
 
@@ -49,30 +60,40 @@ rc.local
 
 ---
 
-compton.conf
+### compton.conf
+
 **what**: Compositor
+
 **how**: Softlinked `ln -s ~/dotfiles/compton/compton.conf .config/compton.conf`
+
 **why**: 
 - ~~to din inactive windows~~ diabled. causes problems while presenting
 ---
 
-crontab -e
+### crontab -e
+
 **what**: run any periodic scheduled task
+
 **how**: copy commands from README into crontab config accessed from `crontab -e`
+
 **why**:
 - play sound every hour
   `0 * * * * paplay /usr/share/sounds/ubuntu/stereo/service-login.ogg`
 ---
-sudo crontab -e
+### sudo crontab -e
+
 **what**: run any periodic scheduled task with root access
+
 **how**: copy commands from README into crontab config accessed from `sudo crontab -e`
+
 **why**: 
 - ~~modify /etc/hosts/~~
   ~~remove "#" (comment) from any line that contains 127.0.0.1 (local DNS)~~
   ~~`awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts`~~
   discontinued. moved this to an alias to be triggered on demand.
 ---
-Other modifications
+### Other modifications
+
 - changed key press delay to improve vim usability using the below commands
   ```
   gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 1
@@ -84,12 +105,15 @@ Other modifications
   gsettings set org.gnome.desktop.peripherals.keyboard delay 250
   ```
 - Removed all options in setxkbmap to be able to use `alt + shift ` shortcut in sublime for splitting view
-It can be restored using the following command
-`setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"`
-For a list of other options run man `xkeyboard-config`
+
+  It can be restored using the following command
+  `setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"`
+  
+  For a list of other options run man `xkeyboard-config`
 ---
 
-Firefox modifications
+### Firefox modifications
+
 misc/userChrome.css
 - remove tabs bar in firefox
 
@@ -108,19 +132,20 @@ about:config changes
 - Resist fingerprinting ~~`privacy.resistfingerprinting = true`~~ disabled. it started randomizing the timezone.
 ---
 
-REQUIREMENTS
+### REQUIREMENTS
 - pqiv
 - rofi
 - clipster
 - scrot
 ---
-NOTES
+### NOTES
 
 -
   - When setting up a new machine create a Screenshots folder in the Pictures folder for scrot keybinding to work. `mkdir ~/Pictures/Screenshots`
   - Pin the folder for ease
  ---
-TODO:
+### TODO:
+
 Write about :
 - xmodmap config
 - firefox extension config
