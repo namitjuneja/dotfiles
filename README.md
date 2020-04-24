@@ -1,100 +1,129 @@
+
+## Dotfiles
+Each component is listed below along with what that component is, what is it used for and how it is used.
+
+---
 .xprofile
-(This file gets executed at the beginning of the X session)
+**what**: This file gets executed at the beginning of the X session)
+**how**: Softlinked `ln -s ~/dotfiles/xprofile/.xprofile ~/.xprofile`
+**why**:
 - to make touchpad tap work in bspwm
 - to increase pointer acceleration to max
-
+---
 .bashrc
-- mostly aliases
-- <location>/.bashrc to original bashrc
+**what**: This file gets executed at the starting of an *interactive* bash session.
+**how**: Sourced from within the default .bashrc file `source ~/dotfiles/bashrc/.bashrc`
+**why**:
+- aliases
+- appending directories to $PATH environment variable
+---
 
-startup.sh (currently run by keeping a soft link in /etc/profile.d directory which means it runs everytime a user logs in)
+startup.sh 
+**what**: This script runs everytime the user log in
+**how**: Softlinked `ln -s ~/dotfiles/startup/startup.sh /etc/profile.d/startup.sh`
+**why**:
 - ~~set background using feh~~ awesomewm theme does this now
 - start compton
-- ~~start ksuperkey to use modkey(independantly) to get system notification~~ dont use this anymore
 - start redshift
-- space mods code
+- start safeeyes
+- keyboard modifications
+  - ~~start ksuperkey to use modkey(independantly) to get system notification~~ not using this anymore
+  - ~~space mods~~ disabled for now. interferes with touch typing
+  - replace windows key with the alt key
+  - replace caps lock key with escape key and control key (xcape)
+  - removing alt+shift shortcut used by default to change the keyboard layout. I cannot recall why I have disabled it.
 - start wifi indicator in system tray (nm-applet)
 - start clipster (clipboard manager)
 - replace windows key with the alt key
 
-rc.local (currently run by keeping a soft copy at /etc/rc.local which it means it runs on startup)
-it is similar to startup.sh but used for sudo commands
-chmod +x it to make it executable
+*Note: Might require chmod +x* 
+
+---
+rc.local 
+**what**: similar to startup.sh (runs upon logging in) but has root priviledges
+**how**: Softlinked `sudo ln -s ~/dotfiles/startup/rc.local /etc/rc.local`
+**why**:
 - turn on thinkpad backlight on startup
 
-compton.conf (soft linked to .config/compton.conf)
-- to din inactive windows
+*Note: Might require chmod +x* 
+
+---
+
+compton.conf
+**what**: Compositor
+**how**: Softlinked `ln -s ~/dotfiles/compton/compton.conf .config/compton.conf`
+**why**: 
+- ~~to din inactive windows~~ diabled. causes problems while presenting
+---
 
 crontab -e
+**what**: run any periodic scheduled task
+**how**: copy commands from README into crontab config accessed from `crontab -e`
+**why**:
 - play sound every hour
-  paplay /usr/share/sounds/ubuntu/stereo/service-login.ogg
-
-
+  `0 * * * * paplay /usr/share/sounds/ubuntu/stereo/service-login.ogg`
+---
 sudo crontab -e
+**what**: run any periodic scheduled task with root access
+**how**: copy commands from README into crontab config accessed from `sudo crontab -e`
+**why**: 
 - ~~modify /etc/hosts/~~
   ~~remove "#" (comment) from any line that contains 127.0.0.1 (local DNS)~~
   ~~`awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts`~~
-  moved this to an alias in bashrc
-
-Note
-changed key press delay to improve vim usability using the below commands
-
-gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 1
-
-gsettings set org.gnome.desktop.peripherals.keyboard delay 1
-
-should be ideally
-
-gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
-
-gsettings set org.gnome.desktop.peripherals.keyboard delay 250
-
+  discontinued. moved this to an alias to be triggered on demand.
+---
+Other modifications
+- changed key press delay to improve vim usability using the below commands
+  ```
+  gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 1
+  gsettings set org.gnome.desktop.peripherals.keyboard delay 1
+  ```
+   should be ideally
+  ```
+  gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
+  gsettings set org.gnome.desktop.peripherals.keyboard delay 250
+  ```
+- Removed all options in setxkbmap to be able to use `alt + shift ` shortcut in sublime for splitting view
+It can be restored using the following command
+`setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"`
+For a list of other options run man `xkeyboard-config`
+---
 
 Firefox modifications
-userChrome.css
-- used to modify UI of Firefox (use this with vivaldi firefox addon)
-- used for xml hack to inect JS which operates when new tab opens to open a custom page, keep the focus to the adress bar and clear any url which is there
+misc/userChrome.css
+- remove tabs bar in firefox
 
-userChrome.xml
-userChrome.js
+misc/userContent.css
+- make background of new window page black
+- make the splitter betwen page and sidebar black
+- remove dropdown menu from the top of the sidebar
 
-userContent.css
-- used to make background of new window page black
-
-List of about:config changes
-- devpixels scaling to 1.2(layout.css.devPixelsPerPx)
-- remove popup for notification permissions( in settings)
-- remove fullscreen warning notification(full-screen-api.warning.timeout=0)
-- enable ctrl q quit firefox warning - to prevent accidental presses(browser.sessionstore.warnOnQuit=true,browser.warnOnQuit=true)
-- privacy.firstparty.isolate;true (cookies cannot be used by anyone except the domain that set it)
+about:config changes
+- pixel scaling for better readability on high res screens `layout.css.devPixelsPerPx=1.2`
+- remove popup for notification permissions  (in settings)
+- remove fullscreen warning notification `full-screen-api.warning.timeout=0`
+- enable ctrl-q quit firefox warning - to prevent accidental presses `browser.sessionstore.warnOnQuit=true,browser.warnOnQuit=true`
+- prevent cookies from being used by anyone except the domain that set it `privacy.firstparty.isolate=true` 
 - enable ESNI and DoH from Cloudflare to prevent tracking
-- privacy.resistfingerprinting = true
-
-Firefox TODO
-- get similar behaviour in new window action
-- figure out a way to include firefox profile in dotfiles, which includes about:config changes
+- Resist fingerprinting ~~`privacy.resistfingerprinting = true`~~ disabled. it started randomizing the timezone.
+---
 
 REQUIREMENTS
--~~ksuperkey~~
--pqiv
--i3lock-fancy
-	-i3lock
-	-scrot
+- pqiv
 - rofi
 - clipster
-
-TODO
-- invalidate Firefox's DNS cache so that /etc/hosts/ takes effect immediately
-
-
-
-
-
+- scrot
+---
 NOTES
-Removed all options in setxkbmap to be able to use alt + shift shortcut (for bspwm & sublime)
-It can be restored using the following command
-setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
-For a list of other options run man xkeyboard-config
 
-When setting up a new machine create a Screenshots folder in the pictures folder for scrot comand to work. 
-Pin the folder for ease
+-
+  - When setting up a new machine create a Screenshots folder in the Pictures folder for scrot keybinding to work. `mkdir ~/Pictures/Screenshots`
+  - Pin the folder for ease
+ ---
+TODO:
+Write about :
+- xmodmap config
+- firefox extension config
+- vim config
+- clipster and roficlip
+
