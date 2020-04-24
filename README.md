@@ -17,6 +17,11 @@ startup.sh (currently run by keeping a soft link in /etc/profile.d directory whi
 - start clipster (clipboard manager)
 - replace windows key with the alt key
 
+rc.local (currently run by keeping a soft copy at /etc/rc.local which it means it runs on startup)
+it is similar to startup.sh but used for sudo commands
+chmod +x it to make it executable
+- turn on thinkpad backlight on startup
+
 compton.conf (soft linked to .config/compton.conf)
 - to din inactive windows
 
