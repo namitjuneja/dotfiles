@@ -324,6 +324,7 @@ globalkeys = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
+
     
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -751,5 +752,58 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 screen.connect_signal("removed", awesome.restart)
 screen.connect_signal("added", awesome.restart)
 
+awful.screen.connect_for_each_screen(function(s)
+	s.app_switcher = awful.popup {
+	      	       widget = awful.widget.tasklist {
+	      	           screen   = s, 
+	      	           filter   = awful.widget.tasklist.filter.currenttags,
+	      	           buttons  = tasklist_buttons,
+	      	           style    = {
+	      	               shape = gears.shape.rectangle,
+	      	           },
+	      	           layout   = {
+	      	               spacing = 10,
+	      	               layout = wibox.layout.grid.horizontal
+	      	           },
+	      	           widget_template = {
+	      	               {
+	      	                   {
+	      	                       id     = 'clienticon',
+	      	                       widget = awful.widget.clienticon,
+	      	                   },
+	      	                   margins = 4,
+	      	                   widget  = wibox.container.margin,
+	      	               },
+	      	               id              = 'background_role',
+	      	               forced_width    = 48,
+	      	               forced_height   = 48,
+	      	               widget          = wibox.container.background,
+	      	               create_callback = function(self, c, index, objects) --luacheck: no unused
+	      	                   self:get_children_by_id('clienticon')[1].client = c
+	      	               end,
+	      	           },
+	      	       },
+	      	       border_color = '#777777',
+	      	       border_width = 2,
+	      	       ontop        = true,
+	      	       visible      = false,
+		       screen 	    = s,
+	      	       placement    = awful.placement.centered,
+	      	       shape        = gears.shape.rounded_rect
+		}
+end)
 
--- }}}
+
+
+b = awful.keygrabber {
+    auto_start     = true,
+    start_callback     = function() awful.screen.focused().app_switcher.visible = true  end,
+    stop_callback      = function() awful.screen.focused().app_switcher.visible = false end,
+    keybindings = {
+        { { modkey         }, "Tab", function() awful.client.focus.byidx( 1) end },
+	{ { modkey, 'Shift'}, 'Tab', function() awful.client.focus.byidx(-1) end },
+    },
+    stop_key           = modkey,
+    stop_event         = 'release',
+    export_keybindings = true,
+}
