@@ -110,6 +110,11 @@ Each component is listed below along with what that component is, what is it use
   `setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"`
   
   For a list of other options run man `xkeyboard-config`
+- added `kernel.sysrq=0` to `/etc/sysctl.conf`.
+  This disables system_req commands initated using ALT+Print+<key> command. The system_req key combinations are used to issue direct commands to the linux kernel. It was interfering with Alt+Shift+Print shortcut for Clipping from the screen.
+It can be restored using the following command
+`setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"`
+For a list of other options run man `xkeyboard-config`
 ---
 
 ### Firefox modifications
