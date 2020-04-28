@@ -244,7 +244,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 20})
+    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 30})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -316,7 +316,7 @@ globalkeys = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ modkey,           }, "1",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -324,7 +324,7 @@ globalkeys = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
-
+    
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
@@ -393,11 +393,11 @@ globalkeys = gears.table.join(
    
     -- screenshot 
     -- need to use util.spawn_will_shell because using arguments and bash functions for date 
-    awful.key({}, "Print", function () awful.util.spawn_with_shell("scrot ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
+    awful.key({modkey,}, "Print", function () awful.util.spawn_with_shell("scrot ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
               {description = "Screenshot", group = "launcher"}),
 
     -- screen clipper
-    awful.key({"Shift"}, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
+    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
               {description = "Screen Clipper", group = "launcher"})
 )
 
@@ -750,4 +750,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- get new custom screen distribution into effect
 screen.connect_signal("removed", awesome.restart)
 screen.connect_signal("added", awesome.restart)
+
+
 -- }}}

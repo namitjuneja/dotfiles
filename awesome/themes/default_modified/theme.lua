@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "roboto regular 10"
+theme.font          = "monospace 10"
 theme.wallpaper     = "/home/namit/Pictures/wallpapers/underwater.jpg"
 
 theme.bg_normal     = "#000000"
@@ -124,6 +124,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
 
 return theme
 

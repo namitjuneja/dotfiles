@@ -24,7 +24,7 @@ alias rr="reset_etchosts"
 alias ll="ls -ltrh --color=auto"
 
 # better image viewer
-alias pq='pqiv -z 1.4  --browse --sort --bind-key="q { goto_file_relative(-1); }" --bind-key="w { goto_file_relative(1); }" ./ &'
+alias pq='pqiv -z 0.3 --browse --sort --bind-key="q { goto_file_relative(-1); }" --bind-key="w { goto_file_relative(1); }" ./ &'
 
 # cd Entropy Isomap folder faster
 alias ent="cd /home/namit/codes/Entropy-Isomap/"
