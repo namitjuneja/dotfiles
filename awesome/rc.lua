@@ -316,16 +316,7 @@ globalkeys = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "1",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
-        {description = "go back", group = "client"}),
-
-    
+        
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
@@ -393,7 +384,15 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
     -- Program Shortcuts
-    awful.key({ modkey,           }, "y", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+    awful.key({ modkey,           }, "1", function () awful.spawn("firefox") end,
+              {description = "Firefox", group = "launcher"}),
+    awful.key({ modkey,           }, "3", function () awful.spawn("subl") end,
+              {description = "Sublime Text", group = "launcher"}),
+    awful.key({ modkey,           }, "5", function () awful.spawn("nautilus") end,
+              {description = "File Browser", group = "launcher"}),
+    awful.key({ modkey,           }, "7", function () awful.spawn("google-chrome") end,
+              {description = "Google Chrome", group = "launcher"}),
+    awful.key({ modkey,           }, "9", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
               {description = "Youtube Music", group = "launcher"}),
 
     -- clipboard manager roficlip launcher
@@ -803,13 +802,15 @@ end)
 
 
 
-b = awful.keygrabber {
+awful.keygrabber {
     auto_start     = true,
     start_callback     = function() awful.screen.focused().app_switcher.visible = true  end,
     stop_callback      = function() awful.screen.focused().app_switcher.visible = false end,
     keybindings = {
-        { { modkey         }, "Tab", function() awful.client.focus.byidx( 1) end },
-	{ { modkey, 'Shift'}, 'Tab', function() awful.client.focus.byidx(-1) end },
+        { { modkey         }, "Tab", function() awful.client.focus.byidx( 1) end, 
+		{description = "focus previous client in history", group = "client"}},
+	{ { modkey, 'Shift'}, 'Tab', function() awful.client.focus.byidx(-1) end ,
+		{description = "focus next client in history", group = "client"}},
     },
     stop_key           = modkey,
     stop_event         = 'release',
