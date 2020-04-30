@@ -320,7 +320,7 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey,  "Shift"  }, "Return", function () awful.spawn(terminal, {floating=true, placement=awful.placement.centered}) end,
+    awful.key({ modkey,  "Shift"  }, "Return", function () awful.spawn("gnome-terminal --window-with-profile=float", {floating=true, placement=awful.placement.centered}) end,
               {description = "open a floating terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
