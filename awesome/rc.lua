@@ -485,11 +485,11 @@ tag_to_screen = {[1]=secondary_screen_index,
 		 [2]=secondary_screen_index,
 		 [3]=secondary_screen_index,
 		 [4]=secondary_screen_index,
-		 [7]=secondary_screen_index,
+		 [7]=primary_screen_index,
 		 [8]=secondary_screen_index,
-		 [5]=primary_screen_index,
-		 [6]=primary_screen_index,
-		 [9]=primary_screen_index}
+		 [5]=secondary_screen_index,
+		 [6]=secondary_screen_index,
+		 [9]=secondary_screen_index}
 
 
 
@@ -758,6 +758,10 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- get new custom screen distribution into effect
 screen.connect_signal("removed", awesome.restart)
 screen.connect_signal("added", awesome.restart)
+
+-- restart pkill when a screen is added
+-- pkill needs to be reconfigured for the new keyboard layout
+screen.connect_signal("added", function() awful.shell("pkill xcape; /home/namit/dotfiles/startup/startup.sh") end)
 
 awful.screen.connect_for_each_screen(function(s)
 	s.app_switcher = awful.popup {
