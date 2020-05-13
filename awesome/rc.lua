@@ -384,7 +384,7 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
     -- Program Shortcuts
-    awful.key({ modkey,           }, "1", function () awful.spawn("firefox") end,
+    awful.key({ modkey,           }, "1", function () awful.spawn("/opt/firefox/firefox") end,
               {description = "Firefox", group = "launcher"}),
     awful.key({ modkey,           }, "3", function () awful.spawn("subl") end,
               {description = "Sublime Text", group = "launcher"}),
@@ -802,6 +802,25 @@ awful.screen.connect_for_each_screen(function(s)
 	      	       placement    = awful.placement.centered,
 	      	       shape        = gears.shape.rounded_rect
 		}
+end)
+
+
+tag.connect_signal("request::screen", function(t)
+    for s in screen do
+        if s ~= t.screen and
+           s.geometry.x == t.screen.geometry.x and
+           s.geometry.y == t.screen.geometry.y and
+           s.geometry.width == t.screen.geometry.width and
+           s.geometry.height == t.screen.geometry.height then
+            local t2 = awful.tag.find_by_name(s, t.name)
+            if t2 then
+                t:swap(t2)
+            else
+                t.screen = s
+            end
+            return
+        end
+    end
 end)
 
 
