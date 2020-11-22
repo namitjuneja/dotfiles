@@ -7,6 +7,9 @@ require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 
+-- Add Lain layout
+local lain = require("lain")
+
 
 -- Theme handling library
 local beautiful = require("beautiful")
@@ -71,9 +74,10 @@ editor_cmd = terminal .. " -e " .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
+
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
+    lain.layout.centerwork,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -89,6 +93,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
+    awful.layout.suit.floating,
+    lain.layout.termfair.center,
 }
 -- }}}
 
@@ -224,8 +230,19 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
-    -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[2])
+    -- Each screen has its own tag table and layout.
+    local layouts = {lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center,
+                     lain.layout.termfair.center}
+
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, layouts)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -285,6 +302,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", function() goToLastTag() end,
+              {description = "go back", group = "tag"}),  -- custom history function
+    awful.key({ modkey,           }, "`", function() goToLastTag() end,
               {description = "go back", group = "tag"}),  -- custom history function
     awful.key({ modkey,           }, "j",
         function ()
@@ -384,15 +403,17 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
     -- Program Shortcuts
-    awful.key({ modkey,           }, "1", function () awful.spawn("/opt/firefox/firefox") end,
+    awful.key({ modkey,           }, "F1", function () awful.spawn("firefox") end,
               {description = "Firefox", group = "launcher"}),
-    awful.key({ modkey,           }, "3", function () awful.spawn("subl") end,
+    awful.key({ modkey,           }, "F3", function () awful.spawn("subl") end,
               {description = "Sublime Text", group = "launcher"}),
-    awful.key({ modkey,           }, "5", function () awful.spawn("nautilus") end,
+    awful.key({ modkey,           }, "F5", function () awful.spawn("nautilus") end,
               {description = "File Browser", group = "launcher"}),
-    awful.key({ modkey,           }, "7", function () awful.spawn("google-chrome") end,
+    awful.key({ modkey,           }, "F6", function () awful.spawn("slack") end,
+              {description = "Slack", group = "launcher"}),
+    awful.key({ modkey,           }, "F7", function () awful.spawn("google-chrome") end,
               {description = "Google Chrome", group = "launcher"}),
-    awful.key({ modkey,           }, "9", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+    awful.key({ modkey,           }, "F9", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
               {description = "Youtube Music", group = "launcher"}),
 
     -- clipboard manager roficlip launcher
@@ -485,8 +506,8 @@ tag_to_screen = {[1]=secondary_screen_index,
 		 [2]=secondary_screen_index,
 		 [3]=secondary_screen_index,
 		 [4]=secondary_screen_index,
-		 [7]=primary_screen_index,
-		 [8]=secondary_screen_index,
+		 [7]=secondary_screen_index,
+		 [8]=primary_screen_index,
 		 [5]=secondary_screen_index,
 		 [6]=secondary_screen_index,
 		 [9]=secondary_screen_index}
@@ -825,14 +846,16 @@ end)
 
 
 
+
 awful.keygrabber {
     auto_start     = true,
-    start_callback     = function() awful.screen.focused().app_switcher.visible = true  end,
-    stop_callback      = function() awful.screen.focused().app_switcher.visible = false end,
+    start_callback     = function() awful.screen.focused().app_switcher.visible = true; end,
+    stop_callback      = function() awful.screen.focused().app_switcher.visible = false; end,
     keybindings = {
         { { modkey         }, "Tab", function() awful.client.focus.byidx( 1) end, 
 		{description = "focus previous client in history", group = "client"}},
-	{ { modkey, 'Shift'}, 'Tab', function() awful.client.focus.byidx(-1) end ,
+
+	    { { modkey, 'Shift'}, 'Tab', function() awful.client.focus.byidx(-1) end ,
 		{description = "focus next client in history", group = "client"}},
     },
     stop_key           = modkey,
