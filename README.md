@@ -116,6 +116,8 @@ Each component is listed below along with what that component is, what is it use
 
   This disables system_req commands initated using ALT+Print+<key> command. The system_req key combinations are used to issue direct commands to the linux kernel. It was interfering with Alt+Shift+Print shortcut for Clipping from the screen.
 - create a profile named 'float' in gnome-terminal with zero transparency to be used as floating terminal.
+- `gsettings set org.gnome.nautilus.preferences recursive-search
+  'never'` - disables recursive search in gnome
 ---
 
 ### Firefox modifications

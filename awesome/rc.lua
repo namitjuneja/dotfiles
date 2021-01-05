@@ -413,7 +413,7 @@ globalkeys = gears.table.join(
               {description = "Slack", group = "launcher"}),
     awful.key({ modkey,           }, "F7", function () awful.spawn("google-chrome") end,
               {description = "Google Chrome", group = "launcher"}),
-    awful.key({ modkey,           }, "F9", function () awful.spawn("/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod") end,
+    awful.key({ modkey,           }, "F9", function () awful.spawn("firefox --new-window \"music.youtube.com\"") end,
               {description = "Youtube Music", group = "launcher"}),
 
     -- clipboard manager roficlip launcher

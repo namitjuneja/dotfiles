@@ -6,6 +6,7 @@ alias jl="jupyter lab"
 alias meads="cd /home/namit/codes/meads/morphology-similarity/; source venv/bin/activate"
 alias sf="cd /home/namit/sf/sfox-web"
 alias qtb="~/qutebrowser/.venv/bin/python3 -m ~/qutebrowser/.venv/bin/qutebrowser"
+alias rem="wine /home/namit/.wine/drive_c/Program\ Files/reMarkable/reMarkable.exe"
 alias lstash="git stash push .watchmanconfig"
 alias rstash="cp ~/.watchmanconfig /home/namit/sf/sfox-web/"
 # folloew this link for installing qutebrowser with tox
