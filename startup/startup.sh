@@ -14,6 +14,8 @@ compton &
 #setxkbmap -option 
 #setxkbmap -option "grp:shift_caps_toggle,grp_led:scroll"
 
+# kill existing redshift first
+redshift -x
 # redshift for eye health
 #redshift -O 3500
 # Little less brightness for the big monitor
@@ -23,6 +25,9 @@ redshift -m randr:crtc=0 -b 1 -O 3500
 
 # eye blink reminder
 safeeyes &
+
+# kill existing xcape bindings before redoing them
+pkill xcape
 
 # replace alt key with the window key
 # awesome's modkey is set to super key(Mod4) but the alt

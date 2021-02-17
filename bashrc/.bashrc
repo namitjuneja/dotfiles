@@ -39,7 +39,74 @@ alias ent="cd /home/namit/codes/Entropy-Isomap/"
 # find size of files without recursion
 alias size="du -sh"
 
+# add branch name to the prompt
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# quick start server
+alias sss="sf; gpa wtch; rstash; yarn run start:staging"
+alias ssq="sf; gpa wtch; rstash; yarn run start:qa02"
+
+# ub server 
+alias vpn="/opt/cisco/anyconnect/bin/vpnui"
+# URL: vpn.buffalo.edu/UBVPN
+alias ccr="ssh namitjun@vortex.ccr.buffalo.edu"
+# scp -r namitjun@vortex.ccr.buffalo.edu:/projects/academic/olgawodo/NLDR/constDt-5replicas-noPer/* ./
+
+
+
+# git patch
+# save diff to a patch in patches foleder
+function gp(){
+    git diff > ~/patches/$1
+}
+
+# apply a patch from the patches folder
+function gpa(){
+   git apply ~/patches/$1
+} 
+
+# revert a patch from the patches folder
+function gpr(){
+    git apply -R ~/patches/$1
+}
+
+# view a patch from the patches folder
+function gpv(){
+    cat ~/patches/$1
+}
+
+# git commit 
+function gc() {
+    gpr wtch
+    git status
+    gpa wtch
+    git commit -am "$1"
+}
+
+# git diff
+function gd() {
+   clear 
+   git diff
+}
+
+# git log
+alias gl="git log --oneline"
+
+# git status
+alias gs="git status -sb"
+
+# git last
+alias glast="git log -1 HEAD --stat"
+
+# git pull rebase
+function gpumr(){
+    git stash
+    git pull upstream master --rebase
+    git stash pop
+}
+
+# git push origin branch
+alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'

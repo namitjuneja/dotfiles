@@ -402,6 +402,11 @@ globalkeys = gears.table.join(
     awful.key({modkey}, "minus", function() volumecfg:down() end),
     awful.key({modkey}, "0",     function() volumecfg:toggle() end),
 
+    -- Switch audio card profiles
+    -- (Headphones/speakers)
+    awful.key({ modkey,}, "/", function () awful.spawn.with_shell("/home/namit/dotfiles/scripts/switch_pulseaudio_profile") end,
+              {description = "toggle headph/spk", group = "volume"}),
+
     -- Program Shortcuts
     awful.key({ modkey,           }, "F1", function () awful.spawn("firefox") end,
               {description = "Firefox", group = "launcher"}),
