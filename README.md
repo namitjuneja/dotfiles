@@ -43,6 +43,7 @@ Each component is listed below along with what that component is, what is it use
 - start wifi indicator in system tray (nm-applet)
 - start clipster (clipboard manager)
 - replace windows key with the alt key
+- set dark theme on nautilus and any other gtk app
 
 *Note: Might require chmod +x* 
 
@@ -118,6 +119,8 @@ Each component is listed below along with what that component is, what is it use
 - create a profile named 'float' in gnome-terminal with zero transparency to be used as floating terminal.
 - `gsettings set org.gnome.nautilus.preferences recursive-search
   'never'` - disables recursive search in gnome
+- `sudo apt-get install yaru-theme-gtk`
+  install dark theme for the environment variable in startup.sh to work
 ---
 
 ### Firefox modifications
