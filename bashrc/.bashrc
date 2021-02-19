@@ -93,7 +93,7 @@ function gd() {
 }
 
 # git log
-alias gl="git log --oneline"
+alias gl="git log  --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # git status
 alias gs="git status -sb"
@@ -110,3 +110,6 @@ function gpumr(){
 
 # git push origin branch
 alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
+
+# git ammend no edit
+alias gcane="git commit --amend --no-edit"
