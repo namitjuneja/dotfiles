@@ -1,1 +1,3 @@
+xinput set-prop "Synaptics TM3289-021" "libinput Tapping Enabled" 1
+xinput set-prop "Synaptics TM3289-021" "libinput Accel Speed" 1
 
