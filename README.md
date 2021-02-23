@@ -121,6 +121,9 @@ Each component is listed below along with what that component is, what is it use
   'never'` - disables recursive search in gnome
 - `sudo apt-get install yaru-theme-gtk`
   install dark theme for the environment variable in startup.sh to work
+- uncomment or add `HandleLidSwitch=ignore` in
+  `/etc/systemd/logind.conf` to make sure nothing happens when the lid
+is closed
 ---
 
 ### Firefox modifications
