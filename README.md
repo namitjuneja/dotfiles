@@ -151,6 +151,7 @@ about:config changes
 - rofi
 - clipster
 - scrot
+- mpv
 ---
 ### NOTES
 

@@ -111,5 +111,8 @@ function gpumr(){
 # git push origin branch
 alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
 
-# git ammend no edit
+# git commit ammend no edit
 alias gcane="git commit --amend --no-edit"
+
+# play the youtube video from clipboard URL
+alias mp="notify-send \"Playing youtube video: $(clipster -o -c)\";mpv $(clipster -o -c)"
