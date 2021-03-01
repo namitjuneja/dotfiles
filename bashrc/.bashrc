@@ -80,11 +80,20 @@ function gpv(){
 
 # git commit 
 function gc() {
+    git status
+    git commit -am "$1"
+}
+
+# git commit with watchman
+function gcs() {
     gpr wtch
     git status
     gpa wtch
     git commit -am "$1"
 }
+
+
+
 
 # git diff
 function gd() {
@@ -96,16 +105,14 @@ function gd() {
 alias gl="git log  --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # git status
-alias gs="git status -sb"
+alias gs="git status"
 
 # git last
 alias glast="git log -1 HEAD --stat"
 
 # git pull rebase
 function gpumr(){
-    git stash
     git pull upstream master --rebase
-    git stash pop
 }
 
 # git push origin branch
@@ -115,4 +122,10 @@ alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
 alias gcane="git commit --amend --no-edit"
 
 # play the youtube video from clipboard URL
-alias mp="notify-send \"Playing youtube video: $(clipster -o -c)\";mpv $(clipster -o -c)"
+function mpp() {
+    notify-send "Playing video:
+    $(clipster -o -c)";
+    echo "Playing video: $(clipster -o -c)";
+    mpv "$(clipster -o -c)";
+}
+alias mp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
