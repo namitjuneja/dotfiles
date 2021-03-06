@@ -70,4 +70,4 @@ nm-applet &
 /home/namit/dotfiles/scripts/clipster -d &                                        
 
 # set dark theme for nautilus and potentially any other GTK app
-export GTK_THEME=Yaru:dark
+export GTK_THEME=Yaru:light
