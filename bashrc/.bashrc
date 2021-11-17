@@ -129,3 +129,9 @@ function mpp() {
     mpv "$(clipster -o -c)";
 }
 alias mp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
+
+# erase clipboard
+alias ec="clipster --erase-entire-board --clipboard"
+
+# run keychron k2 windows keys
+alias k2='/bin/bash -c "echo 0 > /sys/module/hid_apple/parameters/fnmode"'
