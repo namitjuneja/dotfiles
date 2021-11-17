@@ -301,10 +301,10 @@ globalkeys = gears.table.join(
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", function() goToLastTag() end,
-              {description = "go back", group = "tag"}),  -- custom history function
-    awful.key({ modkey,           }, "`", function() goToLastTag() end,
-              {description = "go back", group = "tag"}),  -- custom history function
+    -- awful.key({ modkey,           }, "Escape", function() goToLastTag() end,
+    --          {description = "go back", group = "tag"}),  -- custom history function
+    -- awful.key({ modkey,           }, "`", function() goToLastTag() end,
+    --          {description = "go back", group = "tag"}),  -- custom history function
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -507,15 +507,15 @@ end
 
 -- defining what tags belong to what screen
 -- personal workflow choice
-tag_to_screen = {[1]=secondary_screen_index,
+tag_to_screen = {[1]=primary_screen_index,
 		 [2]=secondary_screen_index,
-		 [3]=secondary_screen_index,
-		 [4]=secondary_screen_index,
-		 [7]=secondary_screen_index,
+		 [3]=primary_screen_index,
+		 [4]=primary_screen_index,
+		 [7]=primary_screen_index,
 		 [8]=primary_screen_index,
-		 [5]=secondary_screen_index,
-		 [6]=secondary_screen_index,
-		 [9]=secondary_screen_index}
+		 [5]=primary_screen_index,
+		 [6]=primary_screen_index,
+		 [9]=primary_screen_index}
 
 
 
