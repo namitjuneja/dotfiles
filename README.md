@@ -124,6 +124,9 @@ Each component is listed below along with what that component is, what is it use
 - uncomment or add `HandleLidSwitch=ignore` in
   `/etc/systemd/logind.conf` to make sure nothing happens when the lid
 is closed
+- wallpapers set by awesome are based on a function that reads the
+  screens resolution and picks a random file from
+`$HOME/Pictures/wallpapers/<screen_resolution>`
 ---
 
 ### Firefox modifications
@@ -158,6 +161,9 @@ about:config changes
 -
   - When setting up a new machine create a Screenshots folder in the Pictures folder for scrot keybinding to work. `mkdir ~/Pictures/Screenshots`
   - Pin the folder for ease
+  - `mkdir ~/Pictures/wallpapers/3440x1440` replace the folder name with
+    the screen's resolution. All randomized wallpapers will be picked
+    from this folder
  ---
 ### TODO:
 

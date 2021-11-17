@@ -1,3 +1,21 @@
+local lfs = require"lfs"
+local awful = require("awful")
+local naughty = require("naughty")
+
+function attrdir (path, resolution)
+    math.randomseed(os.time())
+    path_with_resolution = path.."/"..resolution
+    files = {}
+    for file in lfs.dir(path_with_resolution) do
+        if file ~= "." and file ~= ".." then
+            local f = path_with_resolution..'/'..file
+            table.insert(files, f)
+        end
+    end
+    return files[math.random(#files)]
+end
+
+
 ---------------------------
 -- Default awesome theme --
 ---------------------------
@@ -12,7 +30,15 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "monospace 10"
-theme.wallpaper     = "/home/namit/Pictures/wallpapers/wide/serene.jpg"
+theme.wallpaper     = "/home/namit/Pictures/wallpapers/wide/prague.jpg"
+--awful.screen.connect_for_each_screen(function(s)
+--    naughty.notify({title="hello"})--s.geometry.width
+--end)
+--for s in screen do
+    --a = 1
+--end
+--theme.wallpaper     = attrdir ("/home/namit/Pictures/wallpapers/", "wide")
+theme.wallpaper     = function(s) return attrdir ("/home/namit/Pictures/wallpapers", tostring(s.geometry.width).."x"..tostring(s.geometry.height)) end
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#ecff6b"
