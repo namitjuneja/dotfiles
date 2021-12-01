@@ -2,8 +2,17 @@ local lfs = require"lfs"
 local awful = require("awful")
 local naughty = require("naughty")
 
+function round_to_nearest_n (number, n)
+    return n * math.floor(number/n)
+end
+
 function attrdir (path, resolution)
-    math.randomseed(os.time())
+    unix_timestamp = os.time(os.date("!*t"))
+    unix_timestamp_day_rounded = math.floor(unix_timestamp/(24*360))
+    refresh_interval = 5 --days
+    rounded_unix_timestamp = round_to_nearest_n(unix_timestamp_day_rounded, refresh_interval)
+    math.randomseed(rounded_unix_timestamp)
+    naughty.notify({title=rounded_unix_timestamp})
     path_with_resolution = path.."/"..resolution
     files = {}
     for file in lfs.dir(path_with_resolution) do
