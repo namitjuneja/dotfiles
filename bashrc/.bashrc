@@ -126,7 +126,7 @@ function mpp() {
     notify-send "Playing video:
     $(clipster -o -c)";
     echo "Playing video: $(clipster -o -c)";
-    mpv "$(clipster -o -c)";
+    vlc --open "$(clipster -o -c)" -f;
 }
 alias mp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
 
