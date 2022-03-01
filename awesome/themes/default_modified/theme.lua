@@ -6,13 +6,17 @@ function round_to_nearest_n (number, n)
     return n * math.floor(number/n)
 end
 
-function attrdir (path, resolution)
+function attrdir (path, resolution, random, filename)
+    -- if random is false then just return the filename 
+    -- else randomly select a file from the path
+    if random == false then
+        return filename
+    end
     unix_timestamp = os.time(os.date("!*t"))
-    unix_timestamp_day_rounded = math.floor(unix_timestamp/(24*360))
+    unix_timestamp_day_rounded = math.floor(unix_timestamp/(24*3600))
     refresh_interval = 5 --days
     rounded_unix_timestamp = round_to_nearest_n(unix_timestamp_day_rounded, refresh_interval)
     math.randomseed(rounded_unix_timestamp)
-    naughty.notify({title=rounded_unix_timestamp})
     path_with_resolution = path.."/"..resolution
     files = {}
     for file in lfs.dir(path_with_resolution) do
@@ -47,7 +51,11 @@ theme.wallpaper     = "/home/namit/Pictures/wallpapers/wide/prague.jpg"
     --a = 1
 --end
 --theme.wallpaper     = attrdir ("/home/namit/Pictures/wallpapers/", "wide")
-theme.wallpaper     = function(s) return attrdir ("/home/namit/Pictures/wallpapers", tostring(s.geometry.width).."x"..tostring(s.geometry.height)) end
+-- setting a random wallpaper from a directory based on screen
+-- resolution
+-- theme.wallpaper     = function(s) return attrdir ("/home/namit/Pictures/wallpapers", tostring(s.geometry.width).."x"..tostring(s.geometry.height)) end
+-- setting a static wallpaper
+theme.wallpaper     = function(s) return attrdir (nil, nil, false, "/home/namit/Pictures/wallpapers/1920x1080/yo.jpeg") end
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#ecff6b"

@@ -5,6 +5,7 @@ export PATH="$PATH:/home/namit/dotfiles/scripts"
 alias jl="jupyter-lab"
 alias meads="cd /home/namit/codes/meads/morphology-similarity/"
 alias sf="cd /home/namit/sf/sfox-web"
+alias sfe="cd /home/namit/sf/sfox-web-enterprise"
 alias qtb="~/qutebrowser/.venv/bin/python3 -m ~/qutebrowser/.venv/bin/qutebrowser"
 alias rem="wine /home/namit/.wine/drive_c/Program\ Files/reMarkable/reMarkable.exe"
 alias lstash="git stash push .watchmanconfig"
@@ -47,6 +48,8 @@ export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 # quick start server
 alias sss="sf; gpa wtch; rstash; yarn run start:staging"
+
+
 alias ssq="sf; gpa wtch; rstash; yarn run start:qa02"
 
 # ub server 
@@ -120,6 +123,10 @@ alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
 
 # git commit ammend no edit
 alias gcane="git commit --amend --no-edit"
+
+# view the most recent branches
+alias grecent="git for-each-ref --sort=-committerdate refs/heads/
+--format='%(committerdate:short) %(authorname) %(refname:short)'"
 
 # play the youtube video from clipboard URL
 function mpp() {
