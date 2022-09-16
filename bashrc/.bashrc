@@ -37,6 +37,9 @@ alias pq='pqiv -z 0.3 --browse --sort --bind-key="q { goto_file_relative(-1); }"
 # cd Entropy Isomap folder faster
 alias ent="cd /home/namit/codes/Entropy-Isomap/"
 
+# cd to the phafic folder faster, activate the conda environment
+alias pha="cd /home/namit/codes/PhaFiCContainer/; conda activate phafic"
+
 # find size of files without recursion
 alias size="du -sh"
 
@@ -129,13 +132,13 @@ alias grecent="git for-each-ref --sort=-committerdate refs/heads/
 --format='%(committerdate:short) %(authorname) %(refname:short)'"
 
 # play the youtube video from clipboard URL
-function mpp() {
+function vlc() {
     notify-send "Playing video:
     $(clipster -o -c)";
     echo "Playing video: $(clipster -o -c)";
     vlc --open "$(clipster -o -c)" -f;
 }
-alias mp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
+alias mpp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
 
 # erase clipboard
 alias ec="clipster --erase-entire-board --clipboard"
