@@ -13,10 +13,10 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
 
-set textwidth=72 
+" set textwidth=72
 set colorcolumn=72
 "" set number of window columns
-set columns=72
+" set columns=72
 
 "" swp files in temp directory
 set backupdir=/tmp//
