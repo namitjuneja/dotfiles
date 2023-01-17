@@ -93,6 +93,17 @@ Each component is listed below along with what that component is, what is it use
   ~~`awk '{if ($0 ~ /127.0.1.1/) gsub("#", "", $0); print > "/etc/hosts";}' /etc/hosts`~~
   discontinued. moved this to an alias to be triggered on demand.
 ---
+### .vimrc
+
+**what**: vim config
+
+**how**: Softlinked `ln -s ~/dotfiles/vim/.vimrc ./.vimrc` 
+
+**why**: 
+- set number lines
+- enable vim clipboard syncing with ubuntu clipboard
+- many other vim editor configs (see config file for comments)
+---
 ### Other modifications
 
 - changed key press delay to improve vim usability using the below commands
@@ -164,13 +175,13 @@ about:config changes
   - `mkdir ~/Pictures/wallpapers/3440x1440` replace the folder name with
     the screen's resolution. All randomized wallpapers will be picked
     from this folder
+  - Install `vim-gtk3` for it to work with ubuntu clipbaord register
  ---
 ### TODO:
 
 Write about :
 - xmodmap config
 - firefox extension config
-- vim config
 - clipster and roficlip
 
 Include gnome-terminal config to dotfiles
