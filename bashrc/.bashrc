@@ -20,10 +20,17 @@ alias meads="cd /home/namit/codes/meads/morphology-similarity/"
 alias pha="cd /home/namit/codes/PhaFiCContainer/; conda activate phafic"
 
 # add branch name to the prompt
+force_color_prompt=yes
+color_prompt=yes
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
-export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+if [ "$color_prompt" = yes ]; then
+ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[01;31m\] $(parse_git_branch)\[\033[00m\] \$ '
+else
+ PS1='${debian_chroot:+($debian_chroot)}\u@\h: \w $(parse_git_branch) \$ '
+fi
+unset color_prompt force_color_prompt
 
 # VPN connection
 alias vpn="/opt/cisco/anyconnect/bin/vpnui"
