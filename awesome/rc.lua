@@ -7,10 +7,6 @@ require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 
--- Add Lain layout
-local lain = require("lain")
-
-
 -- Theme handling library
 local beautiful = require("beautiful")
 
@@ -77,7 +73,6 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    lain.layout.centerwork,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -94,7 +89,6 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
     awful.layout.suit.floating,
-    lain.layout.termfair.center,
 }
 -- }}}
 
@@ -230,17 +224,6 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
-    -- Each screen has its own tag table and layout.
-    local layouts = {lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center,
-                     lain.layout.termfair.center}
 
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, layouts)
 

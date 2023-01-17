@@ -55,7 +55,7 @@ theme.wallpaper     = "/home/namit/Pictures/wallpapers/wide/prague.jpg"
 -- resolution
 -- theme.wallpaper     = function(s) return attrdir ("/home/namit/Pictures/wallpapers", tostring(s.geometry.width).."x"..tostring(s.geometry.height)) end
 -- setting a static wallpaper
-theme.wallpaper     = function(s) return attrdir (nil, nil, false, "/home/namit/Pictures/wallpapers/1920x1080/yo.jpeg") end
+theme.wallpaper     = function(s) return attrdir (nil, nil, false, "/home/namit/Pictures/wallpapers/lagoon.jpg") end
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#ecff6b"
