@@ -1,0 +1,13 @@
+configuration{
+    modi: "drun";
+    show-icons: true;
+    terminal: "gnome-terminal";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: true;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 﩯  Window";
+}
+
