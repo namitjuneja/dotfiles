@@ -143,6 +143,16 @@ globalkeys = gears.table.join(
     awful.key({ modkey,}, "b", function () awful.spawn("/home/namit/dotfiles/scripts/roficlip") end,
               {description = "Clipboard Manager", group = "launcher"}),
 
+    -- screenshot 
+    -- need to use util.spawn_will_shell because using arguments and bash functions for date 
+    awful.key({modkey,}, "Print", function () awful.util.spawn_with_shell("scrot ~/Pictures/Screenshots/Screenshot\\ on\\ %d\\ %b\\ %Y\\ at\\ %I:%M:%S%P.jpg") end,
+              {description = "Screenshot", group = "launcher"}),
+
+    -- screen clipper
+    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
+              {description = "Screen Clipper", group = "launcher"}),
+
+
     -- Program Shortcuts
     awful.key({ modkey,           }, "F1", function () awful.spawn("firefox") end,
               {description = "Firefox", group = "launcher"}),
