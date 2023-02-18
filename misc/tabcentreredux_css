@@ -12,3 +12,13 @@
 {
   order: 2;
 }
+:root {
+  --tab-height-compact: 35px;
+}
+.tab,
+.tab.active {
+    border-color: #1F2022 !important;
+}
+
+
+
