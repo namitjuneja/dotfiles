@@ -7,8 +7,10 @@
   visibility: collapse;
 }
 
+
+
 #sidebar-splitter
 {
-background-color: #2e2e2e !important;
+background-color: #000000 !important;
 border: 0px !important;
 }
