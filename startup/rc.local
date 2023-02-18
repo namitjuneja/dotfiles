@@ -1,3 +1,4 @@
 #!/bin/sh -e
 echo 2 > /sys/class/leds/tpacpi\:\:kbd_backlight/brightness
+tzupdate
 exit 0
