@@ -3,6 +3,9 @@ local awful = require("awful")
 -- Theme handling library
 local beautiful = require("beautiful")
 
+-- no gaps when only a single client is present
+beautiful.gap_single_client = false
+
  -- No borders when rearranging only 1 non-floating or maximized client 
 screen.connect_signal("arrange", function (s) 
     local only_one = #s.tiled_clients == 1 
