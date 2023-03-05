@@ -169,7 +169,7 @@ awful.screen.connect_for_each_screen(function(s)
         position = "bottom",
         screen = s,
         height = 30,
-        bg = beautiful.bg_normal .. "55",
+        bg = "#00000059",
         widget = wibox.container.background()
     })
 
