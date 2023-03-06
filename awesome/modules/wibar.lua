@@ -184,6 +184,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            require("modules.battery-widget") {battery_prefix = "🔋", ac_prefix = "🔌", alert_threshold = 10, percent_colors = {{999, "white" }}},
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
