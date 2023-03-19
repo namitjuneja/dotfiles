@@ -149,7 +149,7 @@ globalkeys = gears.table.join(
               {description = "Screenshot", group = "launcher"}),
 
     -- screen clipper
-    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %r.jpg") end,
+    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %d\\ %b\\ %Y\\ at\\ %I:%M:%S%P.jpg") end,
               {description = "Screen Clipper", group = "launcher"}),
 
 
