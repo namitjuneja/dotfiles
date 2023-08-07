@@ -5,6 +5,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -184,7 +185,11 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            spacing=10,
             require("modules.battery-widget") {battery_prefix = "🔋", ac_prefix = "🔌", alert_threshold = 10, percent_colors = {{999, "white" }}},
+            volume_widget({widget_type='icon_and_text',
+                           thickness=3,
+                           font='sans 12'}),
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,

@@ -65,6 +65,9 @@ xcape -e "Control_R=Escape" -t 1000
 # wifi indicator in the sys tray
 nm-applet &
 
+# bluetooth indicator in systray
+blueman-applet &
+
 
 # clipboard manager - clipster
 /home/namit/dotfiles/scripts/clipster -d &                                        

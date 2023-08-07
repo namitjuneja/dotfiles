@@ -3,6 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 -- Theme handling library
 local beautiful = require("beautiful")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
@@ -76,7 +77,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
-    -- Poer Controls
+    -- Power Controls
     awful.key({ modkey,"Shift" }, "Delete", function () awful.spawn("shutdown now") end,
               {description = "shutdown computer", group = "awesome"}),
     awful.key({ modkey,"Control",   "Shift" }, "Delete", function () awful.spawn("shutdown -r now") end,
@@ -166,6 +167,11 @@ globalkeys = gears.table.join(
               {description = "Google Chrome", group = "launcher"}),
     awful.key({ modkey,           }, "F9", function () awful.spawn("firefox --new-window \"music.youtube.com\"") end,
               {description = "Youtube Music", group = "launcher"}),
+
+    -- Volume Adjustment
+    awful.key({ modkey }, "=", function() volume_widget:inc(5) end),
+    awful.key({ modkey }, "-", function() volume_widget:dec(5) end),
+    awful.key({ modkey }, "0", function() volume_widget:toggle() end),
 
     -- Prompt
     awful.key({ modkey },            "d",     function () awful.screen.focused().mypromptbox:run() end,

@@ -1,4 +1,4 @@
-export PATH="$PATH:/home/namit/dotfiles/scripts"
+export PATH="$PATH:/home/namit/.local/bin:/home/namit/dotfiles/scripts"
 
 alias jl="jupyter-lab"
 
@@ -106,7 +106,7 @@ alias grecent="git for-each-ref --sort=-committerdate refs/heads/
 --format='%(committerdate:short) %(authorname) %(refname:short)'"
 
 # play the youtube video from clipboard URL
-function vlc() {
+function vlc0() {
     notify-send "Playing video:
     $(clipster -o -c)";
     echo "Playing video: $(clipster -o -c)";

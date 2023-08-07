@@ -166,6 +166,7 @@ about:config changes
 - clipster
 - scrot
 - mpv
+- blueman
 ---
 ### NOTES
 

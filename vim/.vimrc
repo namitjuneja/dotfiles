@@ -1,5 +1,8 @@
 set number
 
+" set line width marker to 79 charachters (PEP recommendation)
+set colorcolumn=72
+
 " sync clipboard vim and ubuntu
 set clipboard=unnamedplus
 
