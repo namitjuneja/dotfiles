@@ -83,6 +83,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey,"Control",   "Shift" }, "Delete", function () awful.spawn("shutdown -r now") end,
               {description = "restart computer", group = "awesome"}),
 
+    -- Lock Screen
+    awful.key({ modkey,"Shift" }, "space", function () awful.spawn("/home/namit/dotfiles/scripts/lock") end,
+              {description = "lock screen", group = "awesome"}),
+
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,

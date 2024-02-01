@@ -161,6 +161,7 @@ about:config changes
 ---
 
 ### REQUIREMENTS
+- i3lock
 - pqiv
 - rofi
 - clipster
