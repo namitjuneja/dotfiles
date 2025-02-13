@@ -15,13 +15,19 @@ compton &
 #setxkbmap -option "grp:shift_caps_toggle,grp_led:scroll"
 
 # kill existing redshift first
-redshift -x
+# redshift -x
+# killipng redshift not needed anymore
+# instead -P flag ensures that it resets the gamma ramps before applying the new config
 # redshift for eye health
 #redshift -O 3500
 # Little less brightness for the big monitor
-redshift -m randr:crtc=1 -b 1 -O 3700
+redshift -P  -m randr:crtc=1 -b 1 -O 3700
 # Normal brightness for the laptop screen
-redshift -m randr:crtc=0 -b 1 -O 3500
+redshift -P -m randr:crtc=0 -b 1 -O 3500
+# using sct because redshift doesn't work with wayland
+# reverting back to redshfit because I am using X11 now and sct doesn't 
+# allow me to adjust screen brightness
+# sct 4000
 
 # eye blink reminder
 safeeyes &
@@ -73,4 +79,5 @@ blueman-applet &
 /home/namit/dotfiles/scripts/clipster -d &                                        
 
 # set dark theme for nautilus and potentially any other GTK app
-export GTK_THEME=Yaru:light
+# export GTK_THEME=Yaru:light
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark
