@@ -12,16 +12,16 @@ local themes_path = gfs.get_configuration_dir()
 
 local theme = {}
 
-theme.font          = "sans 8"
+theme.font          = "sans 10"
 
-theme.bg_normal     = "#000000BF"
-theme.bg_focus      = "#00000080"
+theme.bg_normal     = "#000000"
+theme.bg_focus      = "#ffff00"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#ffffff"
-theme.fg_focus      = "#dee2ff"
+theme.fg_focus      = "#000000"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
@@ -41,7 +41,7 @@ theme.border_color_marked = "#91231c"
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
---theme.taglist_bg_focus = "#ff0000"
+theme.taglist_bg_focus = "#ffff00"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
@@ -97,7 +97,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."theme/titlebar/m
 theme.titlebar_maximized_button_normal_active = themes_path.."theme/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."theme/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = os.getenv("HOME").."/Pictures/wallpapers/mac.jpg"
+theme.wallpaper = os.getenv("HOME").."/Pictures/wallpapers/sunflower.jpeg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."theme/layouts/fairhw.png"

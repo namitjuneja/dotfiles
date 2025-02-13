@@ -59,7 +59,7 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.maximized(wallpaper, s, false)
     end
 end
 
@@ -71,7 +71,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1: Firefox", "2: Firefox II", "3: Editor", "4: Termninal", "5: Files", "6: Messages", "7: Chrome", "8: Unused", "9: Music" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -157,7 +157,7 @@ awful.screen.connect_for_each_screen(function(s)
             widget = wibox.container.margin
             },
         id     = 'background_role',
-        forced_width = 200,
+        forced_width = 100,
         widget = wibox.container.background,
         },
         widget  = wibox.container.margin,
@@ -177,6 +177,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
+        expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
