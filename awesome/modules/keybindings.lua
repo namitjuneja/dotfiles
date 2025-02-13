@@ -150,11 +150,11 @@ globalkeys = gears.table.join(
 
     -- screenshot 
     -- need to use util.spawn_will_shell because using arguments and bash functions for date 
-    awful.key({modkey,}, "Print", function () awful.util.spawn_with_shell("scrot ~/Pictures/Screenshots/Screenshot\\ on\\ %d\\ %b\\ %Y\\ at\\ %I:%M:%S%P.jpg") end,
+    awful.key({modkey,}, "Print", function () awful.util.spawn_with_shell("scrot ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %I:%M:%S%P.jpg") end,
               {description = "Screenshot", group = "launcher"}),
 
     -- screen clipper
-    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %d\\ %b\\ %Y\\ at\\ %I:%M:%S%P.jpg") end,
+    awful.key({modkey, "Shift"   }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s ~/Pictures/Screenshots/Screenshot\\ on\\ %Y-%m-%d\\ at\\ %I:%M:%S%P.jpg") end,
               {description = "Screen Clipper", group = "launcher"}),
 
 
