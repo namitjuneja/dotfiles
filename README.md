@@ -158,6 +158,9 @@ about:config changes
 - prevent cookies from being used by anyone except the domain that set it `privacy.firstparty.isolate=true` 
 - enable ESNI and DoH from Cloudflare to prevent tracking
 - Resist fingerprinting ~~`privacy.resistfingerprinting = true`~~ disabled. it started randomizing the timezone.
+
+tab center redux
+- go to your published extensions profile page and click on the xpi file
 ---
 
 ### REQUIREMENTS
