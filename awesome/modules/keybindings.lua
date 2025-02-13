@@ -244,6 +244,7 @@ clientkeys = gears.table.join(
 	    local clients = active_tag:clients()
 	    for _, c in ipairs(clients) do
 		c.maximized = false
+        c.fullscreen = false
   		c.maximized_horizontal = false
   		c.maximized_vertical = false
 		c.floating = false
