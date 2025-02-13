@@ -112,6 +112,9 @@ function vlc0() {
     echo "Playing video: $(clipster -o -c)";
     vlc --open "$(clipster -o -c)" -f;
 }
+# update vlc's youtube parser
+# sudo rm youtube.luac; sudo wget https://raw.githubusercontent.com/videolan/vlc/master/share/lua/playlist/youtube.lua
+
 alias mpp="echo \"Playing youtube video: $(clipster -o -c)\"; notify-send \"Playing youtube video: $(clipster -o -c)\"; mpv $(clipster -o -c)"
 
 # erase clipboard
@@ -119,3 +122,37 @@ alias ec="clipster --erase-entire-board --clipboard"
 
 # run keychron k2 windows keys
 alias k2='/bin/bash -c "echo 0 > /sys/module/hid_apple/parameters/fnmode"'
+
+# quick start work env
+alias phafic="cd ~/codes/phafic; source venv/bin/activate"
+
+# record screen
+# install this using - sudo apt install recordmydesktop
+alias record="recordmydesktop --on-the-fly-encoding"
+
+# mini history tutorial so I dont forget
+# search for past commands
+# history | grep "<search query>"
+# !<line_number>
+# easier way is to use `hg` (history grep) alias
+alias hg='history | grep -i'
+
+# don't put duplicate lines or lines starting with space in the history.
+# and erase any duplicates that exist
+# See bash(1) for more options
+HISTCONTROL=ignoreboth:earsedups
+
+# ensure history commands are not blindly executed, but instead filled in on the command line so you can ensure they will do no evil before executing
+shopt -s histverify
+
+HISTFILESIZE=
+HISTSIZE=
+HISTTIMEFORMAT="[%F %T] "
+# Force prompt to write history after every command.
+# http://superuser.com/questions/20900/bash-history-loss
+# -a to make sure appended not overwritten
+# -n appended after every command and not just at the end of session
+# helps if want to search through same command in another bash session
+PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+
+
