@@ -1,0 +1,120 @@
+{
+    "custom/arch": {
+        "format": "󰣇",
+        "tooltip": true,
+        "tooltip-format": "Made with 𖹭 \n ~shivam"
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}",
+        "persistent-workspaces": {
+            "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        }
+    },
+
+    "hyprland/window":{
+        "format": "   {}"
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon} {name}",
+        "icon-size": 16,
+        "tooltip": true,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": []
+    },
+
+    "custom/windows": {
+        "exec": "~/.config/waybar/scripts/workspace-windows.sh",
+        "exec-on-event": true,
+        "interval": "once",
+        "format": "{}",
+        "on-click": "hyprctl dispatch cyclenext",
+        "on-scroll-up": "hyprctl dispatch cyclenext",
+        "on-scroll-down": "hyprctl dispatch cycleprev"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "max-volume": 150,
+        "scroll-step": 5,
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+
+    "bluetooth": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "{status}",
+        "on-click": "rofi-bluetooth"
+    },
+
+    "network": {
+        "format-wifi": "" ,
+        "tooltip": true,
+        "tooltip-format": "SSID: {essid}\nSignal: {signalStrength}%\nSpeed: {bandwidthDownBits} ↓ / {bandwidthUpBits} ↑",
+        "format-ethernet": "",
+        "format-disconnected": "⚠",
+        "interval": 2,
+        "on-click": "networkmanager_dmenu"
+    },
+
+    "custom/sysmon": {
+        "format": "󰪫 ",
+        "tooltip": true,
+        "tooltip-format": "{}",
+        "exec": "~/.config/waybar/scripts/sysmon.sh",
+        "interval": 2
+    },
+
+
+
+    "cpu": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        
+
+        "on-click": "~/.config/waybar/scripts/power-profiles.sh"
+    },
+
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "clock#date": {
+        "format": " {:%A, %e %B}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+
+    "custom/power": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.config/waybar/scripts/powermenu.sh"
+    }
+}
