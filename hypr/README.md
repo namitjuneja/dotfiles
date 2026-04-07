@@ -23,6 +23,8 @@ sudo pacman -S --needed \
   hyprlock \
   hyprpaper \
   swww \
+  cliphist \
+  wl-clipboard \
   pavucontrol \
   playerctl \
   brightnessctl \
@@ -87,6 +89,14 @@ monitor=HDMI-A-2,3440x1440@29.99,0x0,1.6
   monitor layout via GUI. The `hyprland.conf` entry takes precedence if not
   sourced separately.
 
+> **Jankiness root cause (resolved):** The monitor was initially running at `@29.99` (~30fps),
+> which caused the cursor and all animations to look choppy and laggy. Switching to `@59.98`
+> (60fps) fixed it entirely. If everything feels janky, check the refresh rate first.
+>
+> **Other methods not yet tried (if jankiness returns):**
+> - Remove fractional scaling (set scale to `1.0`) — fractional scaling can cause rendering
+>   artifacts and performance issues on some setups.
+
 ---
 
 ### Programs
@@ -106,11 +116,14 @@ Switched launcher from `hyprlauncher` to `rofi`.
 exec-once = hyprpaper &
 exec-once = waybar &
 exec-once = swaync &
+exec-once = wl-paste --type text --watch cliphist store # Stores text data
+exec-once = wl-paste --type image --watch cliphist store # Stores only image data
 ```
 
 - `hyprpaper` — wallpaper daemon
 - `waybar` — status bar
 - `swaync` — notification daemon (SwayNotificationCenter)
+- `cliphist` — clipboard manager; `wl-paste --watch` feeds clipboard events into its store
 
 ---
 
@@ -162,6 +175,21 @@ blur {
 
 Heavy blur with transparency on all windows. No rounded corners.
 
+> **Firefox exception:** A windowrule forces `opacity = 1 override 1 override` for Firefox,
+> exempting it from the global active/inactive opacity so it renders fully opaque.
+
+> **Obsidian exception:** Same as Firefox — a windowrule forces `opacity = 1 override 1 override`
+> for Obsidian so it renders fully opaque.
+
+> **Performance workaround (active):** Blur and shadow are currently disabled to reduce GPU load:
+> ```
+> decoration {
+>     blur { enabled = false }
+>     shadow { enabled = false }
+> }
+> ```
+> To restore, set both back to `enabled = true` and re-enable the blur settings above.
+
 ---
 
 #### animations — workspace transitions disabled
@@ -197,6 +225,8 @@ Plus matching `windowrule` blocks to remove borders/rounding in those cases.
 **Custom:** `force_default_wallpaper = 0`, `disable_hyprland_logo = true`
 
 Disables the default anime mascot wallpaper and the Hyprland logo on startup.
+
+Also added `vfr = true` (variable frame rate) to reduce idle GPU usage.
 
 ---
 
