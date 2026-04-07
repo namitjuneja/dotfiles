@@ -31,8 +31,14 @@ sudo pacman -S --needed \
   base-devel \
   git \
   xorg-xwayland \
-  hyprsunset
+  hyprsunset \
+  pipewire \
+  pipewire-pulse \
+  wireplumber \
+  xdg-desktop-portal-hyprland
 ```
+
+> `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed.
 
 > `blueman` also needs bluetooth enabled:
 > ```bash
