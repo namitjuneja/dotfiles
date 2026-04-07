@@ -29,7 +29,9 @@ sudo pacman -S --needed \
   playerctl \
   brightnessctl \
   base-devel \
-  git
+  git \
+  xorg-xwayland \
+  hyprsunset
 ```
 
 > `blueman` also needs bluetooth enabled:
@@ -116,6 +118,7 @@ Switched launcher from `hyprlauncher` to `rofi`.
 exec-once = hyprpaper &
 exec-once = waybar &
 exec-once = swaync &
+exec-once = hyprsunset --temperature 5000 &
 exec-once = wl-paste --type text --watch cliphist store # Stores text data
 exec-once = wl-paste --type image --watch cliphist store # Stores only image data
 ```
@@ -123,6 +126,7 @@ exec-once = wl-paste --type image --watch cliphist store # Stores only image dat
 - `hyprpaper` — wallpaper daemon
 - `waybar` — status bar
 - `swaync` — notification daemon (SwayNotificationCenter)
+- `hyprsunset --temperature 5000` — blue light filter at 5000K color temperature
 - `cliphist` — clipboard manager; `wl-paste --watch` feeds clipboard events into its store
 
 ---
@@ -286,6 +290,8 @@ All binds use `$mainMod = SUPER`.
 | `Super + =` | Volume up 5% |
 | `Super + -` | Volume down 5% |
 | `Super + 0` | Toggle mute |
+| `` Super + ` `` | Toggle scratchpad (special workspace) |
+| `` Super + Shift + ` `` | Move window to scratchpad |
 
 #### App shortcuts
 
@@ -295,9 +301,14 @@ All binds use `$mainMod = SUPER`.
 | `Super + F3` | VS Code |
 | `Super + F4` | Terminal (kitty) |
 | `Super + F5` | File manager (dolphin) |
-| `Super + F6` | Obsidian |
+| `Super + F6` | Obsidian (Wayland native) |
 | `Super + F7` | Google Chrome |
 | `Super + F9` | YouTube Music (Firefox new window) |
+
+> **Obsidian:** launched with Wayland native mode to avoid XWayland. Requires `xorg-xwayland` installed. Command:
+> ```
+> OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland
+> ```
 
 #### Workspace switching — remapped to bare F-keys
 
@@ -310,7 +321,7 @@ bind = , F1, workspace, 1
 bind = , F9, workspace, 9
 ```
 
-Move window to workspace: `Super + Shift + F1–F9` using `movetoworkspacesilent`
+Move window to workspace: `Shift + F1–F9` using `movetoworkspacesilent`
 (window moves silently without switching to that workspace — default used
 `movetoworkspace` which also switches focus).
 
