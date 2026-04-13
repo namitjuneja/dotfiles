@@ -4,17 +4,17 @@
 /* ================================================= */
 
 * {
-    font-family: "JetbrainsMono Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-family: "Hack Nerd Font", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
     transition: background-color .3s ease-out;
 }
 
-/* Main Waybar window (transparent, pills handle bg) */
+/* Main Waybar window */
 window#waybar {
-    background: transparent;
+    background: #0b1220;
     color: #e6e8ee; /* main foreground text */
     font-family:
-        SpaceMono Nerd Font,
+        Hack Nerd Font,
         feather;
     transition: background-color .5s;
 }
@@ -24,8 +24,8 @@ window#waybar {
 .modules-center,
 .modules-right {
     background: #0b1220; /* dark navy pill background */
-    margin: 5px 10px;
-    padding: 0 5px;
+    margin: 1px 8px;
+    padding: 0 4px;
     border-radius: 100px;
 }
 
@@ -34,7 +34,7 @@ window#waybar {
 }
 
 .modules-center {
-    padding: 0 10px;
+    padding: 0 8px;
 }
 
 /* Shared styling for most modules */
@@ -56,7 +56,7 @@ window#waybar {
 #power-profiles-daemon,
 #language,
 #mpd {
-    padding: 0 10px;
+    padding: 0 7px;
     border-radius: 100px;
 }
 
@@ -83,36 +83,47 @@ window#waybar {
 }
 
 /* Workspace buttons */
+#workspaces {
+    margin: 0;
+    padding: 0;
+}
+
 #workspaces button {
     background: transparent;
     font-family:
-        SpaceMono Nerd Font,
+        Hack Nerd Font,
         feather;
     font-weight: 900;
     font-size: 8pt;
     color: #e6e8ee; /* inactive workspace text */
     border: none;
     border-radius: 100px;
+    padding: 0 8px;
+    margin: 0 1px;
+    min-height: 0;
 }
 
 /* Active workspace pill */
 #workspaces button.active {
-    background: #c9c6ff; /* light lavender */
-    color: #0b1220;      /* dark text for contrast */
+    background: transparent;
+    color: #c9c6ff;       /* lavender accent text */
+    font-weight: bold;
+    border-bottom: 2px solid #c9c6ff;
+    border-radius: 0;
 }
 
 /* Hovered workspace */
 #workspaces button:hover {
-    background: #c9c6ff;
-    color: #0b1220;
+    background: #111a2e;
+    color: #e6e8ee;
     box-shadow: none;
 }
 
 /* Arch logo module */
 #custom-arch {
-    margin-left: 5px;
-    padding: 0 10px;
-    font-size: 18px;
+    margin-left: 4px;
+    padding: 0 8px;
+    font-size: 15px;
     transition: color .5s;
 }
 
@@ -126,7 +137,7 @@ window#waybar {
 
 /* Bluetooth indicator */
 #bluetooth {
-    padding: 0 10px;
+    padding: 0 7px;
     border-radius: 100px;
 }
 
@@ -136,8 +147,8 @@ window#waybar {
 
 /* System monitor icon */
 #custom-sysmon {
-    font-size: 20px;
-    padding: 0 10px;
+    font-size: 16px;
+    padding: 0 7px;
     border-radius: 100px;
 }
 
@@ -147,9 +158,9 @@ window#waybar {
 
 /* Power button */
 #custom-power {
-    padding: 0 12px;
+    padding: 0 9px;
     border-radius: 100px;
-    font-size: 13px;
+    font-size: 12px;
     color: #e06c75; /* soft red */
 }
 
