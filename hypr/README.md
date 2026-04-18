@@ -298,6 +298,27 @@ All binds use `$mainMod = SUPER`.
 | `Super + 0` | Toggle mute |
 | `` Super + ` `` | Toggle scratchpad (special workspace) |
 | `` Super + Shift + ` `` | Move window to scratchpad |
+| `Super + F` | Toggle floating |
+
+#### Navigation
+
+| Binding | Action |
+|---|---|
+| `Super + Left` | Previous workspace |
+| `Super + Right` | Next workspace |
+| `Super + Up` | Focus window above |
+| `Super + Down` | Focus window below |
+| `Super + H` | Focus window left |
+| `Super + L` | Focus window right |
+| `Super + K` | Focus window above |
+| `Super + J` | Focus window below |
+
+#### Window management
+
+| Binding | Action |
+|---|---|
+| `Super + Ctrl + H/L/K/J` | Move window left/right/up/down |
+| `Super + Shift + H/L/K/J` | Expand window left/right/up/down (50px) |
 
 #### App shortcuts
 
