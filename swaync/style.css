@@ -171,6 +171,15 @@
   color: #33ccff;
 }
 
+/* ── Floating Notification Popup Window ── */
+.notification-window {
+  background: rgba(11, 18, 32, 0.97);
+  border-radius: 12px;
+  border: 1px solid rgba(51, 204, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  padding: 4px;
+}
+
 /* ── Notification Cards ── */
 .notification-row {
   outline: none;
@@ -182,17 +191,17 @@
 }
 
 .notification {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(11, 18, 32, 0.95);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(51, 204, 255, 0.12);
   margin: 4px 0;
   padding: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .notification:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(51, 204, 255, 0.15);
+  background: rgba(20, 30, 50, 0.97);
+  border-color: rgba(51, 204, 255, 0.25);
 }
 
 .notification-content {
@@ -255,8 +264,8 @@
 
 /* Urgency indicators */
 .notification.critical {
-  border-color: rgba(255, 85, 85, 0.4);
-  background: rgba(255, 85, 85, 0.06);
+  border-color: rgba(255, 85, 85, 0.5);
+  background: rgba(40, 10, 10, 0.97);
 }
 
 .notification.critical .notification-app-name {
