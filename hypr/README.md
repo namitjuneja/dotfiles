@@ -35,7 +35,8 @@ sudo pacman -S --needed \
   pipewire \
   pipewire-pulse \
   wireplumber \
-  xdg-desktop-portal-hyprland
+  xdg-desktop-portal-hyprland \
+  loupe
 ```
 
 > `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed.
