@@ -88,6 +88,7 @@ window#waybar {
     padding: 0;
 }
 
+/* Occupied workspace (default for all buttons) */
 #workspaces button {
     background: transparent;
     font-family:
@@ -95,20 +96,35 @@ window#waybar {
         feather;
     font-weight: 900;
     font-size: 8pt;
-    color: #e6e8ee; /* inactive workspace text */
+    color: #cdd6f4;
     border: none;
-    border-radius: 100px;
+    border-bottom: 2px solid #45475a;
+    border-radius: 0;
     padding: 0 8px;
     margin: 0 1px;
     min-height: 0;
 }
 
-/* Active workspace pill */
+/* Empty workspace — dim down */
+#workspaces button.empty {
+    color: #555e7a;
+    border-bottom: none;
+    border-radius: 100px;
+}
+
+/* Active workspace */
 #workspaces button.active {
     background: transparent;
-    color: #c9c6ff;       /* lavender accent text */
+    color: #c9c6ff;
     font-weight: bold;
     border-bottom: 2px solid #c9c6ff;
+    border-radius: 0;
+}
+
+/* Urgent workspace */
+#workspaces button.urgent {
+    color: #f38ba8;
+    border-bottom: 2px solid #f38ba8;
     border-radius: 0;
 }
 
