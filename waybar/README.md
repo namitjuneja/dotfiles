@@ -77,8 +77,8 @@ This keeps `config.jsonc` clean — it only handles layout.
 
 - Scroll disabled on the workspace bar
 - Shows workspaces from all outputs (`all-outputs: true`)
-- **Always shows workspaces 1–10** regardless of whether they have windows
-  (`persistent-workspaces: { "*": [1..10] }`)
+- **Always shows workspaces 1–9** — persistence is handled by Hyprland's native
+  `persistent:true` workspace rules (not Waybar's `persistent-workspaces`)
 - Format: just the workspace name (number)
 
 ### hyprland/window
@@ -150,9 +150,11 @@ This keeps `config.jsonc` clean — it only handles layout.
 
 ### Workspaces
 
-- Inactive buttons: transparent background, `#e6e8ee` text
-- Active button: `#c9c6ff` (light lavender) background, `#0b1220` dark text
-- Hover: same as active
+- **Occupied** (has windows): `#cdd6f4` text + gray underline (`#45475a`)
+- **Empty** (no windows): `#555e7a` dimmed text, no underline, pill border-radius
+- **Active**: `#c9c6ff` lavender text + lavender underline, bold
+- **Urgent**: `#f38ba8` red text + red underline
+- Hover: `#111a2e` background
 
 ### Module padding
 

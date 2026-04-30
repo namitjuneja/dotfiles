@@ -218,6 +218,25 @@ layers, fade) remain enabled.
 
 ---
 
+#### Named persistent workspaces (1–9)
+
+Workspaces 1–9 are named and marked `persistent:true` so they always exist,
+even when empty. This lets Waybar's `hyprland/workspaces` module see real
+workspace state (window counts, urgent flags) and apply CSS classes like
+`button.empty` and `button.urgent` correctly.
+
+```
+workspace = 1, name:1: Firefox, persistent:true
+...
+workspace = 9, name:9: Music, persistent:true
+```
+
+> **Note:** Use Hyprland's `persistent:true` rather than Waybar's
+> `persistent-workspaces` — Waybar's approach creates hollow stubs that
+> don't carry real workspace state, so CSS classes won't work.
+
+---
+
 #### Smart gaps (no gaps when only one window)
 
 **Default:** commented out  
