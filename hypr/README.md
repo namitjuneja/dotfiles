@@ -136,6 +136,7 @@ exec-once = wl-paste --type image --watch cliphist store # Stores only image dat
 - `swaync` — notification daemon (SwayNotificationCenter)
 - `hyprsunset --temperature 5000` — blue light filter at 5000K color temperature
 - `cliphist` — clipboard manager; `wl-paste --watch` feeds clipboard events into its store
+- `nowplaying.sh` — watches playerctl for track changes and fires a `notify-send` notification via swaync
 
 ---
 
@@ -331,6 +332,9 @@ All binds use `$mainMod = SUPER`.
 | `` Super + Shift + ` `` | Move window to scratchpad |
 | `Super + F` | Toggle floating |
 | `Super + S` | Toggle swaync notification sidebar |
+| `Super + ,` | Previous track |
+| `Super + .` | Next track |
+| `Super + /` | Play / pause |
 | `Super + T` | Bluetooth menu (`rofi-bluetooth`) |
 | `Super + W` | Network/WiFi menu (`networkmanager_dmenu`) |
 
