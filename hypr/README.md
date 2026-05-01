@@ -331,6 +331,8 @@ All binds use `$mainMod = SUPER`.
 | `` Super + Shift + ` `` | Move window to scratchpad |
 | `Super + F` | Toggle floating |
 | `Super + S` | Toggle swaync notification sidebar |
+| `Super + T` | Bluetooth menu (`rofi-bluetooth`) |
+| `Super + W` | Network/WiFi menu (`networkmanager_dmenu`) |
 
 #### Navigation
 
