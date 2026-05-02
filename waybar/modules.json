@@ -47,6 +47,16 @@
         "on-scroll-down": "hyprctl dispatch cycleprev"
     },
 
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶",
+            "deactivated": "󰛊"
+        },
+        "tooltip-format-activated": "Screen will stay on  —  click to allow sleep",
+        "tooltip-format-deactivated": "Click to keep screen awake"
+    },
+
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "max-volume": 150,

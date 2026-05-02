@@ -172,6 +172,11 @@ window#waybar {
     background: #111a2e;
 }
 
+/* Idle inhibitor — highlight when active */
+#idle_inhibitor.activated {
+    color: #a6e3a1; /* green accent */
+}
+
 /* Power button */
 #custom-power {
     padding: 0 9px;
