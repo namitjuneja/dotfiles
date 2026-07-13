@@ -39,12 +39,20 @@
 
     "custom/windows": {
         "exec": "~/.config/waybar/scripts/workspace-windows.sh",
-        "exec-on-event": true,
         "interval": "once",
+        "signal": 8,
         "format": "{}",
-        "on-click": "hyprctl dispatch cyclenext",
-        "on-scroll-up": "hyprctl dispatch cyclenext",
-        "on-scroll-down": "hyprctl dispatch cycleprev"
+        "on-click": "hyprctl dispatch \"hl.dsp.window.cycle_next({next=true})\"",
+        "on-scroll-up": "hyprctl dispatch \"hl.dsp.window.cycle_next({next=true})\"",
+        "on-scroll-down": "hyprctl dispatch \"hl.dsp.window.cycle_next({next=false})\""
+    },
+
+    "custom/orientation": {
+        "exec": "~/.config/waybar/scripts/master-orientation.sh",
+        "interval": "once",
+        "signal": 9,
+        "format": "{}",
+        "tooltip-format": "Master orientation — Super+R to cycle"
     },
 
     "idle_inhibitor": {

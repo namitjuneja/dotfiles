@@ -12,11 +12,12 @@
 
     // Center
     "modules-center": [
-        "hyprland/window"
+        "custom/windows"
     ],
 
     // Right side
     "modules-right": [
+        "custom/orientation",
         "idle_inhibitor",
 
         "pulseaudio",

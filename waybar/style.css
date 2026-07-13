@@ -135,6 +135,16 @@ window#waybar {
     box-shadow: none;
 }
 
+/* Workspace window list -- each entry's colors (app name, title, active-window
+   pill, separators) are set inline via pango spans in workspace-windows.sh, so
+   this just handles the module's own padding/shape and its distance from the
+   rest of the bar. */
+#custom-windows {
+    padding: 0 16px;
+    margin: 0 4px;
+    border-radius: 100px;
+}
+
 /* Arch logo module */
 #custom-arch {
     margin-left: 4px;
