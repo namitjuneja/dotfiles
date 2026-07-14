@@ -357,6 +357,8 @@ All binds use `$mainMod = SUPER`.
 | `Super + =` | Volume up 5% |
 | `Super + -` | Volume down 5% |
 | `Super + 0` | Toggle mute |
+| `Super + Shift + =` | Brightness up 20% (via `swaync/scripts/brightness-set.sh`) |
+| `Super + Shift + -` | Brightness down 20% (via `swaync/scripts/brightness-set.sh`) |
 | `` Super + ` `` | Toggle scratchpad (special workspace) |
 | `` Super + Shift + ` `` | Move window to scratchpad |
 | `Super + F` | Toggle floating |

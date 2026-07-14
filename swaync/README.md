@@ -93,3 +93,40 @@ If porting to a machine with a different external monitor, check its VCP brightn
 feature code (usually `10`) with `ddcutil capabilities`, and confirm which display index
 `ddcutil detect` assigns it if you have more than one DDC-capable monitor (the scripts
 assume display 1, the default).
+
+### Is `ddcutil` actually necessary?
+
+Yes, for real hardware brightness control on an external monitor — DDC/CI over I2C is
+the only standard way to do that from software, and there's no faster path to it; the
+lag is a protocol-level floor (spec-recommended inter-command delay, monitors drop
+commands sent too fast), not something this config can optimize away further.
+
+The alternative is compositor-side gamma/shader dimming (e.g. Hyprland's screen
+shader) instead of real brightness — that's near-instant since it never touches the
+monitor over I2C, but it's a visual darken-overlay, not literal backlight brightness
+(no reduction in actual power draw, and out of sync with any brightness the monitor's
+own OSD reports). Not used here; if you want it, it'd replace `ddcutil` in both scripts
+and would need its own keybind/slider wiring.
+
+---
+
+## Keyboard Shortcuts
+
+In addition to the sidebar slider, brightness can be adjusted directly via keybinds
+defined in `hypr/hyprland.lua` (**not** `hypr/hyprland.conf` — see that file's header
+comment; Hyprland >= 0.55 loads `hyprland.lua` instead of the `.conf` if both exist):
+
+```lua
+hl.bind(mainMod .. " + SHIFT + equal", hl.dsp.exec_cmd("bash -c 'n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) + 20 )); [ $n -gt 100 ] && n=100; $HOME/.config/swaync/scripts/brightness-set.sh $n'"), { locked = true, repeating = false })
+hl.bind(mainMod .. " + SHIFT + minus", hl.dsp.exec_cmd("bash -c 'n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) - 20 )); [ $n -lt 0 ] && n=0; $HOME/.config/swaync/scripts/brightness-set.sh $n'"), { locked = true, repeating = false })
+```
+
+- `Super + Shift + =` / `Super + Shift + -` — brightness up/down 20%.
+- Step size is 20%, not 5%: the volume keybinds use 5% because `wpctl` is near-instant,
+  but each of these calls is a full slow `ddcutil` round-trip, so a 5% step is easy to
+  miss entirely against the ~0.5s lag. 20% is unmistakable.
+- `repeating = false` is required — holding the key with `repeating = true` (copied
+  from the volume bindings initially) re-fires the binding on every key-repeat tick,
+  which is fine for instant `wpctl` calls but spawns many overlapping ~0.5s `ddcutil`
+  calls for brightness. They race each other (each reads a stale "current" value before
+  earlier calls finish), producing chaotic non-monotonic jumps instead of a clean step.
