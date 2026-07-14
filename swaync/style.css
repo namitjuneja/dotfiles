@@ -71,6 +71,51 @@
   color: rgba(230, 232, 238, 0.7);
 }
 
+/* ── Volume / Brightness Sliders ── */
+.widget-volume,
+.widget-slider {
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.widget-volume > box > label,
+.widget-slider > label {
+  font-size: 12px;
+  color: rgba(230, 232, 238, 0.7);
+  min-width: 20px;
+}
+
+.widget-volume trough,
+.widget-slider trough {
+  min-height: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.widget-volume highlight,
+.widget-slider highlight {
+  min-height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #33ccff, #00ff99);
+}
+
+.widget-volume slider,
+.widget-slider slider {
+  background: #e6e8ee;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+  margin: 0;
+}
+
+.widget-volume slider:hover,
+.widget-slider slider:hover {
+  background: #33ccff;
+}
+
 /* ── Quick Action Buttons ── */
 .widget-buttons-grid {
   padding: 4px 6px;

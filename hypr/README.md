@@ -28,6 +28,7 @@ sudo pacman -S --needed \
   pavucontrol \
   playerctl \
   brightnessctl \
+  ddcutil \
   base-devel \
   git \
   xorg-xwayland \
@@ -41,7 +42,7 @@ sudo pacman -S --needed \
   ark
 ```
 
-> `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed. `loupe` is the image viewer, `evince` the PDF viewer, and `ark` the archive manager (required for Dolphin to open zip/tar files).
+> `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed. `loupe` is the image viewer, `evince` the PDF viewer, and `ark` the archive manager (required for Dolphin to open zip/tar files). `ddcutil` controls external monitor brightness over DDC/CI for the swaync sidebar's brightness slider (falls back to `brightnessctl` on laptops with a real backlight device — see `swaync/README.md`).
 
 > `blueman` also needs bluetooth enabled:
 > ```bash

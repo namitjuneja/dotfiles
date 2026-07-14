@@ -14,6 +14,8 @@
   "widgets": [
     "title",
     "dnd",
+    "volume",
+    "slider",
     "notifications",
     "mpris",
     "buttons-grid"
@@ -26,6 +28,19 @@
     },
     "dnd": {
       "text": "Do Not Disturb"
+    },
+    "volume": {
+      "label": "󰕾"
+    },
+    "slider": {
+      "label": "󰃟",
+      "cmd_setter": "$HOME/.config/swaync/scripts/brightness-set.sh $value",
+      "cmd_getter": "$HOME/.config/swaync/scripts/brightness-get.sh",
+      "min": 0,
+      "max": 100,
+      "min_limit": 0,
+      "max_limit": 100,
+      "value_scale": 0
     },
     "buttons-grid": {
       "actions": [
