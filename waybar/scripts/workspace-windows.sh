@@ -29,7 +29,7 @@
 # consistent across every glyph. The cap glyphs are sized relative to the text
 # (currently 90%) to control how rounded the highlight's corners look.
 
-BAR_BG="#0b1220"
+BAR_BG="#000000"
 
 ws=$(hyprctl activeworkspace -j | jq -r '.id')
 active=$(hyprctl activewindow -j | jq -r '.address // empty')
