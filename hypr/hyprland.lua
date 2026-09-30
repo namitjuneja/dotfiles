@@ -290,7 +290,35 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Dispatchers/ for more
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SHIFT + return", hl.dsp.exec_cmd(terminal, { float = true, size = { 800, 500 } }))
+-- Floating scratchpad terminal (Mod+Shift+Enter)
+-- Opens an 800x500 floating terminal on the "special:magic" scratchpad workspace.
+-- Windows cascade so they never sit exactly on top of each other:
+--   * There are 6 slots; slot N is offset N*30px down and right from the monitor center.
+--   * Slot 0 is the centered position, used when the scratchpad has no windows.
+--   * A new window takes (highest occupied slot + 1). A window's slot is derived from its
+--     current x position, so closing a middle window never causes an overlap, but freed
+--     gaps are not reused (only once the higher windows are closed too).
+--   * After slot 5 it wraps back to slot 0, which overlaps the first window.
+--   * Windows dragged away from the cascade are ignored when choosing the next slot.
+hl.bind(mainMod .. " + SHIFT + return", function()
+    local m = hl.get_active_monitor()
+    local w, h, step, slots = 800, 500, 30, 6
+    local baseX = m.x + (m.width / m.scale - w) / 2
+    local baseY = m.y + (m.height / m.scale - h) / 2
+    -- next slot = highest occupied slot + 1 (wraps), 0 when the scratchpad is empty
+    local next = 0
+    for _, win in ipairs(hl.get_windows()) do
+        if win.workspace and win.workspace.name == "special:magic" then
+            local slot = math.floor((win.at.x - baseX) / step + 0.5)
+            if slot >= 0 and slot < slots and slot + 1 > next then next = slot + 1 end
+        end
+    end
+    local off = (next % slots) * step
+    hl.exec_cmd(terminal, {
+        float = true, workspace = "special:magic", size = { w, h },
+        move = { baseX + off, baseY + off },
+    })
+end)
 hl.bind(mainMod .. " + backspace", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + delete", hl.dsp.exec_cmd("systemctl poweroff"))
 hl.bind(mainMod .. " + SHIFT + CTRL + delete", hl.dsp.exec_cmd("systemctl reboot"))
