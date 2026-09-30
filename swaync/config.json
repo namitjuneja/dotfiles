@@ -43,22 +43,19 @@
       "value_scale": 0
     },
     "buttons-grid": {
+      "buttons-per-row": 3,
       "actions": [
         {
           "label": "󰐥",
-          "command": "wlogout"
+          "command": "$HOME/.config/waybar/scripts/powermenu.sh"
         },
         {
           "label": "󰖩",
-          "command": "nm-connection-editor"
+          "command": "networkmanager_dmenu"
         },
         {
           "label": "󰂯",
-          "command": "blueman-manager"
-        },
-        {
-          "label": "󰄀",
-          "command": "hyprpicker -a"
+          "command": "rofi-bluetooth"
         }
       ]
     },
