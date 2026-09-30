@@ -576,7 +576,7 @@ Timeline:
 | Time idle | Action |
 |---|---|
 | 2:50 | Dim screen to 20% (`brightnessctl -s set 20%`) |
-| 3:00 | Monitors off (`hyprctl dispatch dpms off`) |
+| 3:00 | Monitors off (`hyprctl dispatch 'hl.dsp.dpms({action="off"})'`) |
 | 5:00 | Lock screen (`loginctl lock-session` → triggers `hyprlock`) |
 
 Brightness is restored with `brightnessctl -r` (saved/restored state) and DPMS re-enabled on any input event.
