@@ -1,0 +1,24 @@
+@define-color window_bg_color #000000;
+@define-color window_fg_color #f8f8f2;
+@define-color view_bg_color #000000;
+@define-color view_fg_color #f8f8f2;
+@define-color headerbar_bg_color #000000;
+@define-color headerbar_fg_color #f8f8f2;
+@define-color card_bg_color #282a36;
+@define-color card_fg_color #f8f8f2;
+@define-color popover_bg_color #282a36;
+@define-color popover_fg_color #f8f8f2;
+@define-color dialog_bg_color #21222c;
+@define-color dialog_fg_color #f8f8f2;
+
+/* Dracula Accents & Pop Overrides */
+@define-color accent_color #bd93f9;
+@define-color accent_bg_color #ff79c6;
+@define-color accent_fg_color #282a36;
+@define-color destructive_color #ff5555;
+@define-color success_color #50fa7b;
+@define-color warning_color #ffb86c;
+@define-color sidebar_bg_color #000000;
+@define-color sidebar_fg_color #f8f8f2;
+@define-color border_color #44475a;
+
