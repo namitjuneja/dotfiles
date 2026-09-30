@@ -39,10 +39,16 @@ sudo pacman -S --needed \
   xdg-desktop-portal-hyprland \
   loupe \
   evince \
-  ark
+  ark \
+  nautilus
 ```
 
-> `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed. `loupe` is the image viewer, `evince` the PDF viewer, and `ark` the archive manager (required for Dolphin to open zip/tar files). `ddcutil` controls external monitor brightness over DDC/CI for the swaync sidebar's brightness slider (falls back to `brightnessctl` on laptops with a real backlight device — see `swaync/README.md`).
+> `pipewire-pulse` is a drop-in PulseAudio replacement (keeps `pavucontrol` working). `xdg-desktop-portal-hyprland` is required for screensharing. All four start automatically via systemd user services — no `exec-once` needed. `loupe` is the image viewer, `evince` the PDF viewer, and `ark` the archive manager (required for Nautilus to open zip/tar files). `ddcutil` controls external monitor brightness over DDC/CI for the swaync sidebar's brightness slider (falls back to `brightnessctl` on laptops with a real backlight device — see `swaync/README.md`).
+>
+> **Nautilus (GTK) ignores the system dark-mode setting by default and needs its own gsettings key.** Force dark theme:
+> ```bash
+> gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+> ```
 
 > `blueman` also needs bluetooth enabled:
 > ```bash
@@ -397,7 +403,7 @@ All binds use `$mainMod = SUPER`.
 | `Super + F1` | Firefox |
 | `Super + F3` | VS Code |
 | `Super + F4` | Terminal (kitty) |
-| `Super + F5` | File manager (dolphin) |
+| `Super + F5` | File manager (nautilus) |
 | `Super + F6` | Obsidian (Wayland native) |
 | `Super + F7` | Google Chrome |
 | `Super + F9` | YouTube Music (Firefox new window) |

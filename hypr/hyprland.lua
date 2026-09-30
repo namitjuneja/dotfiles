@@ -26,7 +26,7 @@ hl.monitor({ output = "DP-4",     mode = "3440x1440@50",    position = "0x0",  s
 ---------------------
 
 local terminal    = "kitty"
-local fileManager = "dolphin"
+local fileManager = "nautilus"
 local menu        = "rofi -show run"
 
 
