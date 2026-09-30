@@ -102,7 +102,7 @@ window#waybar {
     padding: 3px 8px 0 8px;
     min-height: 0;
     min-width: 0;
-    margin: 0;
+    margin: 3px 1px;
     min-height: 0;
 }
 
@@ -117,11 +117,11 @@ window#waybar {
     font-weight: bold;
 }
 
-/* Urgent workspace */
+/* Urgent workspace — same style as active, but red background and dull white text */
 #workspaces button.urgent {
-    color: #f38ba8;
-    border-bottom: 2px solid #f38ba8;
-    border-radius: 0;
+    background: #c0392b;
+    color: #d8d8d8;
+    font-weight: bold;
 }
 
 /* Hovered workspace */

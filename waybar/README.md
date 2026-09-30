@@ -153,7 +153,7 @@ This keeps `config.jsonc` clean — it only handles layout.
 - **Occupied** (has windows): `#cdd6f4` text + gray underline (`#45475a`)
 - **Empty** (no windows): `#555e7a` dimmed text, no underline, pill border-radius
 - **Active**: `#c9c6ff` lavender text + lavender underline, bold
-- **Urgent**: `#f38ba8` red text + red underline
+- **Urgent**: `#c0392b` red background, `#d8d8d8` dull white text, bold (same shape as active)
 - Hover: `#111a2e` background
 
 ### Module padding
