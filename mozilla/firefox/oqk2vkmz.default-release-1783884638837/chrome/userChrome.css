@@ -1,0 +1,41 @@
+#TabsToolbar {
+  visibility: collapse;
+}
+
+
+#sidebar-box #sidebar-header,
+#sidebar-panel-header {
+  visibility: collapse;
+}
+
+/* Newer sidebar (sidebar.revamp): header is #sidebar-panel-header; collapse it so no gap is left */
+#sidebar-panel-header {
+  display: none !important;
+}
+
+
+
+#sidebar-splitter
+{
+background-color: #000000 !important;
+border: 0px !important;
+}
+
+
+#sidebar-box {
+  background-color: #000000 !important;
+}
+
+
+/* Remove Nova rounded corners from tabs and toolbars */
+.tab-background, .tab-stack, .tab-content, #urlbar-background, #navigator-toolbox, #TabsToolbar, #nav-bar {
+  border-radius: 0px !important;
+}
+
+/* Global fallback for Nova specific elements */
+@media -moz-pref("browser.nova.enabled") {
+  :root {
+    --chrome-block-radius: 0px !important;
+    --chrome-window-gap: 0px !important;
+  }
+}
