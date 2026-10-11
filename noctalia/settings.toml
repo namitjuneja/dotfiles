@@ -1,0 +1,185 @@
+config_version = 14
+
+[accessibility]
+ui_scale = 0.85000000521540642
+
+[bar]
+order = [ "default" ]
+
+    [bar.default]
+    center = [ "taskbar" ]
+    color = "primary"
+    end = [
+        "todo",
+        "media",
+        "tray",
+        "volume",
+        "notifications",
+        "clipboard",
+        "network",
+        "bluetooth",
+        "brightness",
+        "battery",
+        "control-center",
+        "session",
+        "weather",
+        "bar",
+        "clock",
+        "notes"
+    ]
+    font_family = "Adwaita Mono"
+    font_scale = 0.69999999180436134
+    margin_ends = 0
+    position = "bottom"
+    start = [ "launcher", "workspaces" ]
+    widget_spacing = 10
+
+[brightness]
+enable_ddcutil = true
+
+[calendar]
+enabled = true
+
+    [calendar.account.personal_google]
+    name = "Namit"
+    type = "google"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[location]
+auto_locate = true
+
+[lockscreen]
+transition = [ "fade" ]
+transition_duration = 300
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-widget-0000000000000001" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-4"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1075.0
+    cy = 718.0
+    output = "DP-4"
+    placement_height = 900.0
+    placement_width = 2150.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-4".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1075.0
+    cy = 450.0
+    output = "DP-4"
+    placement_height = 900.0
+    placement_width = 2150.0
+    rotation = 0.0
+    type = "clock"
+
+[plugin_settings."davemhammer/obsidian"]
+vault_path = "/home/namit/Documents/Phosphorus"
+
+[plugin_settings."nightwatch75/todo"]
+panel_position = "center"
+sound_on_complete = true
+
+[plugin_settings."noctalia/notes"]
+panel_open_near_click = true
+panel_placement = "attached"
+
+[plugin_settings."noctalia/world_clock"]
+panel_open_near_click = false
+show_add_zone = false
+time_format = "12h"
+
+[plugins]
+enabled = [ "noctalia/notes", "noctalia/world_clock", "nightwatch75/todo", "davemhammer/obsidian" ]
+
+[shell]
+password_style = "random"
+
+    [shell.launcher]
+    categories = false
+    compact = true
+
+[theme]
+builtin = "Ayu"
+community_palette = "Jiva Paper"
+mode = "dark"
+pure_black_dark = true
+shell_mode = "dark"
+wallpaper_scheme = "m3-content"
+
+[wallpaper]
+directory = "/home/namit/Downloads"
+fill_mode = "fit"
+
+    [wallpaper.default]
+    path = "/home/namit/Downloads/ustad.png"
+
+    [wallpaper.last]
+    path = "/home/namit/Downloads/ustad.png"
+
+    [wallpaper.monitors.DP-4]
+    path = "/home/namit/Downloads/ustad.png"
+
+[widget.bar]
+type = "noctalia/world_clock:bar"
+
+[widget.brightness]
+show_label = false
+
+[widget.clock]
+font_weight = 700
+
+[widget.network]
+show_label = false
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.taskbar]
+capsule = true
+only_active_workspace = true
+show_window_title = true
+workspace_group_capsule = false
+
+[widget.todo]
+type = "nightwatch75/todo:todo"
+
+[widget.weather]
+show_condition = false
