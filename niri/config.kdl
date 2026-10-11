@@ -474,6 +474,8 @@ binds {
     Mod+Shift+Equal allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) + 20 )); [ $n -gt 100 ] && n=100; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
     Mod+Shift+Minus allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) - 20 )); [ $n -lt 0 ] && n=0; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
     Mod+Slash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    Mod+Semicolon allow-when-locked=true { spawn-sh "playerctl previous"; }
+    Mod+Apostrophe allow-when-locked=true { spawn-sh "playerctl next"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+Shift+Space hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }
