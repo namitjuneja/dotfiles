@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "color": {
+      "description": "Color of the icon and count",
+      "label": "Color"
+    },
+    "glyph": {
+      "description": "Icon shown next to the count",
+      "label": "Glyph"
+    },
+    "hide_when_zero": {
+      "description": "Hide the widget when no windows are skipped",
+      "label": "Hide when zero"
+    }
+  },
+  "tooltip": {
+    "restore": "Click to restore the last one",
+    "skipped": "Skipped windows"
+  }
+}

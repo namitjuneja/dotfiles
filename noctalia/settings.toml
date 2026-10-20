@@ -8,6 +8,7 @@ order = [ "default" ]
 
     [bar.default]
     capsule_radius = 3
+    center = [ "taskbar" ]
     color = "primary"
     end = [
         "todo",
@@ -28,10 +29,11 @@ order = [ "default" ]
         "bar",
         "clock"
     ]
+    font_family = "Adwaita Mono"
     font_scale = 0.69999999180436134
     margin_ends = 0
     position = "bottom"
-    start = [ "workspaces" ]
+    start = [ "launcher", "workspaces" ]
     widget_spacing = 10
 
 [brightness]
@@ -166,8 +168,14 @@ enabled = [
     "pulser/hover-widgets",
     "icefish/phone-operate",
     "thepunkoff/pomodoro",
-    "notfinaldev/youtube-search"
+    "notfinaldev/youtube-search",
+    "namitjuneja/niri-skipped"
 ]
+
+    [[plugins.source]]
+    kind = "path"
+    location = "/home/namit/.config/noctalia-plugins"
+    name = "local"
 
 [shell]
 password_style = "random"
@@ -226,6 +234,9 @@ paused_color = "primary"
 playing_glyph = "music"
 type = "ismay/media-player-icon:media-player-icon"
 
+[widget.niri-skipped]
+type = "namitjuneja/niri-skipped:skipped"
+
 [widget.network]
 show_label = false
 
@@ -237,8 +248,10 @@ capsule = false
 icon_scale = 1.4000000000000001
 inactive_opacity = 0.5
 only_active_workspace = true
+show_window_title = true
 show_workspace_label = false
 window_title_max_width = 150
+workspace_group_capsule = false
 
 [widget.todo]
 type = "nightwatch75/todo:todo"
