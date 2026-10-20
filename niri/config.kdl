@@ -562,6 +562,9 @@ binds {
     // Cycle columns left to right, wrapping around (no switcher UI)
     Mod+Tab       { focus-column-right-or-first; }
     Mod+Shift+Tab { focus-column-left-or-last; }
+    // Cycle all windows on the workspace (tiled by column then row, floating last), focusing on each press.
+    Alt+Tab       { spawn-sh r#"niri msg action focus-window --id $(niri msg --json windows | jq '(map(select(.is_focused))[0].workspace_id) as $w | map(select(.workspace_id==$w)) | sort_by([(if .is_floating then 1 else 0 end), (.layout.pos_in_scrolling_layout // [0,0])[0], (.layout.pos_in_scrolling_layout // [0,0])[1], .id]) | (map(.is_focused) | index(true) // -1) as $i | .[($i+1) % length].id')"#; }
+    Alt+Shift+Tab { spawn-sh r#"niri msg action focus-window --id $(niri msg --json windows | jq '(map(select(.is_focused))[0].workspace_id) as $w | map(select(.workspace_id==$w)) | sort_by([(if .is_floating then 1 else 0 end), (.layout.pos_in_scrolling_layout // [0,0])[0], (.layout.pos_in_scrolling_layout // [0,0])[1], .id]) | (map(.is_focused) | index(true) // 0) as $i | .[($i-1+length) % length].id')"#; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }
@@ -766,4 +769,9 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+}
+
+// Disable the built-in MRU switcher; Alt+Tab is bound directly in binds{} above.
+recent-windows {
+    off
 }
