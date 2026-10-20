@@ -9,7 +9,7 @@ state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
 saved='{}'
 for f in "$state"/*; do
     [[ -f $f ]] || continue
-    read -r _ _ x y <"$f"
+    read -r x y <"$f"
     saved=$(jq -c --arg id "$(basename "$f")" --argjson x "$x" --argjson y "$y" '. + {($id): [$x, $y]}' <<<"$saved")
 done
 

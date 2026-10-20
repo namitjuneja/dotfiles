@@ -561,11 +561,11 @@ binds {
     // Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
 
     // Cycle columns left to right, wrapping around (no switcher UI)
-    Mod+Tab       { focus-column-right-or-first; }
-    Mod+Shift+Tab { focus-column-left-or-last; }
+    Alt+Tab       { focus-column-right-or-first; }
+    Alt+Shift+Tab { focus-column-left-or-last; }
     // Cycle all windows on the workspace in on-screen order (floating interleaved), focusing on each press.
-    Alt+Tab       { spawn-sh "~/.config/niri/window-cycle.sh next"; }
-    Alt+Shift+Tab { spawn-sh "~/.config/niri/window-cycle.sh prev"; }
+    Mod+Tab       { spawn-sh "~/.config/niri/window-cycle.sh next"; }
+    Mod+Shift+Tab { spawn-sh "~/.config/niri/window-cycle.sh prev"; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }
@@ -772,7 +772,11 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-// Disable the built-in MRU switcher; Alt+Tab is bound directly in binds{} above.
+// Built-in window switcher (overlay with thumbnails) on Mod+`. Defining binds here
+// replaces the defaults, so Alt+Tab / Mod+Tab stay with the normal binds above.
 recent-windows {
-    off
+    binds {
+        Mod+Grave       { next-window; }
+        Mod+Shift+Grave { previous-window; }
+    }
 }
