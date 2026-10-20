@@ -435,14 +435,17 @@ binds {
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     // Mirrors hyprland.lua: Mod+Space launcher, Mod+F<n> apps, bare F<n> workspaces
     Mod+Space hotkey-overlay-title="Run an Application: noctalia" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
-    Mod+F1 { spawn-sh "firefox"; }
-    Mod+F3 { spawn-sh "code"; }
-    Mod+F4 { spawn-sh "kitty"; }
+    // Mod+F<n> launchers are compound: switch to workspace n first, then spawn the app,
+    // so the new window opens there and focus follows it (a bind holds only one action,
+    // hence spawn-sh with `niri msg action ...; app`).
+    Mod+F1 { spawn-sh "niri msg action focus-workspace 1; firefox"; }
+    Mod+F3 { spawn-sh "niri msg action focus-workspace 3; code"; }
+    Mod+F4 { spawn-sh "niri msg action focus-workspace 4; kitty"; }
     Mod+Return hotkey-overlay-title="Terminal: kitty" { spawn "kitty"; }
-    Mod+F5 { spawn-sh "nautilus"; }
-    Mod+F6 { spawn-sh "OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland"; }
-    Mod+F7 { spawn-sh "google-chrome-stable"; }
-    Mod+F9 { spawn-sh "firefox --new-window music.youtube.com"; }
+    Mod+F5 { spawn-sh "niri msg action focus-workspace 5; nautilus"; }
+    Mod+F6 { spawn-sh "niri msg action focus-workspace 6; OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland"; }
+    Mod+F7 { spawn-sh "niri msg action focus-workspace 7; google-chrome-stable"; }
+    Mod+F9 { spawn-sh "niri msg action focus-workspace 9; firefox --new-window music.youtube.com"; }
     F1 { focus-workspace 1; }
     Shift+F1 { move-window-to-workspace 1 focus=false; }
     F2 { focus-workspace 2; }
