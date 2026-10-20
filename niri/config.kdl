@@ -114,7 +114,19 @@ input {
 // https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 5
+    gaps 10
+
+    // Strip showing one tab per window in tabbed columns (Mod+W).
+    tab-indicator {
+        width 8
+        gap 6
+        length total-proportion=1.0
+        position "left"
+        place-within-column
+        corner-radius 4
+        active-color "#ffc87f"
+        inactive-color "#808080"
+    }
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -122,7 +134,10 @@ layout {
     // - "always", the focused column will always be centered.
     // - "on-overflow", focusing a column will center it if it doesn't fit
     //   together with the previously focused column.
-    center-focused-column "never"
+    center-focused-column "on-overflow"
+
+    // A lone column is centered; a second window then sits beside it, each at half width.
+    always-center-single-column
 
     // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
     preset-column-widths {
@@ -305,7 +320,7 @@ animations {
     // off
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
+    slowdown 0.3
 
     workspace-switch {
         off
@@ -377,12 +392,12 @@ window-rule {
 
 // Mirrors hyprland.lua monitor rules
 output "DP-4" {
-    mode "3440x1440@49.987"
+    mode "3440x1440@59.973"
     scale 1.6
     position x=0 y=0
 }
 output "HDMI-A-2" {
-    mode "3440x1440@49.987"
+    mode "3440x1440@59.973"
     scale 1.6
     position x=0 y=0
 }
@@ -414,7 +429,6 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Bluetooth menu" { spawn-sh "rofi-bluetooth"; }
     Mod+W { toggle-column-tabbed-display; }
     Mod+Shift+Return hotkey-overlay-title="Floating terminal: kitty" { spawn "kitty" "--class" "floating-term"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
@@ -478,6 +492,8 @@ binds {
     Mod+Apostrophe allow-when-locked=true { spawn-sh "playerctl next"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+N hotkey-overlay-title="Notes: noctalia" { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
+    Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
     Mod+Shift+Space hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }
     Mod+Shift+Delete { spawn "systemctl" "poweroff"; }
     Mod+Shift+Ctrl+Delete { spawn "systemctl" "reboot"; }
