@@ -566,6 +566,10 @@ binds {
     // Cycle all windows on the workspace in on-screen order (floating interleaved), focusing on each press.
     Mod+Tab       { spawn-sh "~/.config/niri/window-cycle.sh next"; }
     Mod+Shift+Tab { spawn-sh "~/.config/niri/window-cycle.sh prev"; }
+    // Skip the focused window in Mod+Tab (it stays on the workspace and in the taskbar) and move on;
+    // Mod+Shift+N on a skipped window un-skips it, Mod+Ctrl+N restores the last skipped one and focuses it.
+    Mod+Shift+N hotkey-overlay-title="Skip window in Mod+Tab" { spawn-sh "~/.config/niri/window-cycle.sh skip"; }
+    Mod+Ctrl+N hotkey-overlay-title="Restore last skipped window" { spawn-sh "~/.config/niri/window-cycle.sh unskip"; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }
