@@ -5,7 +5,7 @@
 # Parked floating windows (see floating-stash.sh) are placed by their saved position.
 # Windows marked with the skip bind (Mod+Shift+N) are left out unless focused.
 # skip:   toggle the focused window's mark; marking it also moves focus on to the next window.
-# unskip: clear the most recently marked window and focus it (Mod+Ctrl+N).
+# unskip: clear the most recently marked window on the current workspace and focus it (Mod+Ctrl+N).
 
 state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
 skipdir="${XDG_RUNTIME_DIR:-/tmp}/niri-skip"
@@ -17,7 +17,15 @@ refresh_widget() {
 
 case $1 in
     unskip)
-        last=$(ls -t "$skipdir" 2>/dev/null | head -1)
+        ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
+        on_ws=$(niri msg --json windows | jq -r --argjson ws "$ws" '.[] | select(.workspace_id == $ws) | .id')
+        last=
+        for id in $(ls -t "$skipdir" 2>/dev/null); do
+            if grep -qx "$id" <<<"$on_ws"; then
+                last=$id
+                break
+            fi
+        done
         if [[ -n $last ]]; then
             rm -f "$skipdir/$last"
             niri msg action focus-window --id "$last"

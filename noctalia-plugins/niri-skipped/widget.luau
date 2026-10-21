@@ -1,22 +1,25 @@
 --!nonstrict
 
--- Counts windows marked with the niri skip bind (window-cycle.sh skip, Mod+Shift+N).
+-- Counts windows marked with the niri skip bind (window-cycle.sh skip, Mod+Shift+N)
+-- on the focused workspace, so the widget only shows where it applies.
 -- Marks are files named after window ids in $XDG_RUNTIME_DIR/niri-skip; only marks
--- whose window still exists are counted. Click restores the most recent one.
+-- whose window still exists on that workspace are counted. Click restores the most recent one.
 --
 -- Event driven, no timer: window-cycle.sh pushes a "refresh" IPC event whenever it
--- changes a mark, and a niri event-stream follower recounts when a window closes.
+-- changes a mark, and a niri event-stream follower recounts when a window closes or
+-- the focused workspace changes.
 
 local glyph = noctalia.getConfig("glyph")
 local color = noctalia.getConfig("color")
 local hideWhenZero = noctalia.getConfig("hide_when_zero")
 
-local CLOSE_EVENTS_CMD = "niri msg event-stream | grep --line-buffered '^Window closed'"
+local EVENTS_CMD = "niri msg event-stream | grep --line-buffered -E '^(Window closed|Workspace (focused|activated))'"
 
 local COUNT_CMD = [[
 d="${XDG_RUNTIME_DIR:-/tmp}/niri-skip"
 [ -d "$d" ] || { echo 0; exit; }
-ids=" $(niri msg --json windows | jq -r '.[].id' | tr '\n' ' ') "
+ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
+ids=" $(niri msg --json windows | jq -r --argjson ws "${ws:-null}" '.[] | select(.workspace_id == $ws) | .id' | tr '\n' ' ') "
 n=0
 for f in "$d"/*; do
   [ -f "$f" ] || continue
@@ -68,7 +71,7 @@ function onClick()
   end)
 end
 
-noctalia.runStream(CLOSE_EVENTS_CMD, function()
+noctalia.runStream(EVENTS_CMD, function()
   poll()
 end)
 poll()

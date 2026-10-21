@@ -386,6 +386,26 @@ window-rule {
     clip-to-geometry true
 }
 
+// Background blur behind translucent windows and the Noctalia bar. Opaque surfaces are unaffected.
+// Kept mild (few passes, small offset) so text on top stays readable; raise passes/offset for more.
+blur {
+    passes 2
+    offset 2.0
+}
+
+window-rule {
+    background-effect {
+        blur true
+    }
+}
+
+layer-rule {
+    match namespace="^noctalia-bar"
+    background-effect {
+        blur true
+    }
+}
+
 /-window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
