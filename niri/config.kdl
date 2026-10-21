@@ -388,6 +388,7 @@ window-rule {
 
 // Background blur behind translucent windows and the Noctalia bar. Opaque surfaces are unaffected.
 // Kept mild (few passes, small offset) so text on top stays readable; raise passes/offset for more.
+// xray false blurs whatever is actually behind (other windows), not just the wallpaper.
 blur {
     passes 2
     offset 2.0
@@ -396,6 +397,7 @@ blur {
 window-rule {
     background-effect {
         blur true
+        xray false
     }
 }
 
@@ -403,6 +405,17 @@ layer-rule {
     match namespace="^noctalia-bar"
     background-effect {
         blur true
+        xray false
+    }
+}
+
+// Noctalia panels (launcher, clipboard, control center). Anchored with $ so the
+// full-screen noctalia-panel-click-shield surface is not blurred.
+layer-rule {
+    match namespace="^noctalia-panel$"
+    background-effect {
+        blur true
+        xray false
     }
 }
 
