@@ -759,6 +759,8 @@ binds {
     // e.g. by double-clicking on the titlebar.
     Mod+M { spawn "bash" "-c" "$HOME/.config/niri/scripts/maximize-all.sh"; }
     Mod+Shift+M { fullscreen-window; }
+    // Unfloat everything on this workspace and fit all columns on screen without scrolling.
+    Mod+A { spawn "bash" "-c" "$HOME/.config/niri/scripts/fit-all.sh"; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
