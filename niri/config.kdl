@@ -373,6 +373,15 @@ window-rule {
     default-window-height { fixed 500; }
 }
 
+// Translucent Nautilus, Obsidian and Noctalia Settings so the background blur shows through. Must stay above the
+// floating-hide rule below, or a later match would override its opacity 0.0.
+window-rule {
+    match app-id="^org\\.gnome\\.Nautilus$"
+    match app-id="^md\\.obsidian\\.Obsidian$"
+    match app-id="^dev\\.noctalia\\.Noctalia$"
+    opacity 0.9
+}
+
 // Hide floating windows while focus is on something else; they reappear when focused
 // (Mod+Shift+F jumps focus to the floating layer). They still catch mouse clicks while hidden.
 window-rule {
@@ -820,3 +829,4 @@ recent-windows {
         Mod+Shift+Grave { previous-window; }
     }
 }
+
