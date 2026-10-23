@@ -288,6 +288,8 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"  // replaced by noctalia
 spawn-at-startup "noctalia"
+// The peek bar starts visible; keep retrying until noctalia's IPC is up, then hide it.
+spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done"
 spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -534,14 +536,14 @@ binds {
     Mod+Shift+Equal allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) + 20 )); [ $n -gt 100 ] && n=100; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
     Mod+Shift+Minus allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) - 20 )); [ $n -lt 0 ] && n=0; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
     Mod+Slash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    Mod+Semicolon allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
-    Mod+Apostrophe allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
+    Mod+Semicolon allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    Mod+Apostrophe allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+N hotkey-overlay-title="Notes: noctalia" { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
-    Mod+P hotkey-overlay-title="Peek now playing: noctalia" { spawn-sh "noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
-    F19 hotkey-overlay-title=null { spawn-sh "noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
+    Mod+P hotkey-overlay-title="Peek now playing: noctalia" { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    F19 hotkey-overlay-title=null { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
     Mod+Shift+Space hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }
     Mod+Shift+Delete { spawn "systemctl" "poweroff"; }
     Mod+Shift+Ctrl+Delete { spawn "systemctl" "reboot"; }
@@ -565,8 +567,8 @@ binds {
     // This will work with any MPRIS-enabled media player.
     XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
     XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
