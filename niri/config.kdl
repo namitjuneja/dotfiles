@@ -533,8 +533,8 @@ binds {
     Mod+Equal allow-when-locked=true { spawn-sh "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"; }
     Mod+Minus allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"; }
     Mod+0 allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    Mod+Shift+Equal allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) + 20 )); [ $n -gt 100 ] && n=100; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
-    Mod+Shift+Minus allow-when-locked=true { spawn-sh "n=$(( $($HOME/.config/swaync/scripts/brightness-get.sh) - 20 )); [ $n -lt 0 ] && n=0; $HOME/.config/swaync/scripts/brightness-set.sh $n"; }
+    Mod+Shift+Equal allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    Mod+Shift+Minus allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
     Mod+Slash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
     Mod+Semicolon allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
     Mod+Apostrophe allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
@@ -542,6 +542,7 @@ binds {
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+N hotkey-overlay-title="Notes: noctalia" { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
+    Mod+S hotkey-overlay-title="Notification history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+P hotkey-overlay-title="Peek now playing: noctalia" { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
     F19 hotkey-overlay-title=null { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
     Mod+Shift+Space hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }

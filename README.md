@@ -11,34 +11,29 @@ first (it lists every package to install), then the per-component notes below.
 |---|---|---|
 | `hypr/` | Hyprland compositor config, keybinds, autostart, hypridle | [`hypr/README.md`](hypr/README.md) |
 | `waybar/` | Status bar | [`waybar/README.md`](waybar/README.md) |
-| `swaync/` | Notification sidebar (`Super + S`) — volume/brightness sliders, notifications, quick actions | [`swaync/README.md`](swaync/README.md) |
 
 ---
 
 ## Brightness Control Quick Reference
 
-The swaync sidebar's brightness slider works on both laptops and desktops without
-any config changes — `swaync/scripts/brightness-get.sh` / `brightness-set.sh`
-auto-detect which method to use:
+Hyprland's brightness binds use `swaync/scripts/brightness-get.sh` / `brightness-set.sh`
+(kept after swaync itself was removed); they auto-detect the method:
 
 - **Laptop** (real backlight device) → `brightnessctl`, near-instant.
 - **Desktop with external monitor** (no backlight device, e.g. this machine's LG
-  monitor on `DP-4`) → `ddcutil` over DDC/CI, ~0.4-0.6s per change (protocol-level
-  limit, not fixable in config).
+  monitor on `DP-4`) → `ddcutil` over DDC/CI, ~0.4-0.6s per change.
 
-Requires `ddcutil` for the desktop path (`sudo pacman -S ddcutil`) and I2C
-permissions (user in the `i2c` group or a udev rule for `/dev/i2c-*`). Full details,
-including a swaync 0.12.6 slider bug workaround, in
-[`swaync/README.md`](swaync/README.md).
+Under niri, `Mod+Shift+=` / `Mod+Shift+-` call `noctalia msg brightness-up/down`
+(`enable_ddcutil = true` in `noctalia/settings.toml`). Needs `ddcutil` and I2C permissions.
 
 ---
 
 ## Noctalia peek bar (niri)
 
-A transparent bottom bar, `peek`, that shows the current track for 1.5 s and hides.
+A transparent bottom bar, `peek`, that shows the current track for 2.5 s and hides.
 
 - **Bar:** `[bar.peek]` and `[widget.peek-media]` in `noctalia/settings.toml`. The niri blur rule matches only `noctalia-bar-default`; the peek surface exists while hidden and would leave a blurred strip.
-- **Flash command:** `noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek`
+- **Flash command:** `noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek`
 - **Triggers in `niri/config.kdl`:**
   - `Mod+P` and `F19`.
   - Previous/next binds (`Mod+;`, `Mod+'`, media keys): they wait for the new title, then flash.
@@ -52,8 +47,8 @@ A transparent bottom bar, `peek`, that shows the current track for 1.5 s and hid
   *
 
   [main]
-  leftalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek'))
-  rightalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 1.5; noctalia msg bar-hide peek'))
+  leftalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek'))
+  rightalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek'))
   leftmeta = layerm(meta, macro(f19))
   rightmeta = layerm(meta, macro(f19))
 
