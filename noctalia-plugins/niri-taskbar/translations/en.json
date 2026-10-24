@@ -1,0 +1,16 @@
+{
+  "settings": {
+    "icon_size": { "label": "Icon size", "description": "Window icon size in pixels" },
+    "inactive_opacity": { "label": "Inactive opacity", "description": "Opacity (%) of windows that are not focused" },
+    "only_active_workspace": { "label": "Only active workspace", "description": "Show only the windows of the focused workspace" },
+    "show_window_title": { "label": "Show window title", "description": "Show the title next to each icon" },
+    "skipped_badge": { "label": "Skipped badge", "description": "Show a small eye-off icon on skipped windows" },
+    "skipped_color": { "label": "Skipped color", "description": "Title and badge color of skipped windows" },
+    "skipped_opacity": { "label": "Skipped opacity", "description": "Opacity (%) of skipped windows that are not focused" },
+    "skipped_strikethrough": { "label": "Strike through skipped titles", "description": "Draw a line through the titles of skipped windows" },
+    "title_max_chars": { "label": "Title length", "description": "Longest title shown, in characters" }
+  },
+  "tooltip": {
+    "skipped": "skipped in Mod+Tab"
+  }
+}

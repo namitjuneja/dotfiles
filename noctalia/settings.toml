@@ -3,12 +3,15 @@ config_version = 14
 [accessibility]
 ui_scale = 0.85000000521540642
 
+[audio]
+enable_notification_sounds = false
+
 [bar]
 order = [ "default", "peek" ]
 
     [bar.default]
     capsule_radius = 3
-    center = [ "taskbar" ]
+    center = [ "niri-taskbar" ]
     color = "primary"
     end = [
         "todo",
@@ -179,7 +182,7 @@ enabled = [
     "icefish/phone-operate",
     "thepunkoff/pomodoro",
     "notfinaldev/youtube-search",
-    "namitjuneja/niri-skipped"
+    "namitjuneja/niri-taskbar"
 ]
 
     [[plugins.source]]
@@ -250,8 +253,8 @@ paused_color = "primary"
 playing_glyph = "music"
 type = "ismay/media-player-icon:media-player-icon"
 
-[widget.niri-skipped]
-type = "namitjuneja/niri-skipped:skipped"
+[widget.niri-taskbar]
+type = "namitjuneja/niri-taskbar:taskbar"
 
 [widget.network]
 show_label = false

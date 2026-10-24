@@ -1,49 +1,74 @@
 #!/usr/bin/env bash
-# Usage: window-cycle.sh next|prev|list|skip|unskip
+# Usage: window-cycle.sh next|prev|list|skip|unskip|restore ID
 # Focus the next/previous window on the current workspace in on-screen order
 # (left to right, then top to bottom), floating windows interleaved by position.
 # Parked floating windows (see floating-stash.sh) are placed by their saved position.
-# Windows marked with the skip bind (Mod+Shift+N) are left out unless focused.
-# skip:   toggle the focused window's mark; marking it also moves focus on to the next window.
-# unskip: clear the most recently marked window on the current workspace and focus it (Mod+Ctrl+N).
+# skip:    minimize the focused window (Mod+Shift+N): focus moves to the next window and the window
+#          is parked on the "stash" workspace; its origin is recorded in $XDG_RUNTIME_DIR/niri-skip/<id>.
+#          On an already minimized window it restores it instead.
+# unskip:  restore the most recently minimized window that came from the current workspace (Mod+Ctrl+N).
+# restore: restore the given window id to its origin workspace and focus it (taskbar click).
 
 state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
 skipdir="${XDG_RUNTIME_DIR:-/tmp}/niri-skip"
 
-# Tell the niri-skipped Noctalia widget to recount (no-op if Noctalia or the plugin is absent).
+# Tell the niri-taskbar Noctalia widget to refresh (no-op if Noctalia or the plugin is absent).
 refresh_widget() {
-    noctalia msg plugin namitjuneja/niri-skipped:skipped all refresh >/dev/null 2>&1
+    noctalia msg plugin namitjuneja/niri-taskbar:taskbar all refresh >/dev/null 2>&1
 }
 
+stash=stash   # named niri workspace that holds minimized windows (see config.kdl)
+
+# restore ID: send a minimized window back to the workspace it came from (and its column), focus it.
+restore() {
+    local id=$1 mark ws name col target
+    mark=$(cat "$skipdir/$id" 2>/dev/null) || return
+    name=$(jq -r '.name // empty' <<<"$mark")
+    ws=$(jq -r '.ws // empty' <<<"$mark")
+    col=$(jq -r '.col // empty' <<<"$mark")
+    if [[ -n $name ]]; then
+        target=$name
+    else
+        target=$(niri msg --json workspaces | jq -r --argjson ws "${ws:-null}" '
+            (.[] | select(.id == $ws) | .idx) // (.[] | select(.is_focused) | .idx)')
+    fi
+    rm -f "$skipdir/$id"
+    niri msg action move-window-to-workspace --window-id "$id" --focus false "$target"
+    niri msg action focus-window --id "$id"
+    [[ -n $col ]] && niri msg action move-column-to-index "$col"
+    refresh_widget
+}
+
+minimize=
 case $1 in
+    restore)
+        restore "$2"
+        exit
+        ;;
     unskip)
         ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
-        on_ws=$(niri msg --json windows | jq -r --argjson ws "$ws" '.[] | select(.workspace_id == $ws) | .id')
-        last=
         for id in $(ls -t "$skipdir" 2>/dev/null); do
-            if grep -qx "$id" <<<"$on_ws"; then
-                last=$id
+            if [[ $(jq '.ws' "$skipdir/$id" 2>/dev/null) == "$ws" ]]; then
+                restore "$id"
                 break
             fi
         done
-        if [[ -n $last ]]; then
-            rm -f "$skipdir/$last"
-            niri msg action focus-window --id "$last"
-            refresh_widget
-        fi
         exit
         ;;
     skip)
-        id=$(niri msg --json focused-window | jq .id)
+        win=$(niri msg --json focused-window)
+        id=$(jq .id <<<"$win")
         [[ $id != null ]] || exit
         mkdir -p "$skipdir"
         if [[ -e $skipdir/$id ]]; then
-            rm "$skipdir/$id"
-            refresh_widget
+            restore "$id"
             exit
         fi
-        touch "$skipdir/$id"
-        refresh_widget
+        wsinfo=$(niri msg --json workspaces | jq -c --argjson ws "$(jq .workspace_id <<<"$win")" '.[] | select(.id == $ws)')
+        [[ $(jq -r .name <<<"$wsinfo") == "$stash" ]] && exit
+        jq -nc --argjson w "$wsinfo" --argjson win "$win" \
+            '{ws: $w.id, name: $w.name, col: (if $win.is_floating then null else $win.layout.pos_in_scrolling_layout[0] end)}' >"$skipdir/$id"
+        minimize=$id
         set -- next
         ;;
 esac
@@ -101,3 +126,9 @@ case $1 in
         [[ -n $id ]] && niri msg action focus-window --id "$id"
         ;;
 esac
+
+# Focus has moved on; now park the minimized window on the stash workspace.
+if [[ -n $minimize ]]; then
+    niri msg action move-window-to-workspace --window-id "$minimize" --focus false "$stash"
+    refresh_widget
+fi

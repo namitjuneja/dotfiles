@@ -1,0 +1,85 @@
+id = "namitjuneja/niri-taskbar"
+name = "Niri Taskbar"
+version = "1.0.0"
+plugin_api = 24
+author = "namitjuneja"
+license = "MIT"
+icon = "layout-bottombar"
+description = "Taskbar for niri that styles windows skipped in the Mod+Tab cycle (Mod+Shift+N) differently."
+tags = ["bar", "taskbar", "niri"]
+dependencies = ["niri", "jq", "sh"]
+
+[[widget]]
+id = "taskbar"
+entry = "widget.luau"
+
+    [[widget.setting]]
+    key = "icon_size"
+    type = "int"
+    label_key = "settings.icon_size.label"
+    description_key = "settings.icon_size.description"
+    default = 22
+    min = 10
+    max = 64
+
+    [[widget.setting]]
+    key = "show_window_title"
+    type = "bool"
+    label_key = "settings.show_window_title.label"
+    description_key = "settings.show_window_title.description"
+    default = true
+
+    [[widget.setting]]
+    key = "title_max_chars"
+    type = "int"
+    label_key = "settings.title_max_chars.label"
+    description_key = "settings.title_max_chars.description"
+    default = 24
+    min = 5
+    max = 120
+
+    [[widget.setting]]
+    key = "only_active_workspace"
+    type = "bool"
+    label_key = "settings.only_active_workspace.label"
+    description_key = "settings.only_active_workspace.description"
+    default = true
+
+    [[widget.setting]]
+    key = "inactive_opacity"
+    type = "int"
+    label_key = "settings.inactive_opacity.label"
+    description_key = "settings.inactive_opacity.description"
+    default = 50
+    min = 10
+    max = 100
+
+    [[widget.setting]]
+    key = "skipped_opacity"
+    type = "int"
+    label_key = "settings.skipped_opacity.label"
+    description_key = "settings.skipped_opacity.description"
+    default = 30
+    min = 10
+    max = 100
+
+    [[widget.setting]]
+    key = "skipped_color"
+    type = "color"
+    label_key = "settings.skipped_color.label"
+    description_key = "settings.skipped_color.description"
+    default = "on_surface_variant"
+
+    [[widget.setting]]
+    key = "skipped_strikethrough"
+    type = "bool"
+    label_key = "settings.skipped_strikethrough.label"
+    description_key = "settings.skipped_strikethrough.description"
+    default = true
+
+    [[widget.setting]]
+    key = "skipped_badge"
+    type = "bool"
+    label_key = "settings.skipped_badge.label"
+    description_key = "settings.skipped_badge.description"
+    default = true

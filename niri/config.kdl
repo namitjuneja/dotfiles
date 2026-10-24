@@ -291,9 +291,7 @@ spawn-at-startup "noctalia"
 // The peek bar starts visible and IPC answers before its surface exists, so a single successful hide is not enough;
 // wait for IPC, then keep re-hiding for ~20s to catch the bar once it appears.
 spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done; for i in $(seq 20); do sleep 1; noctalia msg bar-hide peek >/dev/null 2>&1; done"
-// Disabled for now (conflicts with niri-sidebar): spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
-// Daemon that re-stacks the sidebar when one of its windows closes.
-spawn-at-startup "niri-sidebar" "listen"
+// Disabled for now: spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -389,7 +387,7 @@ window-rule {
 
 // Hide floating windows while focus is on something else; they reappear when focused
 // (Mod+Shift+F jumps focus to the floating layer). They still catch mouse clicks while hidden.
-// Disabled for now (conflicts with niri-sidebar):
+// Disabled for now:
 // window-rule {
 //     match is-floating=true is-focused=false
 //     opacity 0.0
@@ -461,6 +459,8 @@ workspace "6"
 workspace "7"
 workspace "8"
 workspace "9"
+// Holds minimized windows (window-cycle.sh skip); the taskbar shows them under their origin workspace.
+workspace "stash"
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -620,10 +620,12 @@ binds {
     // Cycle all windows on the workspace in on-screen order (floating interleaved), focusing on each press.
     Mod+Tab       { spawn-sh "~/.config/niri/window-cycle.sh next"; }
     Mod+Shift+Tab { spawn-sh "~/.config/niri/window-cycle.sh prev"; }
-    // Skip the focused window in Mod+Tab (it stays on the workspace and in the taskbar) and move on;
-    // Mod+Shift+N on a skipped window un-skips it, Mod+Ctrl+N restores the last skipped one and focuses it.
-    Mod+Shift+N hotkey-overlay-title="Skip window in Mod+Tab" { spawn-sh "~/.config/niri/window-cycle.sh skip"; }
-    Mod+Ctrl+N hotkey-overlay-title="Restore last skipped window" { spawn-sh "~/.config/niri/window-cycle.sh unskip"; }
+    // Minimize the focused window: focus moves on and the window is parked on the "stash" workspace;
+    // the niri-taskbar plugin keeps listing it under its origin workspace (dimmed, struck through).
+    // Mod+Shift+N on a minimized window, or clicking it in the taskbar, restores it to its origin workspace;
+    // Mod+Ctrl+N restores the last minimized window that came from the current workspace and focuses it.
+    Mod+Shift+N hotkey-overlay-title="Minimize window to stash workspace" { spawn-sh "~/.config/niri/window-cycle.sh skip"; }
+    Mod+Ctrl+N hotkey-overlay-title="Restore last minimized window" { spawn-sh "~/.config/niri/window-cycle.sh unskip"; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }
@@ -769,12 +771,6 @@ binds {
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
-
-    // niri-sidebar: stack floating utility windows along the right edge (Mod+S is taken by notifications).
-    Mod+Y hotkey-overlay-title="Sidebar: toggle window" { spawn "niri-sidebar" "toggle-window"; }
-    Mod+Shift+Y hotkey-overlay-title="Sidebar: hide/show" { spawn "niri-sidebar" "toggle-visibility"; }
-    Mod+Ctrl+Y hotkey-overlay-title="Sidebar: flip order" { spawn "niri-sidebar" "flip"; }
-    Mod+Alt+Y hotkey-overlay-title="Sidebar: reorder" { spawn "niri-sidebar" "reorder"; }
 
     Mod+C { center-column; }
 
