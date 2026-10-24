@@ -291,7 +291,9 @@ spawn-at-startup "noctalia"
 // The peek bar starts visible and IPC answers before its surface exists, so a single successful hide is not enough;
 // wait for IPC, then keep re-hiding for ~20s to catch the bar once it appears.
 spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done; for i in $(seq 20); do sleep 1; noctalia msg bar-hide peek >/dev/null 2>&1; done"
-spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
+// Disabled for now (conflicts with niri-sidebar): spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
+// Daemon that re-stacks the sidebar when one of its windows closes.
+spawn-at-startup "niri-sidebar" "listen"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -387,10 +389,11 @@ window-rule {
 
 // Hide floating windows while focus is on something else; they reappear when focused
 // (Mod+Shift+F jumps focus to the floating layer). They still catch mouse clicks while hidden.
-window-rule {
-    match is-floating=true is-focused=false
-    opacity 0.0
-}
+// Disabled for now (conflicts with niri-sidebar):
+// window-rule {
+//     match is-floating=true is-focused=false
+//     opacity 0.0
+// }
 
 // Square window corners, as in hyprland.lua (rounding = 0)
 window-rule {
@@ -766,6 +769,12 @@ binds {
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
+
+    // niri-sidebar: stack floating utility windows along the right edge (Mod+S is taken by notifications).
+    Mod+Y hotkey-overlay-title="Sidebar: toggle window" { spawn "niri-sidebar" "toggle-window"; }
+    Mod+Shift+Y hotkey-overlay-title="Sidebar: hide/show" { spawn "niri-sidebar" "toggle-visibility"; }
+    Mod+Ctrl+Y hotkey-overlay-title="Sidebar: flip order" { spawn "niri-sidebar" "flip"; }
+    Mod+Alt+Y hotkey-overlay-title="Sidebar: reorder" { spawn "niri-sidebar" "reorder"; }
 
     Mod+C { center-column; }
 
