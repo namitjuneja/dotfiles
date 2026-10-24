@@ -288,8 +288,9 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"  // replaced by noctalia
 spawn-at-startup "noctalia"
-// The peek bar starts visible; keep retrying until noctalia's IPC is up, then hide it.
-spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done"
+// The peek bar starts visible and IPC answers before its surface exists, so a single successful hide is not enough;
+// wait for IPC, then keep re-hiding for ~20s to catch the bar once it appears.
+spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done; for i in $(seq 20); do sleep 1; noctalia msg bar-hide peek >/dev/null 2>&1; done"
 spawn-at-startup "bash" "-c" "exec ~/.config/niri/floating-stash.sh"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -482,7 +483,7 @@ binds {
     // Mod+F<n> launchers are compound: switch to workspace n first, then spawn the app,
     // so the new window opens there and focus follows it (a bind holds only one action,
     // hence spawn-sh with `niri msg action ...; app`).
-    Mod+F1 { spawn-sh "niri msg action focus-workspace 1; firefox"; }
+    Mod+F1 { spawn "firefox"; }
     Mod+F3 { spawn-sh "niri msg action focus-workspace 3; code"; }
     Mod+F4 { spawn-sh "niri msg action focus-workspace 4; kitty"; }
     Mod+Return hotkey-overlay-title="Terminal: kitty" { spawn "kitty"; }
