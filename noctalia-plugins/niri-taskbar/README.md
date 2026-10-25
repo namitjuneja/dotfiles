@@ -16,6 +16,17 @@ Minimizing is split between `niri/window-cycle.sh` and this plugin.
   by id, else the focused workspace), puts a tiled window back in its column, focuses it and
   deletes the mark. Marks of closed windows are dropped the next time `Mod+Tab` runs.
 
+## Floating windows and Mod+Tab
+
+`Mod+Tab` / `Mod+Shift+Tab` (`window-cycle.sh next|prev`) also stash floating windows, using the
+same mechanism with an extra `"auto": true` in the mark:
+
+- Cycling onto a **tiled** window parks every visible floating window of the workspace on `stash`.
+- Cycling onto a **stashed floating** window brings just that one back in front; the other
+  floating windows keep their state, so cycling floating to floating never stashes anything.
+- Auto-stashed windows stay in the Mod+Tab order of their origin workspace and in the taskbar
+  (styled like minimized ones). Focus changes by other means (mouse, `Alt+Tab`, arrows) don't stash.
+
 ## What the taskbar shows
 
 One item per window (icon, title), in on-screen order: tiled windows by column then row,

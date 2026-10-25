@@ -7,6 +7,8 @@
 #          is parked on the "stash" workspace; its origin is recorded in $XDG_RUNTIME_DIR/niri-skip/<id>.
 #          On an already minimized window it restores it instead.
 # unskip:  restore the most recently minimized window that came from the current workspace (Mod+Ctrl+N).
+# next/prev (Mod+Tab): focusing a floating window that was stashed brings it back; focusing a tiled
+#          window stashes every floating window of the workspace (they stay in the taskbar).
 # restore: restore the given window id to its origin workspace and focus it (taskbar click).
 
 state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
@@ -36,6 +38,22 @@ restore() {
     niri msg action move-window-to-workspace --window-id "$id" --focus false "$target"
     niri msg action focus-window --id "$id"
     [[ -n $col ]] && niri msg action move-column-to-index "$col"
+    refresh_widget
+}
+
+# stash_floating: park every visible floating window of the focused workspace on the stash workspace,
+# marked "auto" so the cycle (and the taskbar) still know them; they come back via the cycle or a click.
+stash_floating() {
+    local wsid wsinfo id
+    wsid=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
+    wsinfo=$(niri msg --json workspaces | jq -c --argjson ws "$wsid" '.[] | select(.id == $ws)')
+    [[ $(jq -r .name <<<"$wsinfo") == "$stash" ]] && return
+    mkdir -p "$skipdir"
+    for id in $(niri msg --json windows | jq -r --argjson ws "$wsid" '.[] | select(.workspace_id == $ws and .is_floating) | .id'); do
+        [[ -e $skipdir/$id ]] && continue
+        jq -nc --argjson w "$wsinfo" '{ws: $w.id, name: $w.name, col: null, auto: true}' >"$skipdir/$id"
+        niri msg action move-window-to-workspace --window-id "$id" --focus false "$stash"
+    done
     refresh_widget
 }
 
@@ -80,23 +98,30 @@ for f in "$state"/*; do
     saved=$(jq -c --arg id "$(basename "$f")" --argjson x "$x" --argjson y "$y" '. + {($id): [$x, $y]}' <<<"$saved")
 done
 
-# Skip marks are files named after window ids; drop the ones whose window is gone.
+ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
+
+# Marks are files named after window ids; drop the ones whose window is gone. Explicitly minimized
+# windows ($skip) stay out of the cycle; floating windows stashed by the cycle itself ("auto" marks)
+# that came from this workspace ($auto) stay in it, so the cycle can bring them back.
 ids=$(niri msg --json windows | jq -c '[.[].id]')
 skip='[]'
+auto='[]'
 for f in "$skipdir"/*; do
     [[ -f $f ]] || continue
     id=$(basename "$f")
     if jq -e --argjson id "$id" 'index($id)' <<<"$ids" >/dev/null; then
-        skip=$(jq -c --argjson id "$id" '. + [$id]' <<<"$skip")
+        if [[ $(jq -r '.auto // false' "$f") == true ]]; then
+            [[ $(jq '.ws' "$f") == "$ws" ]] && auto=$(jq -c --argjson id "$id" '. + [$id]' <<<"$auto")
+        else
+            skip=$(jq -c --argjson id "$id" '. + [$id]' <<<"$skip")
+        fi
     else
         rm -f "$f"
     fi
 done
 
-ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
-
-order=$(niri msg --json windows | jq -c --argjson ws "$ws" --argjson saved "$saved" --argjson skip "$skip" '
-    [.[] | select(.workspace_id == $ws)] as $all
+order=$(niri msg --json windows | jq -c --argjson ws "$ws" --argjson saved "$saved" --argjson skip "$skip" --argjson auto "$auto" '
+    [.[] | select(.workspace_id == $ws or (.id as $i | $auto | index($i)))] as $all
     | [$all[] | select(.is_floating | not)] as $tiled
     # Niri reports no on-screen position for tiled windows, so estimate x from the
     # widths of the columns to their left (exact while the columns fit on screen).
@@ -123,7 +148,18 @@ case $1 in
             | if $n == 0 then empty
               elif $i == null then (if $d == "next" then .[0] else .[$n - 1] end).id
               else .[(if $d == "next" then $i + 1 else $i - 1 + $n end) % $n].id end' <<<"$order")
-        [[ -n $id ]] && niri msg action focus-window --id "$id"
+        if [[ -n $id ]]; then
+            target=$(jq --argjson id "$id" '.[] | select(.id == $id)' <<<"$order")
+            if [[ -e $skipdir/$id ]]; then
+                restore "$id"      # a floating window the cycle stashed: bring it back in front
+            else
+                niri msg action focus-window --id "$id"
+            fi
+            # Landing on a tiled window tucks every floating window away; landing on a floating one doesn't.
+            if [[ -z $minimize && $(jq .is_floating <<<"$target") == false ]]; then
+                stash_floating
+            fi
+        fi
         ;;
 esac
 
