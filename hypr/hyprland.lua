@@ -462,6 +462,8 @@ hl.bind(mainMod .. " + d", hl.dsp.exec_cmd([[bash -c 'cur=$(hyprctl getoption de
 -- Toggle animations on/off entirely
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd([[bash -c 'cur=$(hyprctl getoption animations:enabled -j | jq .bool); [ "$cur" = "true" ] && hyprctl eval "hl.config({animations={enabled=false}})" || hyprctl eval "hl.config({animations={enabled=true}})"']]))
 
+-- Quit Hyprland
+hl.bind(mainMod .. " + SHIFT + e", hl.dsp.exit())
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
