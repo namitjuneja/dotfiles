@@ -1,22 +1,25 @@
-config_version = 14
+config_version = 15
 
 [accessibility]
 ui_scale = 0.85000000521540642
 
 [audio]
-enable_notification_sounds = false
+enable_screenshot_sounds = false
+enable_sounds = false
 
 [bar]
 order = [ "default", "peek" ]
 
     [bar.default]
-    capsule_radius = 3
     center = [ "niri-taskbar" ]
     color = "primary"
     end = [
+        "ambient-sounds",
         "todo",
         "notes",
+        "status",
         "media-player-icon",
+        "bluetooth",
         "media",
         "tray",
         "volume",
@@ -32,19 +35,36 @@ order = [ "default", "peek" ]
         "bar",
         "clock"
     ]
-    font_family = "Adwaita Mono"
     font_scale = 0.69999999180436134
     margin_ends = 0
     position = "bottom"
-    start = [ "launcher", "workspaces" ]
+    shadow = false
+    start = [ "workspaces" ]
     widget_spacing = 10
 
+        [bar.default.dead_zone.actions]
+        left = "panel-toggle control-center home"
+        right = "settings-toggle"
+
     [bar.peek]
-    background_opacity = 0.0
-    capsule_opacity = 0.0
-    center = [ "peek-media" ]
-    position = "bottom"
-    reserve_space = false
+    capsule = true
+    capsule_border = "secondary"
+    capsule_fill = "surface"
+    capsule_opacity = 0.99999997764825821
+    capsule_radius = 3
+    center = []
+    color = "secondary"
+    compositor_blur = false
+    end = [ "peek-media" ]
+    hover_highlight = false
+    icon_color = "secondary"
+    margin_edge = 6
+    margin_ends = 0
+    padding = 13
+    shadow = false
+    show_tooltip = false
+    start = [ "bar_2" ]
+    widget_spacing = 15
 
 [brightness]
 enable_ddcutil = true
@@ -56,6 +76,9 @@ enabled = true
     name = "Namit"
     type = "google"
 
+[control_center]
+sidebar = "full"
+
 [desktop_widgets]
 schema_version = 2
 widget_order = []
@@ -66,6 +89,9 @@ widget_order = []
     visible = true
 
     [desktop_widgets.widget]
+
+[dock]
+background_opacity = 0.99999997764825821
 
 [idle]
 behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
@@ -79,7 +105,7 @@ pre_action_fade_seconds = 30
     [idle.behavior.lock-and-suspend]
     action = "lock_and_suspend"
     enabled = true
-    timeout = 900.0
+    timeout = 3600.0
 
     [idle.behavior.screen-off]
     action = "screen_off"
@@ -141,8 +167,14 @@ widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-widget-000000000000000
     rotation = 0.0
     type = "clock"
 
-[panels]
-transparency_mode = "glass"
+[nightlight]
+enabled = true
+temperature_day = 4600
+temperature_night = 4800
+
+[notification]
+background_opacity = 0.62999998591840267
+position = "top_left"
 
 [plugin_settings."davemhammer/obsidian"]
 vault_path = "/home/namit/Documents/Phosphorus"
@@ -182,8 +214,19 @@ enabled = [
     "icefish/phone-operate",
     "thepunkoff/pomodoro",
     "notfinaldev/youtube-search",
+    "reaperhound/ambient-sounds",
     "namitjuneja/niri-taskbar"
 ]
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
 
     [[plugins.source]]
     kind = "path"
@@ -191,6 +234,7 @@ enabled = [
     name = "local"
 
 [shell]
+clipboard_history_max_entries = 10000
 password_style = "random"
 
     [shell.launcher]
@@ -200,6 +244,13 @@ password_style = "random"
     [shell.panel]
     session_placement = "floating"
     session_position = "center"
+    transparency_mode = "soft"
+
+    [shell.screenshot]
+    remember_last_region = true
+
+    [shell.window_switcher]
+    current_workspace_only = true
 
 [theme]
 builtin = "Ayu"
@@ -223,11 +274,39 @@ fill_mode = "crop"
     [wallpaper.monitors.DP-4]
     path = "/home/namit/Downloads/lukasz-szmigiel-8AdYB7M4OHY-unsplash.jpg"
 
+[widget.active-window]
+type = "pulser/hover-widgets:active-window"
+
+[widget.ambient-sounds]
+type = "reaperhound/ambient-sounds:ambient-sounds"
+
 [widget.bar]
+enabled = false
+type = "noctalia/world_clock:bar"
+
+[widget.bar_2]
+capsule_radius = 3
+color = "secondary"
+font_scale = 0.69000000000000006
+show_clocks = true
+type = "noctalia/world_clock:bar"
+
+[widget.bar_3]
+capsule_border = "secondary"
+capsule_fill = "primary"
+capsule_radius = 3
+color = "secondary"
+enable_scroll = false
+font_scale = 0.64000000000000001
+show_clocks = true
 type = "noctalia/world_clock:bar"
 
 [widget.brightness]
+enabled = false
 show_label = false
+
+[widget.clipboard]
+enabled = false
 
 [widget.clock]
 font_weight = 700
@@ -241,36 +320,55 @@ hide_when_no_media = true
 max_length = 81
 rotate_album_art = true
 
-[widget.peek-media]
-hide_album_art = true
-hide_when_no_media = true
-max_length = 81
-type = "media"
-
 [widget.media-player-icon]
 hide_stopped = true
 paused_color = "primary"
 playing_glyph = "music"
 type = "ismay/media-player-icon:media-player-icon"
 
+[widget.network]
+enabled = false
+show_label = false
+
 [widget.niri-taskbar]
 type = "namitjuneja/niri-taskbar:taskbar"
 
-[widget.network]
-show_label = false
-
 [widget.notes]
 type = "noctalia/notes:notes"
+
+[widget.peek-media]
+capsule_border = "secondary"
+capsule_fill = "surface"
+capsule_foreground = "secondary"
+capsule_padding = 7
+capsule_radius = 3
+color = "secondary"
+font_scale = 0.69000000000000006
+hide_album_art = false
+hide_when_no_media = false
+interactive = false
+max_length = 800
+min_length = 108
+rotate_album_art = true
+show_tooltip = false
+
+[widget.pulse]
+type = "lowcache/claude-companion:pulse"
+
+[widget.session]
+enabled = false
+
+[widget.status]
+type = "icefish/phone-operate:status"
 
 [widget.taskbar]
 capsule = false
 icon_scale = 1.4000000000000001
 inactive_opacity = 0.5
 only_active_workspace = true
-show_window_title = true
 show_workspace_label = false
-window_title_max_width = 150
-workspace_group_capsule = false
+taskbar_max_width = 1000
+window_title_max_width = 101
 
 [widget.todo]
 type = "nightwatch75/todo:todo"
