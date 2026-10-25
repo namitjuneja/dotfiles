@@ -141,6 +141,9 @@ widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-widget-000000000000000
     rotation = 0.0
     type = "clock"
 
+[notification]
+background_opacity = 1.0
+
 [panels]
 transparency_mode = "glass"
 

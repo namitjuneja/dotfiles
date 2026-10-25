@@ -272,9 +272,11 @@ layout {
     // Left and right struts will cause the next window to the side to always be visible.
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
+    // Kept small (gaps are 10) so a few px of the neighbouring column peek in at each edge,
+    // signalling there are more windows off-screen.
     struts {
-        // left 64
-        // right 64
+        left 14
+        right 14
         // top 64
         // bottom 64
     }
@@ -758,7 +760,7 @@ binds {
     Mod+Ctrl+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
 
-    Mod+F { toggle-window-floating; }
+    Mod+F { spawn-sh "~/.config/niri/float-toggle.sh"; }
     Mod+Shift+F { switch-focus-between-floating-and-tiling; }
 
     // While maximize-column leaves gaps and borders around the window,
