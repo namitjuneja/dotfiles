@@ -288,6 +288,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"  // replaced by noctalia
 spawn-at-startup "noctalia"
+spawn-sh-at-startup "~/.config/niri/window-cycle.sh watch"
 // The peek bar starts visible and IPC answers before its surface exists, so a single successful hide is not enough;
 // wait for IPC, then keep re-hiding for ~20s to catch the bar once it appears.
 spawn-sh-at-startup "for i in $(seq 50); do sleep 0.5; noctalia msg bar-hide peek >/dev/null 2>&1 && break; done; for i in $(seq 20); do sleep 1; noctalia msg bar-hide peek >/dev/null 2>&1; done"
@@ -544,7 +545,6 @@ binds {
     Mod+Apostrophe allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
-    Mod+N hotkey-overlay-title="Notes: noctalia" { spawn "noctalia" "msg" "panel-toggle" "noctalia/notes:panel"; }
     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
     Mod+S hotkey-overlay-title="Notification history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+P hotkey-overlay-title="Peek now playing: noctalia" { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
@@ -617,15 +617,17 @@ binds {
     // Cycle columns left to right, wrapping around (no switcher UI)
     Alt+Tab       { focus-column-right-or-first; }
     Alt+Shift+Tab { focus-column-left-or-last; }
-    // Cycle all windows on the workspace in on-screen order (floating interleaved), focusing on each press.
+    // Mod+Tab cycles the tiled windows (left to right) and tucks floating ones away; Mod+` cycles the floating windows, bringing each back in turn.
     Mod+Tab       { spawn-sh "~/.config/niri/window-cycle.sh next"; }
     Mod+Shift+Tab { spawn-sh "~/.config/niri/window-cycle.sh prev"; }
+    Mod+grave       { spawn-sh "~/.config/niri/window-cycle.sh float-next"; }
+    Mod+Shift+grave { spawn-sh "~/.config/niri/window-cycle.sh float-prev"; }
     // Minimize the focused window: focus moves on and the window is parked on the "stash" workspace;
     // the niri-taskbar plugin keeps listing it under its origin workspace (dimmed, struck through).
-    // Mod+Shift+N on a minimized window, or clicking it in the taskbar, restores it to its origin workspace;
-    // Mod+Ctrl+N restores the last minimized window that came from the current workspace and focuses it.
-    Mod+Shift+N hotkey-overlay-title="Minimize window to stash workspace" { spawn-sh "~/.config/niri/window-cycle.sh skip"; }
-    Mod+Ctrl+N hotkey-overlay-title="Restore last minimized window" { spawn-sh "~/.config/niri/window-cycle.sh unskip"; }
+    // Mod+N minimizes the focused window; Mod+Shift+N restores the last minimized window that came from the
+    // current workspace and focuses it. Clicking a minimized window in the taskbar restores it too.
+    Mod+N hotkey-overlay-title="Minimize window to stash workspace" { spawn-sh "~/.config/niri/window-cycle.sh skip"; }
+    Mod+Shift+N hotkey-overlay-title="Restore last minimized window" { spawn-sh "~/.config/niri/window-cycle.sh unskip"; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }

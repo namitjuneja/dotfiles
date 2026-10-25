@@ -5,7 +5,7 @@ plugin_api = 24
 author = "namitjuneja"
 license = "MIT"
 icon = "layout-bottombar"
-description = "Taskbar for niri that styles windows skipped in the Mod+Tab cycle (Mod+Shift+N) differently."
+description = "Taskbar for niri that styles windows skipped in the Mod+Tab cycle (Mod+N) differently."
 tags = ["bar", "taskbar", "niri"]
 dependencies = ["niri", "jq", "sh"]
 
@@ -50,7 +50,7 @@ entry = "widget.luau"
     type = "int"
     label_key = "settings.inactive_opacity.label"
     description_key = "settings.inactive_opacity.description"
-    default = 50
+    default = 75
     min = 10
     max = 100
 
@@ -59,7 +59,7 @@ entry = "widget.luau"
     type = "int"
     label_key = "settings.skipped_opacity.label"
     description_key = "settings.skipped_opacity.description"
-    default = 30
+    default = 40
     min = 10
     max = 100
 
@@ -75,11 +75,11 @@ entry = "widget.luau"
     type = "bool"
     label_key = "settings.skipped_strikethrough.label"
     description_key = "settings.skipped_strikethrough.description"
-    default = true
+    default = false
 
     [[widget.setting]]
     key = "skipped_badge"
     type = "bool"
     label_key = "settings.skipped_badge.label"
     description_key = "settings.skipped_badge.description"
-    default = true
+    default = false

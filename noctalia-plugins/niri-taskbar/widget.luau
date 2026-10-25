@@ -1,10 +1,10 @@
 --!nonstrict
 
 -- Taskbar for niri. Same idea as the built-in taskbar (icon + title per window, click to
--- focus), but windows marked with the niri skip bind (window-cycle.sh skip, Mod+Shift+N)
+-- focus), but windows marked with the niri skip bind (window-cycle.sh skip, Mod+N)
 -- are minimized: window-cycle.sh parks them on the "stash" workspace, and this taskbar still
--- lists them under the workspace they came from, drawn dimmer with a struck-through title and
--- an eye-off badge; clicking one restores it. Marks are files named after window ids in
+-- lists them under the workspace they came from, drawn dimmer in its original slot;
+-- clicking one restores it. Marks are files named after window ids in
 -- $XDG_RUNTIME_DIR/niri-skip holding the origin workspace as JSON.
 --
 -- Event driven, no timer: a niri event-stream follower repolls when windows or workspaces
@@ -23,15 +23,20 @@ marks=$(for f in "$d"/*; do [ -f "$f" ] && printf '%s %s\n' "${f##*/}" "$(cat "$
 ws=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
 niri msg --json windows | jq -c --argjson ws "${ws:-null}" --argjson marks "${marks:-{\}}" --arg only "$ONLY_ACTIVE" '
   # a minimized window lives on the stash workspace but belongs to the workspace it came from
-  map(. + {skipped: ($marks[.id | tostring] != null),
+  map(. + {skipped: ($marks[.id | tostring] != null and ($marks[.id | tostring].auto | not)),
+           parked: ($marks[.id | tostring] != null),
            home: ($marks[.id | tostring].ws // .workspace_id)})
   | [.[] | select($only != "1" or .home == $ws)]
-  | sort_by([.home, (if .skipped then 2 elif .is_floating then 1 else 0 end),
-             (.layout.pos_in_scrolling_layout[0] // 0), (.layout.pos_in_scrolling_layout[1] // 0), .id])
-  | map({id, app_id: (.app_id // ""), title: (.title // ""), focused: .is_focused, skipped})'
+  # a minimized window keeps its slot: tiled ones sit at their old column, floating ones with floating
+  | map(. + {col: (if .parked then $marks[.id | tostring].col else .layout.pos_in_scrolling_layout[0] end),
+             row: (if .parked and $marks[.id | tostring].col != null then -1 else (.layout.pos_in_scrolling_layout[1] // 0) end)})
+  | sort_by([.home, (if .col == null then 1 else 0 end), (.col // 0), .row, .id])
+  | map({id, app_id: (.app_id // ""), title: (.title // ""), focused: .is_focused, skipped, parked, floating: (.col == null)})'
 ]]
 
 local windows = nil
+local lastJson = nil
+local iconCache = {}
 local busy = false
 local again = false
 
@@ -79,20 +84,26 @@ local function render()
     showTitle = true
   end
   local maxChars = noctalia.getConfig("title_max_chars") or 24
-  local inactive = (noctalia.getConfig("inactive_opacity") or 50) / 100
-  local skippedOpacity = (noctalia.getConfig("skipped_opacity") or 30) / 100
+  local inactive = (noctalia.getConfig("inactive_opacity") or 75) / 100
+  local skippedOpacity = (noctalia.getConfig("skipped_opacity") or 40) / 100
   local skippedColor = noctalia.getConfig("skipped_color") or "on_surface_variant"
   local useStrike = noctalia.getConfig("skipped_strikethrough")
   if useStrike == nil then
-    useStrike = true
+    useStrike = false
   end
   local useBadge = noctalia.getConfig("skipped_badge")
   if useBadge == nil then
-    useBadge = true
+    useBadge = false
   end
 
   local items = {}
+  local prev = nil
   for _, w in ipairs(windows) do
+    -- thin divider where the tiled windows end and the floating ones begin
+    if prev and w.floating and not prev.floating then
+      table.insert(items, ui.row({ key = "sep", opacity = 0.4, align = "center", paddingH = 2 }, { ui.label({ text = "│", color = "on_surface_variant" }) }))
+    end
+    prev = w
     local id = w.id
     local isSkipped = w.skipped
     local opacity = 1.0
@@ -101,7 +112,14 @@ local function render()
     end
 
     local kids = {}
-    local iconPath = w.app_id ~= "" and noctalia.appIconPath(w.app_id, ICON_RASTER_SIZE) or nil
+    local iconPath = nil
+    if w.app_id ~= "" then
+      iconPath = iconCache[w.app_id]
+      if iconPath == nil then
+        iconPath = noctalia.appIconPath(w.app_id, ICON_RASTER_SIZE) or false
+        iconCache[w.app_id] = iconPath
+      end
+    end
     if iconPath then
       table.insert(kids, ui.image({ path = iconPath, width = iconSize, height = iconSize, fit = "contain" }))
     else
@@ -125,15 +143,15 @@ local function render()
 
     table.insert(items, ui.row({
       key = "win-" .. tostring(id),
-      gap = 5,
+      gap = 6,
       align = "center",
-      paddingH = 6,
-      paddingV = 2,
-      radius = 6,
+      paddingH = 8,
+      paddingV = 3,
+      radius = 8,
       opacity = opacity,
-      fill = w.focused and "primary/0.15" or nil,
+      fill = w.focused and "primary/0.35" or (isSkipped and "primary/0.0" or "on_surface/0.24"),
       onClick = function()
-        if isSkipped then
+        if w.parked then
           restoreWindow(id)
         else
           focusWindow(id)
@@ -159,10 +177,15 @@ local function poll()
   noctalia.runAsync({ "sh", "-c", "ONLY_ACTIVE=" .. (only and "1" or "0") .. "\n" .. LIST_CMD }, function(result)
     busy = false
     if result.exitCode == 0 then
-      local ok, decoded = pcall(noctalia.json.decode, noctalia.string.trim(result.stdout or ""))
-      if ok and type(decoded) == "table" then
-        windows = decoded
-        render()
+      local out = noctalia.string.trim(result.stdout or "")
+      -- the event stream fires many times per action; only redraw when the list really changed
+      if out ~= lastJson then
+        local ok, decoded = pcall(noctalia.json.decode, out)
+        if ok and type(decoded) == "table" then
+          lastJson = out
+          windows = decoded
+          render()
+        end
       end
     end
     if again then

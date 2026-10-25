@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
-# Usage: window-cycle.sh next|prev|list|skip|unskip|restore ID
-# Focus the next/previous window on the current workspace in on-screen order
-# (left to right, then top to bottom), floating windows interleaved by position.
-# Parked floating windows (see floating-stash.sh) are placed by their saved position.
-# skip:    minimize the focused window (Mod+Shift+N): focus moves to the next window and the window
+# Usage: window-cycle.sh next|prev|float-next|float-prev|list|skip|unskip|restore ID
+# next/prev (Mod+Tab) cycle the tiled windows of the current workspace in on-screen order
+# (left to right, then top to bottom) and tuck every floating window away.
+# float-next/float-prev (Mod+`) cycle the floating windows (by position) and bring each one back
+# as it is reached, so repeated presses make them appear one by one.
+# From a floating window, next/prev return to the tiled window last focused through this script.
+# skip:    minimize the focused window (Mod+N): focus moves to the next window and the window
 #          is parked on the "stash" workspace; its origin is recorded in $XDG_RUNTIME_DIR/niri-skip/<id>.
 #          On an already minimized window it restores it instead.
-# unskip:  restore the most recently minimized window that came from the current workspace (Mod+Ctrl+N).
-# next/prev (Mod+Tab): focusing a floating window that was stashed brings it back; focusing a tiled
+# unskip:  restore the most recently minimized window that came from the current workspace (Mod+Shift+N).
+# (cycle details) focusing a floating window that was stashed brings it back; focusing a tiled
 #          window stashes every floating window of the workspace (they stay in the taskbar).
+# watch:   daemon (started from niri config): opening a new tiled window tucks away floating ones, and a
+#          new floating terminal is nudged by a random offset so they do not stack exactly.
 # restore: restore the given window id to its origin workspace and focus it (taskbar click).
 
 state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
 skipdir="${XDG_RUNTIME_DIR:-/tmp}/niri-skip"
+anchorfile="${XDG_RUNTIME_DIR:-/tmp}/niri-last-tiled"
 
 # Tell the niri-taskbar Noctalia widget to refresh (no-op if Noctalia or the plugin is absent).
 refresh_widget() {
@@ -45,7 +50,7 @@ restore() {
 # marked "auto" so the cycle (and the taskbar) still know them; they come back via the cycle or a click.
 stash_floating() {
     local wsid wsinfo id
-    wsid=$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')
+    wsid=${1:-$(niri msg --json workspaces | jq '.[] | select(.is_focused) | .id')}
     wsinfo=$(niri msg --json workspaces | jq -c --argjson ws "$wsid" '.[] | select(.id == $ws)')
     [[ $(jq -r .name <<<"$wsinfo") == "$stash" ]] && return
     mkdir -p "$skipdir"
@@ -59,6 +64,32 @@ stash_floating() {
 
 minimize=
 case $1 in
+    watch)
+        # Daemon: a newly opened tiled window tucks away the floating windows of its workspace.
+        seen=" "
+        niri msg event-stream | while IFS= read -r line; do
+            case $line in
+                "Windows changed:"*)
+                    seen=" $(grep -oE 'Window \{ id: [0-9]+' <<<"$line" | grep -oE '[0-9]+' | tr '\n' ' ')"
+                    ;;
+                "Window opened or changed:"*)
+                    id=$(sed -nE 's/^[^{]*\{ id: ([0-9]+),.*/\1/p' <<<"$line")
+                    [[ -n $id && $seen != *" $id "* ]] || continue
+                    seen+="$id "
+                    if [[ $line == *'app_id: Some("floating-term")'* ]]; then
+                        # keep new floating terminals from landing exactly on top of each other
+                        niri msg action move-floating-window --id "$id" \
+                            -x "$(printf '%+d' $((RANDOM % 301 - 150)))" -y "$(printf '%+d' $((RANDOM % 201 - 100)))"
+                        continue
+                    fi
+                    [[ $line == *"is_floating: false"* ]] || continue
+                    wsid=$(sed -nE 's/.*workspace_id: Some\(([0-9]+)\).*/\1/p' <<<"$line")
+                    [[ -n $wsid ]] && stash_floating "$wsid"
+                    ;;
+            esac
+        done
+        exit
+        ;;
     restore)
         restore "$2"
         exit
@@ -130,7 +161,7 @@ order=$(niri msg --json windows | jq -c --argjson ws "$ws" --argjson saved "$sav
     | $all
     | map(. + {key:
         (if .is_floating then
-            ($saved[.id | tostring] // .layout.tile_pos_in_workspace_view // [0, 0])
+            [0, .id]   # by id: stable whether the window is shown or stashed (position differs there)
         else
             .layout.pos_in_scrolling_layout[0] as $c
             | [([$cols[] | select(.col < $c) | .w + 10] | add // 0) + 10,
@@ -141,22 +172,28 @@ order=$(niri msg --json windows | jq -c --argjson ws "$ws" --argjson saved "$sav
 
 case $1 in
     list) jq -r '.[] | "\(.id)\t\(.app_id)\tfloating=\(.is_floating)\t\(.key)"' <<<"$order" ;;
-    next | prev)
-        id=$(jq --arg d "$1" '
-            (map(.is_focused) | index(true)) as $i
-            | length as $n
+    next | prev | float-next | float-prev)
+        dir=${1#float-}
+        [[ $1 == float-* ]] && wantfloat=true || wantfloat=false
+        anchor=$(cat "$anchorfile" 2>/dev/null)
+        id=$(jq --arg d "$dir" --argjson fl "$wantfloat" --argjson anchor "${anchor:-null}" '
+            map(select(.is_floating == $fl or .is_focused)) as $all
+            | map(select(.is_floating == $fl)) as $l
+            | ($l | length) as $n
+            | ($l | map(.is_focused) | index(true)) as $i
             | if $n == 0 then empty
-              elif $i == null then (if $d == "next" then .[0] else .[$n - 1] end).id
-              else .[(if $d == "next" then $i + 1 else $i - 1 + $n end) % $n].id end' <<<"$order")
+              elif $i != null then $l[(if $d == "next" then $i + 1 else $i - 1 + $n end) % $n].id
+              elif $fl == false and ($l | map(.id) | index($anchor)) != null then $anchor
+              else (if $d == "next" then $l[0] else $l[$n - 1] end).id end' <<<"$order")
         if [[ -n $id ]]; then
-            target=$(jq --argjson id "$id" '.[] | select(.id == $id)' <<<"$order")
             if [[ -e $skipdir/$id ]]; then
                 restore "$id"      # a floating window the cycle stashed: bring it back in front
             else
                 niri msg action focus-window --id "$id"
             fi
             # Landing on a tiled window tucks every floating window away; landing on a floating one doesn't.
-            if [[ -z $minimize && $(jq .is_floating <<<"$target") == false ]]; then
+            if [[ $wantfloat == false && -z $minimize ]]; then
+                echo "$id" >"$anchorfile"
                 stash_floating
             fi
         fi
