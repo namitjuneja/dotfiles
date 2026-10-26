@@ -32,7 +32,7 @@ Hint that more columns exist off-screen, without wasting space when everything f
 
 Restore the `spawn-at-startup` line and start `./dynamic-struts.sh` (`setsid nohup`).
 
-`struts.kdl` is generated; consider keeping it out of commits.
+`struts.kdl` is tracked with a zeroed default so a fresh clone loads, and marked `git update-index --skip-worktree` locally so runtime rewrites don't show as changes. To commit a real edit to it: `git update-index --no-skip-worktree niri/struts.kdl`, commit, then re-apply. On a new machine run the skip-worktree command once.
 
 ## Mod+F
 
