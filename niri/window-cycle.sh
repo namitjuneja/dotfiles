@@ -5,7 +5,7 @@
 # float-next/float-prev (Mod+`) cycle the floating windows (by position) and bring each one back
 # as it is reached, so repeated presses make them appear one by one.
 # From a floating window, next/prev return to the tiled window last focused through this script.
-# skip:    minimize the focused window (Mod+N): focus moves to the next window and the window
+# skip:    minimize the focused window (Mod+N): niri refocuses the last focused window (as on close) and the window
 #          is parked on the "stash" workspace; its origin is recorded in $XDG_RUNTIME_DIR/niri-skip/<id>.
 #          On an already minimized window it restores it instead.
 # unskip:  restore the most recently minimized window that came from the current workspace (Mod+Shift+N).
@@ -117,8 +117,7 @@ case $1 in
         [[ $(jq -r .name <<<"$wsinfo") == "$stash" ]] && exit
         jq -nc --argjson w "$wsinfo" --argjson win "$win" \
             '{ws: $w.id, name: $w.name, col: (if $win.is_floating then null else $win.layout.pos_in_scrolling_layout[0] end)}' >"$skipdir/$id"
-        minimize=$id
-        set -- next
+        minimize=$id   # no cycle: leaving the workspace lets niri refocus like a close (last focused window)
         ;;
 esac
 
@@ -200,7 +199,7 @@ case $1 in
         ;;
 esac
 
-# Focus has moved on; now park the minimized window on the stash workspace.
+# Park the minimized window on the stash workspace.
 if [[ -n $minimize ]]; then
     niri msg action move-window-to-workspace --window-id "$minimize" --focus false "$stash"
     refresh_widget
