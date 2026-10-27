@@ -833,3 +833,10 @@ recent-windows {
         Mod+Shift+Grave { previous-window; }
     }
 }
+
+gestures {
+    // Disable the default top-left hot corner that toggles the overview.
+    hot-corners {
+        off
+    }
+}
