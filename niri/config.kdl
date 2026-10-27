@@ -268,9 +268,10 @@ layout {
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
-    // Left only: windows keep the regular gap on the other sides.
+    // Left and right only: windows keep the regular gap on top and bottom.
     struts {
         left 15
+        right 15
     }
 }
 
@@ -534,9 +535,9 @@ binds {
     Mod+0 allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     Mod+Shift+Equal allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
     Mod+Shift+Minus allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
-    Mod+Slash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    Mod+Semicolon allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
-    Mod+Apostrophe allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    Mod+Backslash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    Mod+BracketLeft allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    Mod+BracketRight allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
@@ -736,8 +737,8 @@ binds {
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
     // If the window is already in a column, they will expel it out.
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Semicolon    { consume-or-expel-window-left; }
+    Mod+Apostrophe   { consume-or-expel-window-right; }
 
     // Consume one window from the right to the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
@@ -799,9 +800,9 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { spawn "noctalia" "msg" "screenshot-region"; }
+    Print { spawn "noctalia" "msg" "screenshot-annotate"; }
     Ctrl+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
-    Shift+Print { spawn "noctalia" "msg" "screenshot-annotate"; }
+    Shift+Print { spawn "noctalia" "msg" "screenshot-region"; }
     Mod+Shift+Print { spawn "noctalia" "msg" "screenshot-region"; }
     Mod+Print { screenshot-window; }
     Alt+Print { screenshot-window; }
