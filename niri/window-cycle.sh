@@ -11,8 +11,9 @@
 # unskip:  restore the most recently minimized window that came from the current workspace (Mod+Shift+N).
 # (cycle details) focusing a floating window that was stashed brings it back; focusing a tiled
 #          window stashes every floating window of the workspace (they stay in the taskbar).
-# watch:   daemon (started from niri config): opening a new tiled window tucks away floating ones, and a
+# watch:   daemon (started from niri config): opening or focusing a tiled window tucks away floating ones, and a
 #          new floating terminal is nudged by a random offset so they do not stack exactly.
+# tuck:    stash the floating windows of the focused workspace right now (used by quick-term.sh).
 # restore: restore the given window id to its origin workspace and focus it (taskbar click).
 
 state="${XDG_RUNTIME_DIR:-/tmp}/niri-floating-stash"
@@ -72,6 +73,13 @@ case $1 in
                 "Windows changed:"*)
                     seen=" $(grep -oE 'Window \{ id: [0-9]+' <<<"$line" | grep -oE '[0-9]+' | tr '\n' ' ')"
                     ;;
+                "Window focus changed: Some("*)
+                    # Focusing a tiled window (mouse included) tucks away the floating windows of its workspace.
+                    id=${line#*Some(}; id=${id%%)*}
+                    win=$(niri msg --json windows | jq -c --argjson id "$id" '.[] | select(.id == $id)')
+                    [[ -n $win && $(jq .is_floating <<<"$win") == false ]] || continue
+                    stash_floating "$(jq .workspace_id <<<"$win")"
+                    ;;
                 "Window opened or changed:"*)
                     id=$(sed -nE 's/^[^{]*\{ id: ([0-9]+),.*/\1/p' <<<"$line")
                     [[ -n $id && $seen != *" $id "* ]] || continue
@@ -92,6 +100,10 @@ case $1 in
         ;;
     restore)
         restore "$2"
+        exit
+        ;;
+    tuck)
+        stash_floating
         exit
         ;;
     unskip)

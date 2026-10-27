@@ -372,6 +372,14 @@ window-rule {
     default-window-height { fixed 500; }
 }
 
+// Quick terminal toggled by the Volume Up key (quick-term.sh)
+window-rule {
+    match app-id="^quick-term$"
+    open-floating true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 550; }
+}
+
 // Translucent Nautilus, Obsidian and Noctalia Settings so the background blur shows through. Must stay above the
 // floating-hide rule below, or a later match would override its opacity 0.0.
 window-rule {
@@ -558,7 +566,6 @@ binds {
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
     // "-l 1.0" limits the volume to 100%.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
@@ -800,6 +807,13 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
+    // Logitech MX Keys S special keys
+    //   Lock key         sends Alt+L
+    //   Print Screen key sends Alt+Shift+S instead of Print
+    //   Volume Up key    sends XF86AudioRaiseVolume (toggles the quick terminal; Mod+Equal still raises the volume)
+    Alt+L hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }
+    Alt+Shift+S { spawn "noctalia" "msg" "screenshot-annotate"; }
+    XF86AudioRaiseVolume hotkey-overlay-title="Toggle quick terminal" { spawn-sh "~/.config/niri/quick-term.sh"; }
     Print { spawn "noctalia" "msg" "screenshot-annotate"; }
     Ctrl+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
     Shift+Print { spawn "noctalia" "msg" "screenshot-region"; }
