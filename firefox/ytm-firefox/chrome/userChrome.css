@@ -1,0 +1,2 @@
+/* Music-player profile: hide all browser chrome (tabs, nav bar, bookmarks), show only the page. */
+#TabsToolbar, #nav-bar, #PersonalToolbar, #titlebar, #sidebar-main, #sidebar-box { visibility: collapse !important; }
