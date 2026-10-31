@@ -497,6 +497,8 @@ binds {
     Mod+F5 { spawn-sh "niri msg action focus-workspace 5; nautilus"; }
     Mod+F6 { spawn-sh "niri msg action focus-workspace 6; OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland"; }
     Mod+F7 { spawn-sh "niri msg action focus-workspace 7; google-chrome-stable"; }
+    KP_Subtract hotkey-overlay-title="Mail: Gmail" { spawn "firefox" "--new-window" "https://mail.google.com"; }
+    KP_Add hotkey-overlay-title="Mail: Gmail + UB mail" { spawn-sh "firefox --new-window https://mail.google.com; sleep 1; firefox --new-tab https://ubmail.buffalo.edu"; }
     Mod+F9 { spawn-sh "niri msg action focus-workspace 9; firefox --new-window music.youtube.com"; }
     F1 { focus-workspace 1; }
     Shift+F1 { move-window-to-workspace 1 focus=false; }
