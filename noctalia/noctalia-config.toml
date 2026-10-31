@@ -1,0 +1,408 @@
+[accessibility]
+ui_scale = 0.85000000521540642
+
+[audio]
+enable_notification_sounds = false
+enable_screenshot_sounds = false
+enable_sounds = false
+
+[bar]
+order = [ "default", "peek" ]
+
+    [bar.default]
+    capsule_radius = 3
+    center = [ "niri-taskbar" ]
+    color = "primary"
+    end = [
+        "ambient-sounds",
+        "todo",
+        "notes",
+        "status",
+        "media-player-icon",
+        "bluetooth",
+        "media",
+        "tray",
+        "volume",
+        "notifications",
+        "clipboard",
+        "network",
+        "bluetooth",
+        "brightness",
+        "battery",
+        "control-center",
+        "session",
+        "weather",
+        "bar",
+        "clock"
+    ]
+    font_family = "Adwaita Mono"
+    font_scale = 0.69999999180436134
+    margin_ends = 0
+    position = "bottom"
+    shadow = false
+    start = [ "niri-workspaces" ]
+    widget_spacing = 10
+
+        [bar.default.dead_zone.actions]
+        left = "panel-toggle control-center home"
+        right = "settings-toggle"
+
+    [bar.peek]
+    background_opacity = 0.0
+    capsule = true
+    capsule_border = "secondary"
+    capsule_fill = "surface"
+    capsule_opacity = 0.99999997764825821
+    capsule_radius = 3
+    center = []
+    color = "secondary"
+    compositor_blur = false
+    end = [ "peek-media" ]
+    hover_highlight = false
+    icon_color = "secondary"
+    margin_edge = 6
+    margin_ends = 0
+    padding = 13
+    position = "bottom"
+    reserve_space = false
+    shadow = false
+    show_tooltip = false
+    start = [ "bar_2" ]
+    widget_spacing = 15
+
+[brightness]
+enable_ddcutil = true
+
+[calendar]
+enabled = true
+
+    [calendar.account.personal_google]
+    name = "Namit"
+    type = "google"
+
+[control_center]
+sidebar = "full"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[dock]
+background_opacity = 0.99999997764825821
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 30
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 300.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 3600.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 420.0
+
+[location]
+auto_locate = true
+
+[lockscreen]
+transition = [ "fade" ]
+transition_duration = 300
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-widget-0000000000000001" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-4"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1075.0
+    cy = 718.0
+    output = "DP-4"
+    placement_height = 900.0
+    placement_width = 2150.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-4".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1075.0
+    cy = 450.0
+    output = "DP-4"
+    placement_height = 900.0
+    placement_width = 2150.0
+    rotation = 0.0
+    type = "clock"
+
+[nightlight]
+enabled = true
+temperature_day = 4600
+temperature_night = 4800
+
+[notification]
+background_opacity = 0.62999998591840267
+position = "top_left"
+
+[panels]
+transparency_mode = "glass"
+
+[plugin_settings."davemhammer/obsidian"]
+vault_path = "/home/namit/Documents/Phosphorus"
+
+[plugin_settings."ezequiel/mango_layouts"]
+list_mode = true
+panel_open_near_click = true
+panel_placement = "attached"
+
+[plugin_settings."gcap0n1/f1"]
+default_tab = "drivers"
+favorite_driver = "ANT"
+live_source = "f1_feed"
+notify_race = true
+panel_open_near_click = false
+panel_placement = "floating"
+panel_position = "center"
+
+[plugin_settings."nightwatch75/todo"]
+panel_open_near_click = false
+panel_position = "center"
+sound_on_complete = true
+
+[plugin_settings."noctalia/notes"]
+panel_open_near_click = false
+
+[plugin_settings."noctalia/world_clock"]
+panel_open_near_click = false
+show_add_zone = false
+time_format = "12h"
+
+[plugins]
+enabled = [
+    "noctalia/notes",
+    "noctalia/world_clock",
+    "nightwatch75/todo",
+    "davemhammer/obsidian",
+    "ismay/media-player-icon",
+    "lowcache/claude-companion",
+    "lfdominguez/claude-sessions",
+    "pulser/hover-widgets",
+    "icefish/phone-operate",
+    "thepunkoff/pomodoro",
+    "notfinaldev/youtube-search",
+    "reaperhound/ambient-sounds",
+    "ezequiel/mango_layouts",
+    "namitjuneja/niri-taskbar",
+    "namitjuneja/niri-workspaces"
+]
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
+
+    [[plugins.source]]
+    kind = "path"
+    location = "/home/namit/.config/noctalia-plugins"
+    name = "local"
+
+[shell]
+clipboard_history_max_entries = 10000
+password_style = "random"
+
+    [shell.launcher]
+    categories = false
+    compact = true
+
+    [shell.panel]
+    session_placement = "floating"
+    session_position = "center"
+    transparency_mode = "soft"
+
+    [shell.screenshot]
+    remember_last_region = true
+
+    [shell.window_switcher]
+    current_workspace_only = true
+
+[system.monitor]
+enabled = false
+
+[theme]
+builtin = "Ayu"
+community_palette = "Jiva Paper"
+mode = "dark"
+pure_black_dark = true
+shell_mode = "dark"
+source = "builtin"
+wallpaper_scheme = "m3-content"
+
+[wallpaper]
+directory = "/home/namit/Downloads"
+fill_mode = "crop"
+
+    [wallpaper.default]
+    path = "/home/namit/Downloads/lukasz-szmigiel-8AdYB7M4OHY-unsplash.jpg"
+
+    [wallpaper.last]
+    path = "/home/namit/Downloads/lukasz-szmigiel-8AdYB7M4OHY-unsplash.jpg"
+
+    [wallpaper.monitors.DP-4]
+    path = "/home/namit/Downloads/lukasz-szmigiel-8AdYB7M4OHY-unsplash.jpg"
+
+[widget.active-window]
+type = "pulser/hover-widgets:active-window"
+
+[widget.ambient-sounds]
+type = "reaperhound/ambient-sounds:ambient-sounds"
+
+[widget.bar]
+enabled = false
+type = "noctalia/world_clock:bar"
+
+[widget.bar_2]
+capsule_radius = 3
+color = "secondary"
+font_scale = 0.69000000000000006
+show_clocks = true
+type = "noctalia/world_clock:bar"
+
+[widget.bar_3]
+capsule_border = "secondary"
+capsule_fill = "primary"
+capsule_radius = 3
+color = "secondary"
+enable_scroll = false
+font_scale = 0.64000000000000001
+show_clocks = true
+type = "noctalia/world_clock:bar"
+
+[widget.brightness]
+enabled = false
+show_label = false
+
+[widget.clipboard]
+enabled = false
+
+[widget.clock]
+font_weight = 700
+format = "{:%a %d %b %I:%M%P}"
+
+[widget.media]
+enabled = false
+hide_album_art = true
+hide_artist = true
+hide_when_no_media = true
+max_length = 81
+rotate_album_art = true
+
+[widget.media-player-icon]
+hide_stopped = true
+paused_color = "primary"
+playing_glyph = "music"
+type = "ismay/media-player-icon:media-player-icon"
+
+[widget.network]
+enabled = false
+show_label = false
+
+[widget.niri-workspaces]
+type = "namitjuneja/niri-workspaces:workspaces"
+
+[widget.niri-taskbar]
+type = "namitjuneja/niri-taskbar:taskbar"
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
+[widget.peek-media]
+capsule_border = "secondary"
+capsule_fill = "surface"
+capsule_foreground = "secondary"
+capsule_padding = 7
+capsule_radius = 3
+color = "secondary"
+font_scale = 0.69000000000000006
+hide_album_art = false
+hide_when_no_media = false
+interactive = false
+max_length = 800
+min_length = 108
+rotate_album_art = true
+show_tooltip = false
+type = "media"
+
+[widget.pulse]
+type = "lowcache/claude-companion:pulse"
+
+[widget.session]
+enabled = false
+
+[widget.status]
+type = "icefish/phone-operate:status"
+
+[widget.taskbar]
+capsule = false
+icon_scale = 1.4000000000000001
+inactive_opacity = 0.5
+only_active_workspace = true
+show_window_title = true
+show_workspace_label = false
+taskbar_max_width = 1000
+window_title_max_width = 101
+workspace_group_capsule = false
+
+[widget.todo]
+type = "nightwatch75/todo:todo"
+
+[widget.weather]
+show_condition = false
+
+[widget.workspaces]
+active_pill_size = 1.0
+empty_color = "on_primary"
+font_family = "Adwaita Mono"
+font_weight = 700
+occupied_color = "surface_variant"
+scale = 1.2000000000000002

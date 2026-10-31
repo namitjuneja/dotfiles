@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "max_workspace": { "label": "Last workspace shown", "description": "Workspaces with a higher index (the minimize stash, the trailing empty one) are hidden." },
+    "scale": { "label": "Scale (%)", "description": "Size of the workspace pills." },
+    "active_color": { "label": "Active color", "description": "Pill of the focused workspace." },
+    "occupied_color": { "label": "Occupied color", "description": "Pills of workspaces that have windows." },
+    "empty_color": { "label": "Empty color", "description": "Pills of workspaces without windows." }
+  }
+}

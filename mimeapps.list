@@ -6,6 +6,7 @@ image/png=loupe-2.desktop;loupe.desktop;
 text/html=firefox-2.desktop;
 video/mp4=vlc-3.desktop;
 video/x-matroska=vlc-2.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
 
 [Default Applications]
 application/pdf=evince-6.desktop;
@@ -16,3 +17,4 @@ text/html=firefox-2.desktop;
 video/mp4=vlc-3.desktop;
 video/x-matroska=vlc-2.desktop;
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+image/jpeg=org.gnome.Loupe.desktop

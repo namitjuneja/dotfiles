@@ -87,6 +87,7 @@ local function render()
   local inactive = (noctalia.getConfig("inactive_opacity") or 75) / 100
   local skippedOpacity = (noctalia.getConfig("skipped_opacity") or 40) / 100
   local skippedColor = noctalia.getConfig("skipped_color") or "on_surface_variant"
+  local privateColor = noctalia.getConfig("private_color") or "tertiary"
   local useStrike = noctalia.getConfig("skipped_strikethrough")
   if useStrike == nil then
     useStrike = false
@@ -110,6 +111,9 @@ local function render()
     if not w.focused then
       opacity = isSkipped and skippedOpacity or inactive
     end
+
+    -- Firefox private windows carry "Private Browsing" in their title
+    local isPrivate = w.app_id:lower():find("firefox", 1, true) ~= nil and w.title:find("Private Browsing", 1, true) ~= nil
 
     local kids = {}
     local iconPath = nil
@@ -149,7 +153,8 @@ local function render()
       paddingV = 3,
       radius = 8,
       opacity = opacity,
-      fill = w.focused and "primary/0.35" or (isSkipped and "primary/0.0" or "on_surface/0.24"),
+      fill = isPrivate and (w.focused and (privateColor .. "/0.45") or (privateColor .. "/0.28"))
+        or (w.focused and "primary/0.35" or (isSkipped and "on_surface/0.10" or "on_surface/0.24")),
       onClick = function()
         if w.parked then
           restoreWindow(id)

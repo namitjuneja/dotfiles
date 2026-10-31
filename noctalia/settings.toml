@@ -36,7 +36,7 @@ order = [ "default", "peek" ]
     font_scale = 0.69999999180436134
     margin_ends = 0
     position = "bottom"
-    start = [ "launcher", "workspaces" ]
+    start = [ "launcher", "niri-workspaces" ]
     widget_spacing = 10
 
     [bar.peek]
@@ -79,11 +79,13 @@ pre_action_fade_seconds = 30
     [idle.behavior.lock-and-suspend]
     action = "lock_and_suspend"
     enabled = true
+    locked_timeout = 600.0
     timeout = 900.0
 
     [idle.behavior.screen-off]
     action = "screen_off"
     enabled = true
+    locked_timeout = 5.0
     timeout = 420.0
 
 [location]
@@ -185,7 +187,8 @@ enabled = [
     "icefish/phone-operate",
     "thepunkoff/pomodoro",
     "notfinaldev/youtube-search",
-    "namitjuneja/niri-taskbar"
+    "namitjuneja/niri-taskbar",
+    "namitjuneja/niri-workspaces"
 ]
 
     [[plugins.source]]
@@ -258,6 +261,11 @@ type = "ismay/media-player-icon:media-player-icon"
 
 [widget.niri-taskbar]
 type = "namitjuneja/niri-taskbar:taskbar"
+skipped_opacity = 95
+skipped_color = "on_surface"
+
+[widget.niri-workspaces]
+type = "namitjuneja/niri-workspaces:workspaces"
 
 [widget.network]
 show_label = false

@@ -1,0 +1,53 @@
+id = "namitjuneja/niri-workspaces"
+name = "Niri Workspaces"
+version = "1.0.0"
+plugin_api = 24
+author = "namitjuneja"
+license = "MIT"
+icon = "layout-grid"
+description = "Workspace indicator that only shows workspaces 1-9, hiding the minimize stash and the trailing empty workspace."
+tags = ["bar", "workspaces", "niri"]
+dependencies = ["niri", "jq", "sh"]
+
+[[widget]]
+id = "workspaces"
+entry = "widget.luau"
+
+    [[widget.setting]]
+    key = "max_workspace"
+    type = "int"
+    label_key = "settings.max_workspace.label"
+    description_key = "settings.max_workspace.description"
+    default = 9
+    min = 1
+    max = 20
+
+    [[widget.setting]]
+    key = "scale"
+    type = "int"
+    label_key = "settings.scale.label"
+    description_key = "settings.scale.description"
+    default = 120
+    min = 50
+    max = 300
+
+    [[widget.setting]]
+    key = "active_color"
+    type = "color"
+    label_key = "settings.active_color.label"
+    description_key = "settings.active_color.description"
+    default = "primary"
+
+    [[widget.setting]]
+    key = "occupied_color"
+    type = "color"
+    label_key = "settings.occupied_color.label"
+    description_key = "settings.occupied_color.description"
+    default = "surface_variant"
+
+    [[widget.setting]]
+    key = "empty_color"
+    type = "color"
+    label_key = "settings.empty_color.label"
+    description_key = "settings.empty_color.description"
+    default = "on_primary"

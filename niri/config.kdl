@@ -372,6 +372,14 @@ window-rule {
     default-window-height { fixed 500; }
 }
 
+// Google Home panel (keypad *): chromeless Firefox launched with --name home-panel
+window-rule {
+    match app-id="^home-panel$"
+    open-floating true
+    default-column-width { fixed 480; }
+    default-window-height { fixed 640; }
+}
+
 // Quick terminal toggled by the Volume Up key (quick-term.sh)
 window-rule {
     match app-id="^quick-term$"
@@ -499,7 +507,8 @@ binds {
     Mod+F7 { spawn-sh "niri msg action focus-workspace 7; google-chrome-stable"; }
     KP_Subtract hotkey-overlay-title="Mail: Gmail" { spawn "firefox" "--new-window" "https://mail.google.com"; }
     KP_Add hotkey-overlay-title="Mail: Gmail + UB mail" { spawn-sh "firefox --new-window https://mail.google.com; sleep 1; firefox --new-tab https://ubmail.buffalo.edu"; }
-    Mod+F9 { spawn-sh "niri msg action focus-workspace 9; firefox --new-window music.youtube.com"; }
+    KP_Multiply hotkey-overlay-title="Google Home: floating Firefox" { spawn-sh "firefox --no-remote --name home-panel --profile ~/.local/share/home-firefox --new-window https://home.google.com & for i in $(seq 100); do id=$(niri msg -j windows | jq -r '[.[] | select(.app_id==\"home-panel\" and (.is_floating | not))][0].id // empty'); [ -n \"$id\" ] && { niri msg action move-window-to-floating --id $id; niri msg action set-window-width --id $id 480; niri msg action set-window-height --id $id 640; niri msg action center-window --id $id; break; }; sleep 0.1; done"; }
+    Mod+F9 { spawn-sh "niri msg action focus-workspace 9; firefox --no-remote --profile ~/.local/share/ytm-firefox --new-window music.youtube.com"; }
     F1 { focus-workspace 1; }
     Shift+F1 { move-window-to-workspace 1 focus=false; }
     F2 { focus-workspace 2; }
@@ -545,9 +554,9 @@ binds {
     Mod+0 allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     Mod+Shift+Equal allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
     Mod+Shift+Minus allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
-    Mod+Backslash allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    Mod+BracketLeft allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
-    Mod+BracketRight allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    Mod+Backslash allow-when-locked=true { spawn-sh "playerctl -p \"$(~/.config/niri/ytm-player.sh)\" play-pause"; }
+    Mod+BracketLeft allow-when-locked=true { spawn-sh "o=$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title); playerctl -p \"$(~/.config/niri/ytm-player.sh)\" previous; for i in $(seq 12); do [ \"$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    Mod+BracketRight allow-when-locked=true { spawn-sh "o=$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title); playerctl -p \"$(~/.config/niri/ytm-player.sh)\" next; for i in $(seq 30); do [ \"$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
@@ -574,10 +583,10 @@ binds {
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl previous; for i in $(seq 12); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "o=$(playerctl metadata title); playerctl next; for i in $(seq 30); do [ \"$(playerctl metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl -p \"$(~/.config/niri/ytm-player.sh)\" play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl -p \"$(~/.config/niri/ytm-player.sh)\" stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "o=$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title); playerctl -p \"$(~/.config/niri/ytm-player.sh)\" previous; for i in $(seq 12); do [ \"$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "o=$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title); playerctl -p \"$(~/.config/niri/ytm-player.sh)\" next; for i in $(seq 30); do [ \"$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
@@ -593,19 +602,15 @@ binds {
     Mod+Q repeat=false { close-window; }
     Mod+BackSpace repeat=false { close-window; }
 
-    Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
     Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
 
-    Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
     Mod+Ctrl+Up    { move-window-up; }
-    Mod+Ctrl+Right { move-column-right; }
     Mod+Ctrl+H     { move-column-left; }
     Mod+Ctrl+J     { move-window-down; }
     Mod+Ctrl+K     { move-window-up; }
@@ -665,14 +670,14 @@ binds {
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
-    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Ctrl+U         { move-column-to-workspace-down; }
-    Mod+Ctrl+I         { move-column-to-workspace-up; }
+    Mod+Right         { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action focus-workspace-down || niri msg action focus-workspace 1"; }
+    Mod+Left          { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action focus-workspace-up || niri msg action focus-workspace 9"; }
+    Mod+U              { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action focus-workspace-down || niri msg action focus-workspace 1"; }
+    Mod+I              { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action focus-workspace-up || niri msg action focus-workspace 9"; }
+    Mod+Ctrl+Right     { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action move-column-to-workspace-down || niri msg action move-column-to-workspace 1"; }
+    Mod+Ctrl+Left      { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action move-column-to-workspace-up || niri msg action move-column-to-workspace 9"; }
+    Mod+Ctrl+U         { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action move-column-to-workspace-down || niri msg action move-column-to-workspace 1"; }
+    Mod+Ctrl+I         { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action move-column-to-workspace-up || niri msg action move-column-to-workspace 9"; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
@@ -689,10 +694,10 @@ binds {
     // To avoid scrolling through workspaces really fast, you can use
     // the cooldown-ms property. The bind will be rate-limited to this value.
     // You can set a cooldown on any bind, but it's most useful for the wheel.
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+WheelScrollDown      cooldown-ms=150 { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action focus-workspace-down || niri msg action focus-workspace 1"; }
+    Mod+WheelScrollUp        cooldown-ms=150 { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action focus-workspace-up || niri msg action focus-workspace 9"; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -lt 9 ] && niri msg action move-column-to-workspace-down || niri msg action move-column-to-workspace 1"; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { spawn-sh "[ \"$(niri msg -j workspaces | jq '.[] | select(.is_focused).idx')\" -gt 1 ] && niri msg action move-column-to-workspace-up || niri msg action move-column-to-workspace 9"; }
 
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }

@@ -82,4 +82,4 @@ Any one of these:
 
 ## What was left instead
 
-A fixed 15px left strut in `config.kdl` and nothing on the right. Earlier fixed 12px/14px struts on both sides were tried; with the 10px `gaps` they gave only a 2-4px sliver of the neighbouring column (the peek is the strut minus the gap) and cost width on both sides.
+A fixed 15px strut on the left and right in `config.kdl`. Earlier fixed 12px/14px struts on both sides were tried; with the 10px `gaps` they gave only a 2-4px sliver of the neighbouring column (the peek is the strut minus the gap) and cost width on both sides.
