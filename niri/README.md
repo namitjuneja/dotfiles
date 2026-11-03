@@ -8,3 +8,6 @@
 `scripts/maximize-focused.sh`: focused window → tiled + maximized to edges (floating gets tiled first). Press again: unmaximize, stays tiled.
 - Floating windows still open floating: `kitty/kitty.conf` sets `remember_window_size no`, else kitty restores "maximized" and niri tiles it.
 - `scripts/maximize-all.sh` (old: maximize every column) is unused.
+
+## Mod+Shift+B
+`scripts/cycle-audio-sink.sh`: cycles default audio sink (all sinks, wraps), moves playing streams, notifies "name · volume" (replaces itself).
