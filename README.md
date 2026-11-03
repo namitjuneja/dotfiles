@@ -11,6 +11,7 @@ first (it lists every package to install), then the per-component notes below.
 |---|---|---|
 | `hypr/` | Hyprland compositor config, keybinds, autostart, hypridle | [`hypr/README.md`](hypr/README.md) |
 | `waybar/` | Status bar | [`waybar/README.md`](waybar/README.md) |
+| `firefox/` | Tracked Firefox profile config (YT Music, Google Home) | [`firefox/README.md`](firefox/README.md) |
 
 ---
 
@@ -98,3 +99,6 @@ The two `~/.local/share` profiles symlink `user.js` and `chrome/` into `firefox/
 **Gotchas**
 - A normal window on a chromeless profile: move `chrome/userChrome.css` aside, launch the profile, restore the file once the window is up (CSS is read at startup). Quit the profile's running instance first.
 - `pgrep -f` or `pkill -f` with a profile name can match your own shell command.
+
+## Default apps
+`mimeapps.list`: Firefox (`firefox.desktop`) handles `text/html`, `http(s)`, `about`, `unknown` and `xhtml`.
