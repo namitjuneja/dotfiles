@@ -11,3 +11,6 @@
 
 ## Mod+Shift+B
 `scripts/cycle-audio-sink.sh`: cycles default audio sink (all sinks, wraps), moves playing streams, notifies "name · volume" (replaces itself).
+
+## Mod+R
+Cycles column width: 1/3 → 1/2 → 2/3 → full (`preset-column-widths` in `config.kdl`).
