@@ -774,7 +774,7 @@ binds {
     // maximize-window-to-edges doesn't: the window expands to the edges of the screen.
     // This bind corresponds to normal window maximizing,
     // e.g. by double-clicking on the titlebar.
-    Mod+M { spawn "bash" "-c" "$HOME/.config/niri/scripts/maximize-all.sh"; }
+    Mod+M { spawn "bash" "-c" "$HOME/.config/niri/scripts/maximize-focused.sh"; }
     Mod+Shift+M { fullscreen-window; }
     // Unfloat everything on this workspace and fit all columns on screen without scrolling.
     Mod+A { spawn "bash" "-c" "$HOME/.config/niri/scripts/fit-all.sh"; }
