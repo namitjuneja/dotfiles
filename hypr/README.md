@@ -17,7 +17,6 @@ sudo pacman -S --needed \
   hyprpolkitagent \
   nwg-displays \
   waybar \
-  blueman \
   hyprshot \
   swaync \
   hyprlock \
@@ -50,7 +49,7 @@ sudo pacman -S --needed \
 > gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 > ```
 
-> `blueman` also needs bluetooth enabled:
+> Bluetooth needs the BlueZ service enabled:
 > ```bash
 > sudo systemctl enable --now bluetooth
 > ```
