@@ -31,7 +31,7 @@ The repo is `~/.config` itself.
 Ask before installing. Lists live in the READMEs; install only what the user picks.
 
 - **yay** (AUR helper): see `hypr/README.md` § yay.
-- **niri stack:** `niri`, `noctalia`, `kitty`, `fish`, `rofi-wayland`, `jq`, `playerctl`, `wireplumber` (`wpctl`), `brightnessctl`, `ddcutil` (external monitor brightness; needs I2C permissions), `firefox`, `solaar`, `htop`, `micro`.
+- **niri stack:** `niri`, `noctalia`, `kitty`, `fish`, `rofi-wayland`, `jq`, `playerctl`, `wireplumber` (`wpctl`), `brightnessctl`, `ddcutil` (external monitor brightness; needs I2C permissions), `firefox`, `solaar`, `htop`, `micro`, `keyd`.
 - **Default-app programs:** `evince` (PDF), `ark` (archives), `loupe` (images), `vlc` (video).
 - **Fonts:** `ttf-meslo-nerd`, `ttf-jetbrains-mono-nerd`, Adwaita Mono (used by the bar).
 - **Hyprland fallback:** `hypr/README.md` § Packages (pacman + AUR lists).
@@ -45,6 +45,7 @@ Ask before installing. Lists live in the READMEs; install only what the user pic
 | `noctalia/` | `noctalia-config.toml`, a merged export of the live config | See step 4 |
 | `noctalia-plugins/` | Local plugins `niri-taskbar`, `niri-workspaces` | Loaded via the `local` plugin source |
 | `kitty/` | Terminal config | Used as-is |
+| `keyd/` | `default.conf` for `/etc/keyd/` | Not copied by default; see 7b (sudo) |
 | `fish/` | `config.fish` (aliases, git helpers) | Used as-is; sets `$PATH` |
 | `solaar/` | Logitech device config and rules | Used as-is |
 | `firefox/` | `user.js` + `userChrome.css` for YT Music and Google Home profiles | See step 5 |
@@ -108,15 +109,24 @@ Tracked files containing `/home/namit` (ask before editing each; or just keep th
 - `noctalia/noctalia-config.toml` (local plugin source)
 - `hypr/hyprlock.conf`, `hypr/hyprpaper.conf` (Hyprland only)
 - `gtk-3.0/bookmarks`, `fish/fish_variables`
-- Optional keyd config in `README.md` § Noctalia peek bar (`runuser -u namit`, UID 1000).
+- `keyd/default.conf` (`runuser -u namit`, UID 1000, `WAYLAND_DISPLAY=wayland-1`). See 7b.
 
 ## 7. Optional extras
 
-- **keyd** (tap Alt to flash the peek bar): `/etc/keyd/default.conf`, config in `README.md`. Needs `sudo`; ask first.
 - **Logitech MX Keys S:** niri binds assume Lock = `Alt+L`, Print Screen = `Alt+Shift+S`.
 - **Wallpaper / lock screen:** Hyprland only (`hyprpaper`, `hyprlock`); Noctalia handles these under niri.
 
-## 7b. Default apps (last step)
+## 7b. keyd (required; needs sudo)
+
+Config is tracked at `keyd/default.conf`; live path is `/etc/keyd/default.conf`. Tap Alt flashes the Noctalia peek bar; Win key sends F19. Ask before each step.
+
+1. Check `keyd/default.conf` against the new machine: `whoami` (file says `namit`), `id -u` (file says `1000`), `echo $WAYLAND_DISPLAY` (file says `wayland-1`). Propose fixes.
+2. Show the file. After a yes: `sudo cp keyd/default.conf /etc/keyd/default.conf`.
+3. After a yes: `sudo systemctl enable --now keyd`, then `sudo keyd reload`.
+4. Test: tap Alt, the peek bar should flash. Needs Noctalia running (see 4).
+5. Undo: `sudo systemctl disable --now keyd`.
+
+## 7c. Default apps (last step)
 
 Do not copy `mimeapps.list`. Its `.desktop` names (`evince-6`, `ark-2`, `loupe-2`, `vlc-3`) are numbered duplicates from the old machine. Build it fresh:
 

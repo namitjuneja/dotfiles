@@ -38,25 +38,9 @@ A transparent bottom bar, `peek`, that shows the current track for 2.5 s and hid
 - **Triggers in `niri/config.kdl`:**
   - `Mod+P` and `F19`.
   - Previous/next binds (`Mod+;`, `Mod+'`, media keys): they wait for the new title, then flash.
-- **Optional keyd (`/etc/keyd/default.conf`, not in this repo):** niri cannot bind a bare modifier, so keyd sends the trigger.
+- **keyd (`/etc/keyd/default.conf`; backup copy: `keyd/default.conf`):** niri cannot bind a bare modifier, so keyd sends the trigger.
 
-  ```
-  [global]
-  overload_tap_timeout = 250
-
-  [ids]
-  *
-
-  [main]
-  leftalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek'))
-  rightalt = overload(alt, command(runuser -u namit -- env XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 sh -c 'noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek'))
-  leftmeta = layerm(meta, macro(f19))
-  rightmeta = layerm(meta, macro(f19))
-
-  [alt:A]
-
-  [meta:M]
-  ```
+  - Config: `keyd/default.conf` (hardcodes user `namit`, UID 1000, `wayland-1`).
 
   - `altwin:swap_alt_win` makes the Alt keys act as Super and the Win keys as Alt.
   - Tapping Alt flashes the bar; holding it stays a normal modifier.

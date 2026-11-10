@@ -60,9 +60,17 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 
 ## 7. Remaining configs, one by one
 - For each: Claude shows the file, says what it does, asks me, then copies on my yes.
-- Includes the keyd config.
 - Skip `mimeapps.list`: step 12 rebuilds it.
 - Skip `hypr/` and `waybar/` (old setup) unless I want them.
+
+## 7b. keyd (needs sudo)
+- Config is in the repo: `keyd/default.conf` (tap Alt flashes the bar, Win key sends F19).
+- Ask Claude to:
+  - Check it matches the new machine: username (`namit`), UID (`1000`), Wayland display (`wayland-1`). Fix if not.
+  - Show me the file, then `sudo cp` it to `/etc/keyd/default.conf`.
+  - `sudo systemctl enable --now keyd`, then `sudo keyd reload`.
+- Test: tap Alt, the peek bar flashes.
+- Claude asks before each `sudo` step.
 
 ## 8. Firefox profiles
 - Main profile: copy `userChrome.css`, set the `about:config` pref.
