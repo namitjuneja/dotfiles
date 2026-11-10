@@ -43,7 +43,7 @@ entry = "widget.luau"
     type = "color"
     label_key = "settings.occupied_color.label"
     description_key = "settings.occupied_color.description"
-    default = "surface_variant"
+    default = "on_surface_variant/0.2"
 
     [[widget.setting]]
     key = "empty_color"

@@ -34,7 +34,7 @@ local function render()
   local last = noctalia.getConfig("max_workspace") or 9
   local scale = (noctalia.getConfig("scale") or 120) / 100
   local activeColor = noctalia.getConfig("active_color") or "primary"
-  local occupiedColor = noctalia.getConfig("occupied_color") or "surface_variant"
+  local occupiedColor = noctalia.getConfig("occupied_color") or "on_surface_variant/0.2"
   local emptyColor = noctalia.getConfig("empty_color") or "on_primary"
 
   local items = {}
