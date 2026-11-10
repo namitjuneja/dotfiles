@@ -2,6 +2,8 @@
 
 Restore this repo on a fresh Arch/CachyOS machine. Main desktop: **niri + Noctalia**. `hypr/` and `waybar/` are the older Hyprland setup, kept as fallback.
 
+> The user follows `new_installation_playbook.md` (short, step order). Follow its order: packages before configs; Noctalia must work with niri before the rest.
+
 ## Rules for whoever follows this (human or AI)
 
 - **Ask before every change.** Say what you will do and which files it touches. Wait for a yes.
