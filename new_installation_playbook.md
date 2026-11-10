@@ -3,17 +3,33 @@
 For me. Follow in order. Claude's version: `new-installation.md`.
 
 ## 1. Basics + Firefox
-- Install `git` and `yay` only.
+- Install `git` and `yay` only:
+  ```
+  sudo pacman -S --needed git base-devel
+  git clone https://aur.archlinux.org/yay-bin.git ~/yay-bin
+  cd ~/yay-bin && makepkg -si
+  ```
+  - CachyOS may ship `yay` already: check `yay --version` first.
 - Install Firefox, open it once, log in to Firefox and Google accounts, quit.
+  ```
+  sudo pacman -S firefox
+  ```
   - Why: this creates the profile folder step 8 needs.
 
 ## 2. Claude Code
-- Install Claude Code in the terminal and log in.
+- Install Claude Code in the terminal and log in:
+  ```
+  curl -fsSL https://claude.ai/install.sh | bash
+  claude
+  ```
+  - Restart the shell if `claude` is not found (installs to `~/.local/bin`).
 
-## 3. GitHub
-- Install `gh`, log in (`gh auth login`).
-- Clone the dotfiles into a separate folder, not `~/.config`.
-- `git checkout niri` (default is `master`, the old Hyprland setup).
+## 3. Dotfiles
+- Clone the dotfiles into a separate folder, not `~/.config`, and switch to `niri` (default is `master`, the old Hyprland setup):
+  ```
+  git clone https://github.com/namitjuneja/dotfiles ~/dotfiles-src
+  cd ~/dotfiles-src && git checkout niri
+  ```
 
 ## 4. Packages (before any config)
 - Ask Claude: one install command per group, plus one line on what each package is for.
@@ -56,3 +72,10 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   - LeechBlock: Options → Import.
 - Do this in the main and YT Music profiles (separate profiles = separate extensions).
 - Settings files aren't in the repo yet. Export them from the old PC first.
+
+## 10. GitHub login (last)
+- Only needed to push changes. Clone needs no login (repo is public).
+  ```
+  sudo pacman -S github-cli
+  gh auth login
+  ```
