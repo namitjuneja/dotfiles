@@ -47,3 +47,12 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 - YT Music and Google Home: make the dirs and symlinks.
 - Restart Firefox. Test `Mod+F9` (YT Music) and `KP_Multiply` (Home).
 - Details: `firefox/README.md`.
+
+## 9. Browser extensions
+- Install uBlock Origin, Vimium C, LeechBlock (Firefox Sync may bring the add-ons, not their settings).
+- Restore settings in each:
+  - uBlock: Settings → Backup/Restore → restore from file.
+  - Vimium C: Options → Backup/Restore → import.
+  - LeechBlock: Options → Import.
+- Do this in the main and YT Music profiles (separate profiles = separate extensions).
+- Settings files aren't in the repo yet. Export them from the old PC first.
