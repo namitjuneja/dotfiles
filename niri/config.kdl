@@ -819,10 +819,12 @@ binds {
     // Logitech MX Keys S special keys
     //   Lock key         sends Alt+L
     //   Print Screen key sends Alt+Shift+S instead of Print
-    //   Volume Up key    sends XF86AudioRaiseVolume (toggles the quick terminal; Mod+Equal still raises the volume)
+    //   Volume Up key    sends XF86AudioRaiseVolume (raises the volume; quick terminal toggle disabled)
     Alt+L hotkey-overlay-title="Lock the Screen: noctalia" { spawn "noctalia" "msg" "session" "lock"; }
     Alt+Shift+S { spawn "noctalia" "msg" "screenshot-annotate"; }
-    XF86AudioRaiseVolume hotkey-overlay-title="Toggle quick terminal" { spawn-sh "~/.config/niri/quick-term.sh"; }
+    // Disabled for now: quick terminal toggle
+    // XF86AudioRaiseVolume hotkey-overlay-title="Toggle quick terminal" { spawn-sh "~/.config/niri/quick-term.sh"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"; }
     Print { spawn "noctalia" "msg" "screenshot-annotate"; }
     Ctrl+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
     Shift+Print { spawn "noctalia" "msg" "screenshot-region"; }
@@ -864,3 +866,4 @@ gestures {
         off
     }
 }
+
