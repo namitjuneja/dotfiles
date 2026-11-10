@@ -36,6 +36,7 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 - Must include:
   - niri, noctalia
   - kitty, fish, rofi, jq, playerctl, wireplumber, brightnessctl, solaar, htop, micro
+  - default-app programs: `evince` (PDF), `ark` (archives), `loupe` (images), `vlc` (video)
   - fonts
   - `ddcutil` (monitor brightness; needs I2C permissions)
   - `keyd` (Alt/Win tap keys; config goes in `/etc/keyd/default.conf`)
@@ -45,6 +46,10 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 ## 5. niri config
 - Ask Claude to copy `niri/` (and `kitty/`).
 - Run `niri validate`.
+- Fix monitors and brightness for the new machine (Claude does it, ask first):
+  - Run `niri msg outputs`. Replace the old output names (`DP-4`, `HDMI-A-2`) and their `mode`, `scale`, `position` in `config.kdl`.
+  - Desktop with external monitor: brightness uses `ddcutil` (`enable_ddcutil = true` in the Noctalia config).
+  - Laptop: brightness uses `brightnessctl`; set `enable_ddcutil = false`.
 
 ## 6. Noctalia
 - Ask Claude to copy `noctalia/` and `noctalia-plugins/`.
@@ -56,6 +61,7 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 ## 7. Remaining configs, one by one
 - For each: Claude shows the file, says what it does, asks me, then copies on my yes.
 - Includes the keyd config.
+- Skip `mimeapps.list`: step 12 rebuilds it.
 - Skip `hypr/` and `waybar/` (old setup) unless I want them.
 
 ## 8. Firefox profiles
@@ -79,3 +85,26 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   sudo pacman -S github-cli
   gh auth login
   ```
+
+## 11. Apps (last)
+- Obsidian, Slack, Nautilus:
+  ```
+  sudo pacman -S nautilus obsidian
+  yay -S slack-desktop
+  ```
+- Log in to Slack, open the Obsidian vault.
+- niri already has binds and window rules for them (`Mod+F5` Nautilus, `Mod+F6` Obsidian).
+
+## 12. Default apps (last)
+- Do not copy `mimeapps.list` (its `.desktop` names are machine-specific).
+- Ask Claude to build it fresh from this list, using the real `.desktop` names found on the new machine, and show me before writing:
+
+  | Type | App |
+  |---|---|
+  | Web links, HTML (`http`, `https`, `about`) | Firefox |
+  | PDF | Evince |
+  | zip, rar | Ark |
+  | png, jpeg | Loupe |
+  | mp4, mkv | VLC |
+
+- Test: open one file of each type.

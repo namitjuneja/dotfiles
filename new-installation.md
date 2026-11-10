@@ -32,6 +32,7 @@ Ask before installing. Lists live in the READMEs; install only what the user pic
 
 - **yay** (AUR helper): see `hypr/README.md` § yay.
 - **niri stack:** `niri`, `noctalia`, `kitty`, `fish`, `rofi-wayland`, `jq`, `playerctl`, `wireplumber` (`wpctl`), `brightnessctl`, `ddcutil` (external monitor brightness; needs I2C permissions), `firefox`, `solaar`, `htop`, `micro`.
+- **Default-app programs:** `evince` (PDF), `ark` (archives), `loupe` (images), `vlc` (video).
 - **Fonts:** `ttf-meslo-nerd`, `ttf-jetbrains-mono-nerd`, Adwaita Mono (used by the bar).
 - **Hyprland fallback:** `hypr/README.md` § Packages (pacman + AUR lists).
 - **Waybar fallback:** `waybar/README.md` § Dependencies.
@@ -49,7 +50,8 @@ Ask before installing. Lists live in the READMEs; install only what the user pic
 | `firefox/` | `user.js` + `userChrome.css` for YT Music and Google Home profiles | See step 5 |
 | `mozilla/firefox/<main-profile>/chrome/` | `userChrome.css` for main profile | See step 5 |
 | `rofi/`, `micro/`, `qt6ct/`, `gtk-3.0/`, `gtk-4.0/`, `nwg-displays/`, `neofetch/`, `networkmanager-dmenu/`, `swaync/` | App configs | Used as-is |
-| `mimeapps.list`, `user-dirs.dirs` | Default apps (Firefox), XDG dirs | Ask before overwriting |
+| `mimeapps.list` | Old default apps, machine-specific names | **Do not copy.** See "Default apps" |
+| `user-dirs.dirs` | XDG dirs | Ask before overwriting |
 | `hypr/`, `waybar/` | Old Hyprland desktop | Only if the user wants Hyprland |
 
 ## 4. Noctalia
@@ -67,6 +69,17 @@ Noctalia loads **every `*.toml` in `~/.config/noctalia/`**, then `~/.local/state
 Notes:
 - `niri-taskbar` needs `workspace "stash"` in `niri/config.kdl` (already there) and `jq`.
 - Known validate warnings on the old machine: `[panels]` unknown section, missing plugins `gcap0n1/f1` and `namitjuneja/ytm-media`. Harmless; ask before removing.
+
+## 4b. Monitors and brightness (hardware-specific)
+
+`niri/config.kdl` has `output` blocks for this machine's monitors (`DP-4`, `HDMI-A-2`: `mode`, `scale`, `position`). They will not match a new machine. Ask before changing.
+
+1. Run `niri msg outputs`; show the user the names, modes and scales.
+2. Propose new `output` blocks; replace the old ones after a yes.
+3. Brightness:
+   - Desktop with external monitor (no backlight): `ddcutil` over DDC/CI. Keep `enable_ddcutil = true` in `noctalia/noctalia-config.toml`; needs `ddcutil` and I2C permissions.
+   - Laptop (backlight device): `brightnessctl`. Set `enable_ddcutil = false`.
+4. Test `Mod+Shift+=` / `Mod+Shift+-` (they call `noctalia msg brightness-up/down`).
 
 ## 5. Firefox
 
@@ -102,6 +115,21 @@ Tracked files containing `/home/namit` (ask before editing each; or just keep th
 - **keyd** (tap Alt to flash the peek bar): `/etc/keyd/default.conf`, config in `README.md`. Needs `sudo`; ask first.
 - **Logitech MX Keys S:** niri binds assume Lock = `Alt+L`, Print Screen = `Alt+Shift+S`.
 - **Wallpaper / lock screen:** Hyprland only (`hyprpaper`, `hyprlock`); Noctalia handles these under niri.
+
+## 7b. Default apps (last step)
+
+Do not copy `mimeapps.list`. Its `.desktop` names (`evince-6`, `ark-2`, `loupe-2`, `vlc-3`) are numbered duplicates from the old machine. Build it fresh:
+
+1. Install the programs first (see Packages).
+2. Find real names: `ls /usr/share/applications | grep -i -E "firefox|evince|ark|loupe|vlc"`.
+3. Map these types (show the user the mapping, wait for a yes, then write):
+   - `x-scheme-handler/http`, `x-scheme-handler/https`, `x-scheme-handler/about`, `x-scheme-handler/unknown`, `text/html`, `application/xhtml+xml` → Firefox
+   - `application/pdf` → Evince
+   - `application/zip`, `application/vnd.rar` → Ark
+   - `image/png`, `image/jpeg` → Loupe
+   - `video/mp4`, `video/x-matroska` → VLC
+4. Set each with `xdg-mime default <real>.desktop <type>` (writes `~/.config/mimeapps.list`).
+5. Check: `xdg-mime query default <type>`.
 
 ## 8. Verify
 
