@@ -124,6 +124,11 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   yay -S slack-desktop
   ```
 - Log in to Slack, open the Obsidian vault.
+- VS Code:
+  ```
+  sudo pacman -S code
+  ```
+  - Disable telemetry: `Ctrl+,`, search "telemetry".
 - KDE Connect:
   ```
   sudo pacman -S kdeconnect
