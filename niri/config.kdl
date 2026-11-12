@@ -396,6 +396,8 @@ window-rule {
     match app-id="^md\\.obsidian\\.Obsidian$"
     match app-id="^dev\\.noctalia\\.Noctalia$"
     opacity 0.9
+    // Else the focus ring is filled solid behind the window when focused, hiding the transparency.
+    draw-border-with-background false
 }
 
 // Hide floating windows while focus is on something else; they reappear when focused
@@ -414,7 +416,8 @@ window-rule {
 
 // Background blur behind translucent windows and the Noctalia bar. Opaque surfaces are unaffected.
 // Kept mild (few passes, small offset) so text on top stays readable; raise passes/offset for more.
-// xray false blurs whatever is actually behind (other windows), not just the wallpaper.
+// Tiled windows use xray (reliable); non-xray blur is experimental and was flaky for non-maximized tiles.
+// Floating windows use regular blur so they blur what is behind them.
 blur {
     passes 2
     offset 2.0
@@ -423,6 +426,13 @@ blur {
 window-rule {
     background-effect {
         blur true
+        xray true
+    }
+}
+
+window-rule {
+    match is-floating=true
+    background-effect {
         xray false
     }
 }
@@ -862,3 +872,6 @@ gestures {
     }
 }
 
+
+
+include "noctalia.kdl"

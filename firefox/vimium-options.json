@@ -1,0 +1,85 @@
+{
+  "exclusionRules": [
+    {
+      "passKeys": "*",
+      "pattern": "https?://www.openvim.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://www.openvim.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://localhost:8888/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://localhost:8889/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://redditshell.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://docs.google.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://v6p9d9t4.ssl.hwcdn.net/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://www.twoplayergames.org/*"
+    },
+    {
+      "passKeys": "*",
+      "pattern": "https?://slowroads.io/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://slowroads.io/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://www.typing.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://localhost:8080/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://www.crazygames.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://www.overleaf.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://w2g.tv/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://web.whatsapp.com/*"
+    },
+    {
+      "passKeys": "alqdo1234567890",
+      "pattern": "https?://localhost:5173/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://app.codesignal.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "file:///*"
+    }
+  ],
+  "grabBackFocus": true,
+  "keyMappings": "# Insert your preferred key mappings here.\nmap J nextTab\nmap K previousTab",
+  "newTabDestination": "browserNewTabPage",
+  "searchEngines": "w: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\n\n# More examples.\n#\n# (Vimium supports search completion Wikipedia, as\n# above, and for these.)\n#\ng: https://www.google.com/search?q=%s Google\n# l: https://www.google.com/search?q=%s&btnI I'm feeling lucky...\n# y: https://www.youtube.com/results?search_query=%s Youtube\n# gm: https://www.google.com/maps?q=%s Google maps\n# b: https://www.bing.com/search?q=%s Bing\n# d: https://duckduckgo.com/?q=%s DuckDuckGo\n# az: https://www.amazon.com/s/?field-keywords=%s Amazon\n# qw: https://www.qwant.com/?q=%s Qwant",
+  "settingsVersion": "2.4.2"
+}

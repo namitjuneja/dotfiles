@@ -92,19 +92,23 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   - On: remember browsing and download history (`places.history.enabled`).
   - Off: always private (`browser.privatebrowsing.autostart`), remember search and form history (`browser.formfill.enable`), clear history on close (`privacy.sanitize.sanitizeOnShutdown`).
 - YT Music and Google Home: make the dirs and symlinks.
+- YT Music and Google Home: install [Vimium](https://addons.mozilla.org/firefox/addon/vimium-ff/) and [LeechBlock NG](https://addons.mozilla.org/firefox/addon/leechblock-ng/) in both, then import:
+  - Vimium: Options → Backup and restore → [`firefox/vimium-options.json`](firefox/vimium-options.json).
+  - LeechBlock: Options → Import → [`firefox/leechblock-options.txt`](firefox/leechblock-options.txt) (blocks everything except `home.google.com`, `music.youtube.com`).
+  - Profiles run with `--no-remote`, so open the add-on pages from inside each window (`Ctrl+L`), or launch it by hand: `firefox --no-remote --profile ~/.local/share/<ytm|home>-firefox --new-window <url>`.
 - Restart Firefox. Test `Mod+F9` (YT Music) and `KP_Multiply` (Home).
 - Details: `firefox/README.md`.
 
 ## 9. Browser extensions
-- Install uBlock Origin, Vimium C, LeechBlock, Tab Center Reborn (Firefox Sync may bring the add-ons, not their settings).
+- Install uBlock Origin, Vimium, LeechBlock NG, Tab Center Reborn (Firefox Sync may bring the add-ons, not their settings).
 - Vertical Custom (own add-on, unlisted): log in at AMO developer hub → "My Extension" → Manage Versions → download signed `.xpi` → open in Firefox. Bookmark: `https://addons.mozilla.org/en-US/firefox/addon/46a8e3abcda744e397f1/`.
 - Restore settings in each:
   - uBlock: Settings → Backup/Restore → restore from file.
-  - Vimium C: Options → Backup/Restore → import.
-  - LeechBlock: Options → Import.
+  - Vimium: Options → Backup and restore → import [`firefox/vimium-options.json`](firefox/vimium-options.json).
+  - LeechBlock: Options → Import → [`firefox/leechblock-options.txt`](firefox/leechblock-options.txt).
   - Tab Center Reborn: Options → custom CSS → paste `firefox/tab-center-reborn.css` (main profile only).
 - Do this in the main and YT Music profiles (separate profiles = separate extensions).
-- Settings files aren't in the repo yet. Export them from the old PC first.
+- Vimium and LeechBlock settings are in the repo; export uBlock's from the old PC first.
 
 ## 10. GitHub login (last)
 - Only needed to push changes. Clone needs no login (repo is public).
