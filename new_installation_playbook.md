@@ -129,6 +129,15 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   sudo pacman -S code
   ```
   - Disable telemetry: `Ctrl+,`, search "telemetry".
+  - LaTeX Workshop: install TeX Live and Biber:
+    ```
+    sudo pacman -S --needed texlive biber
+    ```
+  - Then install the LaTeX Workshop extension and set the build directory:
+    1. `Ctrl+Shift+P`
+    2. Run "Preferences: Open User Settings".
+    3. Search `outDir`.
+    4. Change `%DIR%` to `%DIR%/build`.
 - KDE Connect:
   ```
   sudo pacman -S kdeconnect
