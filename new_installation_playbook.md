@@ -55,6 +55,9 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 - Ask Claude to copy `noctalia/` and `noctalia-plugins/`.
 - Check the plugin path in the config (it says `/home/namit/...`).
 - Copy plugin data (e.g. world clock zones) from the old machine, then restart Noctalia: `cp -r <old>/.local/state/noctalia/plugins/data ~/.local/state/noctalia/plugins/`
+- Clear the GUI override: `rm ~/.local/state/noctalia/settings.toml`, then restart Noctalia. Else its defaults beat the restored config (lock screen, wallpaper).
+- Rename old monitor names (e.g. `DP-4`) to the new ones from `niri msg outputs`: `sed -i 's/DP-4/DP-2/g' ~/.config/noctalia/noctalia-config.toml`.
+- Old machine, before wiping: `noctalia config export > ~/.config/noctalia/noctalia-config.toml` (merges GUI changes).
 - Run `noctalia config validate`.
 - Confirm niri and Noctalia work together: bar shows, workspaces and taskbar show, keybinds work.
 - Log in to Google Calendar: account `personal_google` is already in the config; sign in from Noctalia's settings (Calendar section). Login is not stored in the repo.
@@ -94,6 +97,7 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 
 ## 9. Browser extensions
 - Install uBlock Origin, Vimium C, LeechBlock, Tab Center Reborn (Firefox Sync may bring the add-ons, not their settings).
+- Vertical Custom (own add-on, unlisted): log in at AMO developer hub → "My Extension" → Manage Versions → download signed `.xpi` → open in Firefox. Bookmark: `https://addons.mozilla.org/en-US/firefox/addon/46a8e3abcda744e397f1/`.
 - Restore settings in each:
   - uBlock: Settings → Backup/Restore → restore from file.
   - Vimium C: Options → Backup/Restore → import.

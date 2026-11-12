@@ -135,7 +135,7 @@ transition_duration = 400
 enabled = true
 schema_version = 2
 widget_order = [
-    "lockscreen-login-box@DP-4",
+    "lockscreen-login-box@DP-2",
     "lockscreen-widget-0000000000000002",
     "lockscreen-widget-0000000000000008",
     "lockscreen-widget-0000000000000009"
@@ -146,18 +146,18 @@ widget_order = [
     major_interval = 4
     visible = true
 
-    [lockscreen_widgets.widget."lockscreen-login-box@DP-4"]
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
     box_height = 70.0
     box_width = 400.0
     cx = 1075.0
     cy = 717.10546875
-    output = "DP-4"
+    output = "DP-2"
     placement_height = 900.0
     placement_width = 2150.0
     rotation = 0.0
     type = "login_box"
 
-        [lockscreen_widgets.widget."lockscreen-login-box@DP-4".settings]
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
         background_color = "on_surface_variant"
         background_opacity = 0.41000000000000003
         background_radius = 32.0
@@ -179,7 +179,7 @@ widget_order = [
     box_width = 0.0
     cx = 1075.0
     cy = 450.0
-    output = "DP-4"
+    output = "DP-2"
     placement_height = 900.0
     placement_width = 2150.0
     rotation = 0.0
@@ -190,7 +190,7 @@ widget_order = [
     box_width = 312.0
     cx = 1075.0
     cy = 362.0
-    output = "DP-4"
+    output = "DP-2"
     placement_height = 900.0
     placement_width = 2150.0
     rotation = 0.0
@@ -209,7 +209,7 @@ widget_order = [
     box_width = 256.0
     cx = 1075.0
     cy = 426.0
-    output = "DP-4"
+    output = "DP-2"
     placement_height = 900.0
     placement_width = 2150.0
     rotation = 0.0
@@ -228,7 +228,7 @@ widget_order = [
     box_width = 0.0
     cx = 1075.0
     cy = 560.0
-    output = "DP-4"
+    output = "DP-2"
     placement_height = 900.0
     placement_width = 2150.0
     rotation = 0.0
@@ -369,7 +369,7 @@ transition_on_startup = true
     [wallpaper.last]
     path = "/home/namit/Downloads/Dotfiles/wallpapers/library/monochrome/mon-23.jpg"
 
-    [wallpaper.monitors.DP-4]
+    [wallpaper.monitors.DP-2]
     path = "/home/namit/Downloads/Dotfiles/wallpapers/library/monochrome/mon-23.jpg"
 
     [[wallpaper.favorite]]
