@@ -1,0 +1,2 @@
+[General]
+commands="@ByteArray({\"cfe77a19_4f54_4454_aee7_5bc67b9e4d0d\":{\"command\":\"bluetoothctl devices Connected | awk '{print $2}' | xargs -r -n1 bluetoothctl disconnect\",\"name\":\"Disconnect All Bluetooth\"}})"

@@ -12,6 +12,7 @@
 !/fish/
 !/gtk-3.0/
 !/gtk-4.0/
+!/kdeconnect/
 !/keyd/
 !/kitty/
 !/micro/
@@ -39,3 +40,8 @@
 *.bak
 /micro/colorschemes/
 /micro/syntax/
+
+# kdeconnect: keep only plugin configs, never keys/certs/trust
+/kdeconnect/*.pem
+/kdeconnect/trusted_devices
+/kdeconnect/*/*.pem

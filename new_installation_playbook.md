@@ -54,6 +54,7 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 ## 6. Noctalia
 - Ask Claude to copy `noctalia/` and `noctalia-plugins/`.
 - Check the plugin path in the config (it says `/home/namit/...`).
+- Copy plugin data (e.g. world clock zones) from the old machine, then restart Noctalia: `cp -r <old>/.local/state/noctalia/plugins/data ~/.local/state/noctalia/plugins/`
 - Run `noctalia config validate`.
 - Confirm niri and Noctalia work together: bar shows, workspaces and taskbar show, keybinds work.
 - Log in to Google Calendar: account `personal_google` is already in the config; sign in from Noctalia's settings (Calendar section). Login is not stored in the repo.
@@ -75,6 +76,18 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 
 ## 8. Firefox profiles
 - Main profile: copy `userChrome.css`, set the `about:config` pref.
+- Main profile `about:config` prefs:
+  - `sidebar.position_start` = `false`
+  - `browser.nova.enabled` = `true`
+  - `full-screen-api.warning.timeout` = `0`
+- Settings → Search (address bar), main profile. Checked = on, rest off (pref in brackets):
+  - Show search suggestions (`browser.search.suggest.enabled`): on.
+  - Off: suggestions before history (`browser.urlbar.showSearchSuggestionsFirst`), in private windows (`browser.search.suggest.enabled.private`), trending (`browser.urlbar.trending.featureGate`).
+  - Firefox Suggest: only Browsing history on (`browser.urlbar.suggest.history`).
+  - Off: bookmarks (`.bookmark`), open tabs (`.openpage`), shortcuts (`.topsites`), recent searches (`.recentsearches`), search engines (`.engines`), quick actions (`.quickactions`), from Firefox (`.quicksuggest.nonsponsored`), sponsors (`.quicksuggest.sponsored`), all under `browser.urlbar.suggest`.
+- Settings → Privacy and security → History → Advanced:
+  - On: remember browsing and download history (`places.history.enabled`).
+  - Off: always private (`browser.privatebrowsing.autostart`), remember search and form history (`browser.formfill.enable`), clear history on close (`privacy.sanitize.sanitizeOnShutdown`).
 - YT Music and Google Home: make the dirs and symlinks.
 - Restart Firefox. Test `Mod+F9` (YT Music) and `KP_Multiply` (Home).
 - Details: `firefox/README.md`.
@@ -103,6 +116,17 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   yay -S slack-desktop
   ```
 - Log in to Slack, open the Obsidian vault.
+- KDE Connect:
+  ```
+  sudo pacman -S kdeconnect
+  cp -r <old>/.config/kdeconnect ~/.config/
+  ```
+  - Run command config comes from the repo (`kdeconnect/`); keys are not tracked (private key: never commit). Pair from the phone.
+  - Needs autostart: `spawn-at-startup "kdeconnectd"` in `niri/config.kdl`.
+  - Run command (Pixel 10a, after pairing): add `Disconnect All Bluetooth`, or copy `kdeconnect/<phone-id>/kdeconnect_runcommand/config` from the old machine.
+    ```
+    bluetoothctl devices Connected | awk '{print $2}' | xargs -r -n1 bluetoothctl disconnect
+    ```
 - niri already has binds and window rules for them (`Mod+F5` Nautilus, `Mod+F6` Obsidian).
 
 ## 12. Default apps (last)
@@ -119,3 +143,11 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   | Folders (`inode/directory`) | Nautilus (else folders open in kitty) |
 
 - Test: open one file of each type.
+
+## 13. KDE Connect firewall (last, needs sudo)
+- Open the ports, restart the daemon, pair from the phone:
+  ```
+  sudo ufw allow 1714:1764/tcp && sudo ufw allow 1714:1764/udp
+  pkill kdeconnectd; setsid -f kdeconnectd
+  ```
+- Phone and PC must be on the same LAN.
