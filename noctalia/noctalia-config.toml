@@ -13,7 +13,7 @@ order = [ "default", "peek" ]
     capsule_radius = 3
     center = [ "niri-taskbar" ]
     color = "primary"
-    end = [ "group:g1", "status", "volume", "media", "session", "weather", "bar", "clock" ]
+    end = [ "group:g1", "status", "volume", "media", "session", "snow", "weather", "bar", "clock" ]
     font_family = "Adwaita Mono"
     font_scale = 0.69999999180436134
     margin_ends = 0
@@ -91,14 +91,23 @@ sidebar = "full"
 
 [desktop_widgets]
 schema_version = 2
-widget_order = []
+widget_order = [ "desktop-widget-snow" ]
 
     [desktop_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
 
-    [desktop_widgets.widget]
+    [desktop_widgets.widget.desktop-widget-snow]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1075.0
+    cy = 200.0
+    output = "DP-2"
+    placement_height = 900.0
+    placement_width = 2150.0
+    rotation = 0.0
+    type = "namitjuneja/snow-outlook:snow"
 
 [dock]
 background_opacity = 0.99999997764825821
@@ -303,7 +312,8 @@ enabled = [
     "reaperhound/ambient-sounds",
     "ezequiel/mango_layouts",
     "namitjuneja/niri-taskbar",
-    "namitjuneja/niri-workspaces"
+    "namitjuneja/niri-workspaces",
+    "namitjuneja/snow-outlook"
 ]
 
     [[plugins.source]]
@@ -532,6 +542,9 @@ capsule_fill = "#2D2D2D"
 capsule_radius = 16
 color = "#BFBFBF"
 scale = 0.90000000000000002
+
+[widget.snow]
+type = "namitjuneja/snow-outlook:bar"
 
 [widget.weather]
 capsule = true

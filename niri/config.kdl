@@ -116,7 +116,7 @@ layout {
     // Set gaps around windows in logical pixels.
     gaps 10
 
-    // Strip showing one tab per window in tabbed columns (Mod+W).
+    // Strip showing one tab per window in tabbed columns (Mod+T).
     tab-indicator {
         width 8
         gap 6
@@ -496,7 +496,8 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+W { toggle-column-tabbed-display; }
+    Mod+T { toggle-column-tabbed-display; }
+    Mod+W hotkey-overlay-title="Snow outlook" { spawn "noctalia" "msg" "panel-toggle" "namitjuneja/snow-outlook:panel"; }
     Mod+Shift+Return hotkey-overlay-title="Floating terminal: kitty" { spawn "kitty" "--class" "floating-term"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     // Mirrors hyprland.lua: Mod+Space launcher, Mod+F<n> apps, bare F<n> workspaces
@@ -565,7 +566,7 @@ binds {
     Mod+BracketRight allow-when-locked=true { spawn-sh "o=$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title); playerctl -p \"$(~/.config/niri/ytm-player.sh)\" next; for i in $(seq 30); do [ \"$(playerctl -p \"$(~/.config/niri/ytm-player.sh)\" metadata title)\" != \"$o\" ] && break; sleep 0.1; done; sleep 0.2; noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
 
     Mod+B hotkey-overlay-title="Clipboard history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
-    Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
+//     Mod+T hotkey-overlay-title="To Do: noctalia" { spawn "noctalia" "msg" "panel-toggle" "nightwatch75/todo:panel"; }
     Mod+S hotkey-overlay-title="Notification history: noctalia" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+P hotkey-overlay-title="Peek now playing: noctalia" { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }
     F19 hotkey-overlay-title=null { spawn-sh "noctalia msg bar-show peek; sleep 2.5; noctalia msg bar-hide peek"; }

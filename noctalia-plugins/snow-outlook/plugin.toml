@@ -1,0 +1,40 @@
+id = "namitjuneja/snow-outlook"
+name = "Snow Outlook"
+version = "1.0.0"
+plugin_api = 24
+author = "namitjuneja"
+license = "MIT"
+icon = "snowflake"
+description = "Minimal desktop widget: will it snow today and over the next 6 days."
+tags = ["desktop", "bar", "weather"]
+dependencies = ["python3"]
+
+[[desktop_widget]]
+id = "snow"
+entry = "widget.luau"
+
+[[service]]
+id = "service"
+entry = "service.luau"
+
+[[widget]]
+id = "bar"
+entry = "bar.luau"
+
+    [[widget.setting]]
+    key = "threshold"
+    type = "int"
+    label_key = "settings.threshold.label"
+    description_key = "settings.threshold.description"
+    default = 30
+    min = 0
+    max = 100
+
+[[panel]]
+id = "panel"
+entry = "panel.luau"
+width = 678
+height = 292
+placement = "attached"
+position = "auto"
+open_near_click = false
