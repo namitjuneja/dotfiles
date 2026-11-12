@@ -32,13 +32,13 @@ local function columns(data, size, gap)
       ui.label({ text = i == 1 and "Today" or WD[weekday(day.date)], fontSize = 12,
         color = i == 1 and "on_surface" or "on_surface_variant", fontWeight = i == 1 and "bold" or nil, opacity = i == 1 and 1 or 0.7 }),
       ui.box({ width = 1, height = math.max(1, 6 - gap), fill = "#00000000" }),
-      (storm and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = size, height = size * 0.875, fit = "contain" })
+      (storm and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = size, height = size * 0.888, fit = "contain" })
         or ui.glyph({ name = "snowflake", size = size, color = snow and "primary" or "on_surface_variant",
           opacity = snow and 1 or 0.15 })),
       ui.box({ width = 1, height = math.max(1, 7 - gap), fill = "#00000000" }), -- flake centred between label and amount
     }
     kids[#kids + 1] = ui.label({ text = snow and (day.inches > 0 and (tostring(day.inches) .. '"') or "snow") or " ",
-      fontSize = 12, color = storm and "#5aa9ff" or "primary" })
+      fontSize = 12, color = "primary" })
     kids[#kids + 1] = ui.label({ text = snow and (tostring(math.floor(day.pct or 0)) .. "%") or " ",
       fontSize = 11, color = "on_surface_variant", opacity = 0.7 })
     kids[#kids + 1] = ui.box({ width = 1, height = math.max(1, 7 - gap), fill = "#00000000" }) -- separates snow info from temps

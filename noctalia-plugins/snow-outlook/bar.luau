@@ -20,7 +20,7 @@ local function render()
   local lit = today ~= nil and today.snow and (today.pct or 0) >= threshold
   local storm = lit and (today.inches or 0) >= 4 -- snowstorm threshold (inches)
   barWidget.render(storm
-    and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = 16, height = 14, fit = "contain" })
+    and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = 16, height = 14.2, fit = "contain" })
     or ui.glyph({ name = "snowflake", color = lit and "primary" or "on_surface_variant", opacity = lit and 1 or 0.4 }))
   if data == nil or data.days == nil then
     barWidget.setTooltip("Snow outlook loading…")
