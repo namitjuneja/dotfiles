@@ -1,0 +1,41 @@
+# Ignore everything by default (public repo; ~/.config holds cookies, tokens, app data).
+/*
+# Tracked configs
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/new-installation.md
+!/new_installation_playbook.md
+!/mimeapps.list
+!/user-dirs.dirs
+!/firefox/
+!/fish/
+!/gtk-3.0/
+!/gtk-4.0/
+!/keyd/
+!/kitty/
+!/micro/
+!/neofetch/
+!/networkmanager-dmenu/
+!/niri/
+!/noctalia/
+!/noctalia-plugins/
+!/nwg-displays/
+!/qt6ct/
+!/rofi/
+!/solaar/
+!/swaync/
+# Firefox main profile: only userChrome.css
+!/mozilla/
+/mozilla/*
+!/mozilla/firefox/
+/mozilla/firefox/*
+!/mozilla/firefox/*/
+/mozilla/firefox/*/*
+!/mozilla/firefox/*/chrome/
+/mozilla/firefox/*/chrome/*
+!/mozilla/firefox/*/chrome/userChrome.css
+# Never track
+*.bak
+/micro/colorschemes/
+/micro/syntax/

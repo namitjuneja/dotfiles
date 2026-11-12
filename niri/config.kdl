@@ -451,12 +451,7 @@ layer-rule {
 }
 
 // Mirrors hyprland.lua monitor rules
-output "DP-4" {
-    mode "3440x1440@59.973"
-    scale 1.6
-    position x=0 y=0
-}
-output "HDMI-A-2" {
+output "DP-2" {
     mode "3440x1440@59.973"
     scale 1.6
     position x=0 y=0

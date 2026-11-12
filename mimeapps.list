@@ -1,25 +1,17 @@
-[Added Associations]
-application/pdf=evince-6.desktop;evince-5.desktop;evince-4.desktop;evince-3.desktop;evince-2.desktop;evince.desktop;
-application/vnd.rar=ark-2.desktop;
-application/zip=ark.desktop;
-image/png=loupe-2.desktop;loupe.desktop;
-text/html=firefox-2.desktop;
-video/mp4=vlc-3.desktop;
-video/x-matroska=vlc-2.desktop;
-image/jpeg=org.gnome.Loupe.desktop;
 
 [Default Applications]
-application/pdf=evince-6.desktop;
-application/vnd.rar=ark-2.desktop;
-application/zip=ark.desktop;
-image/png=loupe-2.desktop;
-text/html=firefox.desktop
-video/mp4=vlc-3.desktop;
-video/x-matroska=vlc-2.desktop;
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
-image/jpeg=org.gnome.Loupe.desktop
+text/html=firefox.desktop
+application/xhtml+xml=firefox.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 x-scheme-handler/about=firefox.desktop
 x-scheme-handler/unknown=firefox.desktop
-application/xhtml+xml=firefox.desktop
+application/pdf=org.gnome.Evince.desktop
+application/zip=org.kde.ark.desktop
+application/vnd.rar=org.kde.ark.desktop
+image/png=org.gnome.Loupe.desktop
+image/jpeg=org.gnome.Loupe.desktop
+video/mp4=vlc.desktop
+video/x-matroska=vlc.desktop
+inode/directory=org.gnome.Nautilus.desktop

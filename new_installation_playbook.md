@@ -56,6 +56,7 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 - Check the plugin path in the config (it says `/home/namit/...`).
 - Run `noctalia config validate`.
 - Confirm niri and Noctalia work together: bar shows, workspaces and taskbar show, keybinds work.
+- Log in to Google Calendar: account `personal_google` is already in the config; sign in from Noctalia's settings (Calendar section). Login is not stored in the repo.
 - Do not go on until this works.
 
 ## 7. Remaining configs, one by one
@@ -79,11 +80,12 @@ For me. Follow in order. Claude's version: `new-installation.md`.
 - Details: `firefox/README.md`.
 
 ## 9. Browser extensions
-- Install uBlock Origin, Vimium C, LeechBlock (Firefox Sync may bring the add-ons, not their settings).
+- Install uBlock Origin, Vimium C, LeechBlock, Tab Center Reborn (Firefox Sync may bring the add-ons, not their settings).
 - Restore settings in each:
   - uBlock: Settings → Backup/Restore → restore from file.
   - Vimium C: Options → Backup/Restore → import.
   - LeechBlock: Options → Import.
+  - Tab Center Reborn: Options → custom CSS → paste `firefox/tab-center-reborn.css` (main profile only).
 - Do this in the main and YT Music profiles (separate profiles = separate extensions).
 - Settings files aren't in the repo yet. Export them from the old PC first.
 
@@ -114,5 +116,6 @@ For me. Follow in order. Claude's version: `new-installation.md`.
   | zip, rar | Ark |
   | png, jpeg | Loupe |
   | mp4, mkv | VLC |
+  | Folders (`inode/directory`) | Nautilus (else folders open in kitty) |
 
 - Test: open one file of each type.

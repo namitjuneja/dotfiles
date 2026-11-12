@@ -67,6 +67,8 @@ Noctalia loads **every `*.toml` in `~/.config/noctalia/`**, then `~/.local/state
    `noctalia msg plugins disable <id>; sleep 2; noctalia msg plugins enable <id>`
    (ids: `namitjuneja/niri-taskbar`, `namitjuneja/niri-workspaces`)
 
+6. Google Calendar: `[calendar.account.personal_google]` (type `google`) is in the config; sign in once from Noctalia's settings (Calendar section). Login is not tracked in the repo.
+
 Notes:
 - `niri-taskbar` needs `workspace "stash"` in `niri/config.kdl` (already there) and `jq`.
 - Known validate warnings on the old machine: `[panels]` unknown section, missing plugins `gcap0n1/f1` and `namitjuneja/ytm-media`. Harmless; ask before removing.
@@ -131,13 +133,14 @@ Config is tracked at `keyd/default.conf`; live path is `/etc/keyd/default.conf`.
 Do not copy `mimeapps.list`. Its `.desktop` names (`evince-6`, `ark-2`, `loupe-2`, `vlc-3`) are numbered duplicates from the old machine. Build it fresh:
 
 1. Install the programs first (see Packages).
-2. Find real names: `ls /usr/share/applications | grep -i -E "firefox|evince|ark|loupe|vlc"`.
+2. Find real names: `ls /usr/share/applications | grep -i -E "firefox|evince|ark|loupe|vlc|nautilus"`.
 3. Map these types (show the user the mapping, wait for a yes, then write):
    - `x-scheme-handler/http`, `x-scheme-handler/https`, `x-scheme-handler/about`, `x-scheme-handler/unknown`, `text/html`, `application/xhtml+xml` → Firefox
    - `application/pdf` → Evince
    - `application/zip`, `application/vnd.rar` → Ark
    - `image/png`, `image/jpeg` → Loupe
    - `video/mp4`, `video/x-matroska` → VLC
+   - `inode/directory` → Nautilus (`org.gnome.Nautilus.desktop`; else folders open in kitty)
 4. Set each with `xdg-mime default <real>.desktop <type>` (writes `~/.config/mimeapps.list`).
 5. Check: `xdg-mime query default <type>`.
 
