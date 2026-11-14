@@ -1,8 +1,9 @@
 --!nonstrict
 
--- Bar icon: snowflake lit (primary) when today's chance of snow >= threshold, dim otherwise.
+-- Bar icon: snowflake lit (yellow) when today's chance of snow >= threshold, dim otherwise.
 -- Hover: 7-day summary tooltip. Click: panel.
 
+local SNOW = "#FFEF00" -- accent for everything snow (matches assets/storm.png)
 local WD = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }
 local data = noctalia.state.get("snow.data")
 
@@ -21,7 +22,7 @@ local function render()
   local storm = lit and (today.inches or 0) >= 4 -- snowstorm threshold (inches)
   barWidget.render(storm
     and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = 16, height = 14.2, fit = "contain" })
-    or ui.glyph({ name = "snowflake", color = lit and "primary" or "on_surface_variant", opacity = lit and 1 or 0.4 }))
+    or ui.glyph({ name = "snowflake", color = lit and SNOW or "on_surface_variant", opacity = lit and 1 or 0.4 }))
   if data == nil or data.days == nil then
     barWidget.setTooltip("Snow outlook loading…")
     return
