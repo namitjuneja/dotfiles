@@ -1,6 +1,6 @@
 --!nonstrict
 
--- Bar icon: snowflake lit (yellow) when today's chance of snow >= threshold, dim otherwise.
+-- Bar icon: snowflake lit (yellow) on a snow day (rule in fetch.py), dim otherwise.
 -- Hover: 7-day summary tooltip. Click: panel.
 
 local SNOW = "#FFEF00" -- accent for everything snow (matches assets/storm.png)
@@ -16,9 +16,8 @@ local function weekday(date)
 end
 
 local function render()
-  local threshold = noctalia.getConfig("threshold") or 30
   local today = data and data.days and data.days[1]
-  local lit = today ~= nil and today.snow and (today.pct or 0) >= threshold
+  local lit = today ~= nil and today.snow -- same rule as the panel (set in fetch.py)
   local storm = lit and (today.inches or 0) >= 4 -- snowstorm threshold (inches)
   barWidget.render(storm
     and ui.image({ path = noctalia.pluginDir() .. "/assets/storm.png", width = 16, height = 14.2, fit = "contain" })

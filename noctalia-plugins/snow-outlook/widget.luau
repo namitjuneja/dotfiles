@@ -16,7 +16,7 @@ local function weekday(date)
   return (y + math.floor(y / 4) - math.floor(y / 100) + math.floor(y / 400) + t[m] + d) % 7 + 1
 end
 
-local FULL_IN = 0.25 -- in/hr that counts as heavy snow; one scale for every hour
+local FULL_IN = 0.5 -- in/hr that counts as heavy snow; one scale for every hour
 local GAP = 4
 
 local function hourLabels(w)

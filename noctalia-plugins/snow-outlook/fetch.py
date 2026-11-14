@@ -11,15 +11,22 @@ r = json.load(urllib.request.urlopen(url, timeout=15))
 d = r["daily"]
 now_c = r["current"]["temperature_2m"]
 SNOW_CODES = {71, 73, 75, 77, 85, 86}
+# One rule everywhere: snow needs enough chance AND (a little snow OR a snow weather code).
+MIN_POP = 30        # % chance of precipitation
+DAY_MIN_IN = 0.02   # forecast inches for a day
+HOUR_MIN_IN = 0.01  # forecast inches for one hour
 days = []
 for t, s, c, hi, lo, p in zip(d["time"], d["snowfall_sum"], d["weather_code"], d["temperature_2m_max"], d["temperature_2m_min"], d["precipitation_probability_max"]):
     s = s or 0
-    days.append({"date": t, "snow": s >= 0.05 or c in SNOW_CODES, "inches": round(s, 1), "hi": round(hi), "lo": round(lo), "pct": p or 0})
+    days.append({"date": t, "snow": (p or 0) >= MIN_POP and (s >= DAY_MIN_IN or c in SNOW_CODES), "inches": round(s, 1), "hi": round(hi), "lo": round(lo), "pct": p or 0})
 sf = r["hourly"]["snowfall"]
+hp = r["hourly"]["precipitation_probability"]
+# an hour counts only if it passes the chance test too; others are zeroed
+sf = [(x or 0) if (x or 0) >= HOUR_MIN_IN and (hp[k] or 0) >= MIN_POP else 0 for k, x in enumerate(sf)]
 for i, day in enumerate(days):
-    v = [x or 0 for x in sf[24 * i:24 * i + 24]]
-    on = [k for k, x in enumerate(v) if x >= 0.01]
-    if on:
+    v = sf[24 * i:24 * i + 24]
+    on = [k for k, x in enumerate(v) if x > 0]
+    if on and day["snow"]:
         day.update({"from": on[0], "to": on[-1] + 1, "peak": v.index(max(v))})
 pop = [x or 0 for x in r["hourly"]["precipitation_probability"][:24]]
 FAKE = os.path.expanduser("~/.cache/noctalia/snow-fake")  # touch to enable demo data, rm to disable

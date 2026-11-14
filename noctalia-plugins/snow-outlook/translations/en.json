@@ -1,8 +1,0 @@
-{
-  "settings": {
-    "threshold": {
-      "label": "Snow chance threshold (%)",
-      "description": "Bar icon lights up when today's snow chance is at least this."
-    }
-  }
-}

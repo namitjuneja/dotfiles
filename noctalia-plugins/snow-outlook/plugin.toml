@@ -21,15 +21,6 @@ entry = "service.luau"
 id = "bar"
 entry = "bar.luau"
 
-    [[widget.setting]]
-    key = "threshold"
-    type = "int"
-    label_key = "settings.threshold.label"
-    description_key = "settings.threshold.description"
-    default = 30
-    min = 0
-    max = 100
-
 [[panel]]
 id = "panel"
 entry = "panel.luau"
